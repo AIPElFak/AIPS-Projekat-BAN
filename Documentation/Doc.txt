@@ -1,0 +1,46 @@
+Texas Hold'Em
+
+Domen:
+
+Web aplikacija koja implementira igru Texas Hold'em. Texas Hold'em je poznata kartaška igra poreklom iz SAD-a u kojoj mogu da 
+učestvuju od 2 do 9 igrača. Igra se regularnim špilom od 52 karte i poenta je da igrači zarade što više novca koji se 
+obično predstavlja žetonima koji se koriste u igri. Korisnici će imati mogućnost da igraju onlajn sa drugim korisnicima 
+tako što će započinjati nove partije ili se pridruživati postojećim. Takođe će imati mogućnost razgovora sa drugim korisnicima i
+pregled odigranih partija. 
+
+Funkcionalnosti:
+
+-Iscrtavanje grafičkog prikaza igre
+-Početak nove ili pridruživanje postojećoj partiji
+-Čet medju korisnicima
+-Kupovina virtualnog novca
+-Prikazivanje statusa igrača
+-Mogucnost gledanja odigranih partija
+
+Tehnologije:
+
+-C#
+-HTML
+-CSS
+-Javascript
+-MSSQL
+
+Okviri:
+
+-ASP.NET
+-Bootstrap
+-JQuerry
+
+Okruženja:
+
+Visual studio (ASP.NET MVC project)
+Microsoft SQL server
+
+Zaduženja:
+
+Predrag Nikolić - Backend, projektovanje i implementacija baze.
+Nevena Radosavljević - Frontend, implementacija modela i kontrolera.
+Aleksandar Stojčić - Grafički prikaz i implementacija mehanike igre.
+
+Ovo su neka okvirna zaduženja. U zavisnosti od razvoja aplikacije i obima posla članovi tima će 
+se pridruživati jedni drugima radi rešavanja nekih zadataka. 
