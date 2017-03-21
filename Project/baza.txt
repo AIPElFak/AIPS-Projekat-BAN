@@ -1,0 +1,16 @@
+korisnik: username,password,neke tamogluposti,trenutna kolicina novca
+sto: tip stola, lista slobodih mesta
+partija: -pocetak
+		 -lista podeljenih karata
+		 -sto za kojim je odrzana
+		 -lista poteza
+		 -lista korisnika i mesta na kojima sede (zadnja dva su small i big)
+potez: tip poteza,id korisnika, opciona polja u zavisnosti od poteza, vreme
+tip poteza: -1: usao u partiju (id korisnika i mesto na koje je seo)
+			-2: izasao iz partije (id korisnika)
+			-3: cekirao (nista se ne desava)
+			-4: fold (odustajanje)
+			-5: raise (podizanje uloga, ima opcino polje za koliko)
+			-6: call (ispratis ulog)
+			-7: podela karata(nema korisnika u partiji)
+			-8: kraj partije
