@@ -169,12 +169,14 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LogInController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\LogInModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -182,6 +184,18 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\logIn\1.jpg" />
+    <Content Include="Content\logIn\apple-touch-icon-114-precomposed.png" />
+    <Content Include="Content\logIn\apple-touch-icon-144-precomposed.png" />
+    <Content Include="Content\logIn\apple-touch-icon-57-precomposed.png" />
+    <Content Include="Content\logIn\apple-touch-icon-72-precomposed.png" />
+    <Content Include="Content\logIn\bootstrap-theme.css" />
+    <Content Include="Content\logIn\bootstrap-theme.min.css" />
+    <Content Include="Content\logIn\bootstrap.css" />
+    <Content Include="Content\logIn\bootstrap.min.css" />
+    <Content Include="Content\logIn\favicon.png" />
+    <Content Include="Content\logIn\form-elements.css" />
+    <Content Include="Content\logIn\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -196,6 +210,15 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\logIn\bootstrap.js" />
+    <Content Include="Scripts\logIn\bootstrap.min.js" />
+    <Content Include="Scripts\logIn\jquery-1.11.1.js" />
+    <Content Include="Scripts\logIn\jquery-1.11.1.min.js" />
+    <Content Include="Scripts\logIn\jquery.backstretch.js" />
+    <Content Include="Scripts\logIn\jquery.backstretch.min.js" />
+    <Content Include="Scripts\logIn\npm.js" />
+    <Content Include="Scripts\logIn\placeholder.js" />
+    <Content Include="Scripts\logIn\scripts.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -234,6 +257,10 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\LogIn\LogIn.cshtml" />
+    <Content Include="Scripts\logIn\bootstrap-theme.css.map" />
+    <Content Include="Scripts\logIn\bootstrap.css.map" />
+    <Content Include="Views\LogIn\SignUp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -245,6 +272,12 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Business\Business.csproj">
+      <Project>{9f5b3a64-46db-4aac-b76a-248e1ec9f705}</Project>
+      <Name>Business</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
