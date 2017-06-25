@@ -224,6 +224,7 @@
     <Content Include="Scripts\logIn\jquery.backstretch.js" />
     <Content Include="Scripts\logIn\jquery.backstretch.min.js" />
     <Content Include="Scripts\logIn\npm.js" />
+    <Content Include="Scripts\logIn\password.js" />
     <Content Include="Scripts\logIn\placeholder.js" />
     <Content Include="Scripts\logIn\scripts.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
