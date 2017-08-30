@@ -24,8 +24,8 @@ namespace Poker.Controllers
                 UserRepository u = new UserRepository();
                 if (ModelState.IsValid && u.IsMatch(lg.username, lg.password))
                 {
-                    Session["username"] = u.ReadByUsername(lg.username);
-                    return RedirectToAction("Home", "Home");
+                    Session["username"] = u.ReadByUsername(lg.username).username;
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
@@ -57,7 +57,7 @@ namespace Poker.Controllers
                 u.Register(username, password);
                 var temp = u.ReadByUsername(username);
                 Session["username"] = temp.username;
-                return RedirectToAction("Home", "Home");
+                return RedirectToAction("Index", "Home");
             }
         }
         public ActionResult LogOut()

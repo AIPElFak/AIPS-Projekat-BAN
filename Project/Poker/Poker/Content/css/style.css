@@ -1,0 +1,360 @@
+h1, h2, h3, h4, h5, h6, li {
+	margin:0;
+}
+body {
+	background-color: #000000;
+	margin-left: 0px;
+	margin-top: 1px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	color: #FFFFFF;
+	font-size: 11px;
+}
+a {
+	color: #FFFFFC;
+	text-decoration: underline;
+}
+a:hover {
+	text-decoration: none;
+}
+.slogan {
+	font-family: Tahoma;
+   	font-size: 13px;
+	font-weight: bold;
+	line-height: 18px;	
+	color: #FFFFFF;
+}
+.top-table
+{
+	margin-bottom:20px;
+}
+.img-circle
+{
+	height:100px;
+	border-radius:50%;
+	animation:pulse 0.3s infinite alternate;
+	display:block;
+	margin: 0 auto;
+	clear:both;
+}
+
+.main-image
+{
+	width: 65%;
+	
+	-webkit-transform: perspective(300px) rotateX(-12deg);
+    -o-transform: perspective(300px) rotateX(-12deg);
+    -moz-transform: perspective(300px) rotateX(-12deg);
+    -webkit-transform-origin: 0% 50%;
+    -moz-transform-origin: 0% 50%;
+    -o-transform-origin: 0% 50%;
+    transform-origin: 0% 50%;
+}
+
+.fake-input { position: relative; }
+.fake-input input { border:none: background:#fff; display:block; width: 100%; box-sizing: border-box }
+.fake-input img { position: absolute; top: 2px; right: 5px }
+
+.MyTextbox
+{ 
+    outline:0;  
+    width: 100%;
+	background: black;
+	color:#fff;
+	box-shadow: 0 0 2px 1px #1095ab;
+	height: 30px;
+	text-align:center;
+	font-family: 'Montserrat', sans-serif;
+}
+
+.MyTextboxT { 
+    -moz-border-radius-topright: 30px; 
+    -webkit-border-top-right-radius: 30px; 
+    border-top-right-radius: 30px;
+	margin-top:25px;
+	border: 1px solid #1095ab;
+  }
+  
+  .MyTextboxB { 
+    -moz-border-radius-bottomleft: 30px; 
+    -webkit-border-bottom-left-radius: 30px; 
+    border-bottom-left-radius: 30px;
+	border: 1px solid #1095ab;
+	margin-top: 5px;	
+  }
+
+.img-circle:hover{
+	animation:pulse 0.3s infinite alternate;
+}
+@-webkit-keyframes pulse {
+  from { box-shadow:0px 0px 10px 10px black,
+					0 0 20px 10px #1095ab; }
+  to { box-shadow:	0px 0px 10px 5px black,
+					0px 0px 10px 10px #1095ab; }
+}
+
+.flex-grid-center {
+	display: flex;
+	justify-content: center;
+	margin: 5em 0;
+}
+
+
+.fuller-button {
+	color: rgba(255,255,255,1);
+	background: none;
+	border-radius: 0;
+	letter-spacing: 0.35em;
+	font-size: 35px;
+	letter-spacing:3px;
+	transition: background-color 0.3s, box-shadow 0.3s, color 0.3s;
+	float:right;
+	height:100px;
+	width:32%;
+	margin-top:50px;
+	font-family: 'Acme', sans-serif;
+}
+
+.trans
+{
+	
+	-webkit-transform: perspective(300px) rotateX(22deg);
+    -o-transform: perspective(300px) rotateX(22deg);
+    -moz-transform: perspective(300px) rotateX(22deg);
+    -webkit-transform-origin: 100% 50%;
+    -moz-transform-origin: 100% 50%;
+    -o-transform-origin: 100% 50%;
+    transform-origin: 100% 50%;
+}
+	
+	.fuller-button.blue {
+		background-color: #0dd;
+		box-shadow: inset 0 0 0 rgba(0,170,170,0.5), 0 0 1.5em rgba(0,170,170,0.7);
+	}
+	
+	.fuller-button.blue:hover {
+		
+		
+		box-shadow: inset 0 0 1em rgba(0,170,170,0.5), 0 0 1em rgba(0,170,170,0.5);
+		border: #0dd solid 2px;
+	}
+
+.pure-form button {
+  margin: 0.5em 1em; 
+}
+
+.heading
+{
+	height: 40px;
+	background-color: #05021d;
+	border-top: 2px solid red;
+	border-bottom: 2px solid #ff5200;
+}
+
+.heading-end
+{
+	border-bottom:8px solid black;
+	border-top:8px solid black;
+	width:8%;
+}
+
+.heading-middle
+{
+	width:84%;
+	font-family:  'Montserrat', sans-serif;
+	text-align:center;
+	font-size: 25px;
+	color:lightsalmon;
+}
+.borders
+{
+	height:inherit;
+	border-top: 2px solid red;
+	border-bottom: 2px solid #ff5200;
+}
+
+.bottom-table
+{
+	width:82%;
+	background-color: #000027;
+	height: 500px;
+	margin:auto;
+	border-bottom: 2px solid #1095ab;
+	border-left: 2px solid #1095ab;
+	border-right: 2px solid #1095ab;
+	margin-bottom: 50px;
+	box-shadow: 0 2px 9px 1px #06908b;
+	padding-top:60px;
+	padding-left:100px;
+	padding-right:100px;
+	padding-bottom:0px;
+}
+
+.stakes
+{
+	background-color:black;
+	color:white;
+	border: 2px solid #1095ab;
+	height:100px;
+	box-shadow: 0 0 9px 1px #1095ab;
+	padding:5px;
+}
+
+.stakes div
+{
+	width:49%;
+	float:left;
+	text-align:center;
+	font-size:25px;
+	font-family: 'Montserrat', sans-serif;
+	height:100px;
+}
+
+.myDiv
+{
+	border-right: 2px solid #1095ab;
+	-webkit-box-shadow: 5px 0 8px -4px #1095ab;
+          box-shadow: 5px 0 8px -4px #1095ab;
+}
+
+.myText
+{
+	font-size: 15px;
+	color: #06908b;
+	text-shadow: 0 0 3px #1095ab;
+}
+
+.sld
+{
+	background-color:#080808;
+	border: 2px solid #191b1b;
+	height:30px;
+	padding:5px;
+	border-radius:50px;
+	padding-top:10px;
+}
+
+.table-button
+{
+	display:-webkit-box; 
+	float:none; 
+	margin:auto;
+	height:70px;
+}
+
+.poker-container
+{
+	width:90%;
+	background-color: #000027;
+	height: 450px;
+	margin:auto;
+	border-left: 8px solid #444848;
+	border-right: 8px solid #444848; 
+	padding-bottom:0px;
+}
+.chat-table
+{
+	overflow-y:scroll;
+	height:170px;
+	display:block;
+}
+.chat-container
+{
+	width:93%;
+	background-color: #797676;
+	height:300px;
+	margin: auto;
+	border-radius:20px;
+	padding-right:20px;
+	padding-left:20px;
+	padding-top:5px;
+	box-shadow: inset 0px -2px 10px 5px black;
+	margin-bottom:50px;
+}
+
+.poker-buttons
+{
+	float:right;
+	width:15%;
+	height:50px;
+	background-color:#353534;
+	color:#bfb9b9;
+	font-family: 'Montserrat', sans-serif;
+	font-weight:bold;
+	font-size:large;
+}
+
+.poker-buttons:hover
+{
+	background-color:#40403f;
+}
+
+.chat-log
+{
+	width:49%;
+	float:left;
+	background-color: black;
+	border-radius:5px;
+	height:210px;
+}
+
+.hand-log
+{
+	float:right;
+}
+
+.chat-log-head
+{
+	width:100%;
+	height:35px;
+	background-color:#02026b;
+	padding-left:10px;
+	vertical-align:middle;
+}
+.chat-input
+{
+	width:72%;
+	float:left;
+	background-color:black;
+	color:#ededf5;
+	margin-right:10px;
+	border:none;
+	height:70%;
+	border-radius:2px;
+	text-shadow: 0 0 5px #1095ab;
+	margin-left:2px;
+	padding-left:5px;
+	padding-right:5px;
+	outline:none;
+}
+
+.send-button
+{
+	width:15%;
+	float:left;
+	background-color:rgb(88, 7, 26);
+	color:#f5b2b2;
+	font-family: 'Montserrat', sans-serif;
+	font-weight:bold;
+	font-size:inherit;
+	border:1px solid #1d0712;
+	border-radius:4px;
+}
+.send-button:hover
+{
+	background-color:rgb(117, 18, 41);
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+ 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(10,10,10,10.3); 
+    border-radius: 10px;
+}
+ 
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgb(67, 88, 239); 
+}

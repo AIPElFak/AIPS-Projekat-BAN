@@ -176,6 +176,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LogInModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -185,7 +186,35 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\ion.rangeSlider.css" />
+    <Content Include="Content\css\ion.rangeSlider.skinFlat.css" />
+    <Content Include="Content\css\style.css" />
     <Content Include="Content\Game.css" />
+    <Content Include="Content\images\avatar.png" />
+    <Content Include="Content\images\bult.jpg" />
+    <Content Include="Content\images\cntr_bg.jpg" />
+    <Content Include="Content\images\cntr_bult.jpg" />
+    <Content Include="Content\images\coin.png" />
+    <Content Include="Content\images\design.gif" />
+    <Content Include="Content\images\header.jpg" />
+    <Content Include="Content\images\hg.jpg" />
+    <Content Include="Content\images\lnk1.jpg" />
+    <Content Include="Content\images\lnk2.jpg" />
+    <Content Include="Content\images\lnk3.jpg" />
+    <Content Include="Content\images\lnk4.jpg" />
+    <Content Include="Content\images\lnk5.jpg" />
+    <Content Include="Content\images\lnk6.jpg" />
+    <Content Include="Content\images\lnk7.jpg" />
+    <Content Include="Content\images\lnk8.jpg" />
+    <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\nav_lft.jpg" />
+    <Content Include="Content\images\nav_rite.jpg" />
+    <Content Include="Content\images\onl_pokr_lnks.jpg" />
+    <Content Include="Content\images\pokr_rom_bg.jpg" />
+    <Content Include="Content\images\pokr_rom_btm_bg.jpg" />
+    <Content Include="Content\img\sprite-skin-flat.png" />
+    <Content Include="Content\js\ion.rangeSlider.js" />
+    <Content Include="Content\js\jquery-1.12.3.min.js" />
     <Content Include="Content\logIn\1.jpg" />
     <Content Include="Content\logIn\apple-touch-icon-114-precomposed.png" />
     <Content Include="Content\logIn\apple-touch-icon-144-precomposed.png" />
@@ -310,9 +339,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -338,6 +364,7 @@
     <Content Include="Scripts\logIn\bootstrap.css.map" />
     <Content Include="Views\LogIn\SignUp.cshtml" />
     <Content Include="Views\Game\Index.cshtml" />
+    <Content Include="Views\Home\Home.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

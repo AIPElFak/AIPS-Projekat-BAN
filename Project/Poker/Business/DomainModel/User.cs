@@ -14,6 +14,6 @@ namespace Business.DomainModel
         public string username { get; set; }
         public string password { get; set; }
         public int Money { get; set; }
-
+        //ubaciti sliku (avatar)
     }
 }

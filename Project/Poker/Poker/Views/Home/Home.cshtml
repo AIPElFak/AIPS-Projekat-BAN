@@ -1,0 +1,206 @@
+﻿@model Poker.Models.HomeModel
+
+@{
+    ViewBag.Title = "Home";
+}
+
+@{ 
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Texas Hold'em</title>
+    <meta name="Description" content="Your website description goes here.">
+    <meta name="KeyWords" content="keyword1, keyword2, keyword3">
+    <link href="~/Content/css/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="~/Content/css/ion.rangeSlider.css" />
+    <link rel="stylesheet" href="~/Content/css/ion.rangeSlider.skinFlat.css" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Acme|Baloo+Bhaijaan" rel="stylesheet">
+</head>
+
+    <body>
+        <table align="center" border="0" cellpadding="0" cellspacing="0" width="1000">
+            <tbody>
+                <tr>
+                    <td valign="top" width="1000">
+                        <table border="0" cellpadding="0" cellspacing="0" width="1000">
+                            <tbody>
+                                <tr>
+                                    <td valign="top" width="1000">
+                                        <table class="top-table" align="center" border="0" cellpadding="0" cellspacing="0" width="860">
+                                            <tbody>
+                                                <tr valign="top">
+                                                    <td width="35%;">
+                                                        <img src="~/Content/images/logo.png">
+                                                    </td>
+                                                    <td style= height="151" valign="middle" width="30%">
+                                                        <table align="center" border="0" cellpadding="0" cellspacing="0" width="175">
+                                                            <tbody>
+                                                                <img class="img-circle spin circle" src="~/Content/images/avatar.png">
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                    <td width="35%;">
+                                                        <table>
+                                                            <tr>
+                                                                <div class="fake-input">
+                                                                    <input class="textbox MyTextboxT MyTextbox" type="text" readonly="readonly" value="@Model.username">
+                                                                </div>
+                                                            </tr>
+                                                            <tr>
+                                                                <div class="fake-input">
+                                                                    <input class="textbox MyTextboxB MyTextbox" type="text" readonly="readonly" value="$185.000">
+                                                                    <img src="~/Content/images/coin.png" width="25px">
+                                                                </div>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="background-repeat:repeat-x;" background="~/Content/images/pokr_rom_btm_bg.jpg" height="25" valign="top" width="1000">&nbsp;</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img class="main-image" src="~/Content/images/header.jpg">
+                        <button class="pure-button fuller-button blue trans">PLAY NOW</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="background-repeat:repeat-x;" background="~/Content/images/pokr_rom_btm_bg.jpg" height="25" valign="top" width="1000">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="100%">
+                            <tr>
+                                <td class="heading heading-end">
+                                    <div class="borders">
+                                    </div>
+                                </td>
+                                <td class="heading heading-middle">
+                                    CHOOSE YOUR TABLE
+                                </td>
+                                <td class="heading heading-end">
+                                    <div class="borders">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table class="bottom-table">
+                            <tbody class="bottom-body">
+                                <tr>
+                                    <td class="stakes">
+                                        <div class="myDiv">
+                                            <p id="myP1"></p>
+                                            <p class="myText">Stakes</p>
+                                        </div>
+                                        <div>
+                                            <p id="myP2"></p>
+                                            <p class="myText">Buy-In Range</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="sld">
+                                            <button class="minus js-btn-minus"><div class="mySpan">-</div></button>
+                                            <div style="width:88%; float:left; margin-top:5px;">
+                                                <div class="range-slider">
+                                                    <input type="text" class="js-range-slider" value="" />
+                                                </div>
+                                            </div>
+                                            <button class="plus js-btn-plus"><div class="mySpan2">+</div></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="display:block;">
+                                        <div>
+                                            <button class="pure-button fuller-button blue table-button">PLAY</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <script src="~/Content/js/jquery-1.12.3.min.js"></script>
+        <script src="~/Content/js/ion.rangeSlider.js"></script>
+
+        <script>
+
+    var $range = $(".js-range-slider"),
+    $btn_minus = $(".js-btn-minus"),
+    $btn_plus = $(".js-btn-plus"),
+    min = 1,
+    max = 5,
+    step = 1,
+	val = ["$100/$200","$500/$1K","$1K/$2K","$5K/$10K","$10K/$20K"],
+	val2= ["$5K/$25K","$25K/125K","$50K/$250K","$250K/$1.25M","$500K/$2.5M"],
+    from = 1;
+
+	var p1 = document.getElementById("myP1");
+	var p2 = document.getElementById("myP2");
+	p1.innerHTML = val[0];
+	p2.innerHTML = val2[0];
+
+$range.ionRangeSlider({
+    type: "single",
+    min: min,
+    max: max,
+    step: step,
+    from: from,
+    onFinish: function (data) {
+        from = data.from;
+    }
+});
+
+$btn_minus.on("click", function () {
+    updateRange(-1);
+});
+
+$btn_plus.on("click", function () {
+    updateRange(1);
+});
+
+var range_instance = $range.data("ionRangeSlider");
+
+var updateRange = function (direction) {
+    from += step * direction;
+    if (from < min) {
+        from = min;
+    } else if (from > max) {
+        from = max;
+    }
+
+	var p1 = document.getElementById('myP1');
+	var p2 = document.getElementById('myP2');
+	p1.innerHTML = val[from-1];
+	p2.innerHTML = val2[from-1];
+
+    range_instance.update({
+        from: from
+    });
+};
+        </script>
+
+    </body>
+</html>
+
