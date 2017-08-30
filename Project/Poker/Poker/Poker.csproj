@@ -363,7 +363,7 @@
     <Content Include="Scripts\logIn\bootstrap-theme.css.map" />
     <Content Include="Scripts\logIn\bootstrap.css.map" />
     <Content Include="Views\LogIn\SignUp.cshtml" />
-    <Content Include="Views\Game\Index.cshtml" />
+    <Content Include="Views\Game\Game.cshtml" />
     <Content Include="Views\Home\Home.cshtml" />
   </ItemGroup>
   <ItemGroup>

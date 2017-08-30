@@ -11,7 +11,7 @@ namespace Poker.Controllers
         // GET: Game
         public ActionResult Index()
         {
-            return View();
+            return View("Game");
         }
     }
 }
