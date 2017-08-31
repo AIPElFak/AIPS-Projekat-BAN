@@ -1,10 +1,5 @@
-﻿var drawAllPlayingCardPositions = function (Size, height, yOffset, heightDiff, firstCard, secondCard, blankCard, position) {
-    var mat = new Array(16);
-    for (var i = 0; i < 16; ++i)
-        mat[i] = blankCard;
-
-    mat[position * 2] = firstCard;
-    mat[position * 2 + 1] = secondCard;
+﻿var drawAllPlayingCardPositions = function (Size, height, yOffset, heightDiff, mat) {
+    
 
     //1 i 8  
     drawAParOfCCards(Size, height, heightDiff * 0.8, -yOffset * 0.3, Math.PI, mat[0], mat[1]);
