@@ -1,0 +1,238 @@
+var createScene = function () {
+	var scene = new BABYLON.Scene(engine);
+	scene.clearColor = new BABYLON.Color3( 0.5, 0.5, 0.8);
+	// camera
+	var camera = new BABYLON.ArcRotateCamera("camera1",  0, 0, 0, new BABYLON.Vector3(0, 0, 0), scene);
+	camera.setPosition(new BABYLON.Vector3(0, 10, -50));
+	camera.attachControl(canvas, true);
+	// light
+	var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 1), scene);
+	light.intensity = 0.9;
+	// material
+	var mat = new BABYLON.StandardMaterial("mat1", scene);
+  	
+      mat.alpha = 1.0;
+  	mat.diffuseColor = new BABYLON.Color3(0.2067, 0.0432, 0.0432);
+  	mat.backFaceCulling = false;
+    //mat.diffuseTexture = new BABYLON.Texture("textures/grass.png", scene);
+
+    var mat2 = new BABYLON.StandardMaterial("mat2", scene);
+  	mat2.alpha = 1;
+  	mat2.diffuseColor = new BABYLON.Color3(0.4, 0.2980, 0.0314);
+  	mat2.backFaceCulling = false;
+	// parabola
+
+    var mat3 = new BABYLON.StandardMaterial("mat2", scene);
+  	mat3.alpha = 1;
+  	mat3.diffuseColor = new BABYLON.Color3(0.4, 0.0824, 0.0824);
+  	mat3.backFaceCulling = false;
+
+    var mat4 = new BABYLON.StandardMaterial("mat4", scene);
+  	mat4.alpha = 1;
+  	mat4.diffuseColor = new BABYLON.Color3(0.8, 0.6431, 0.0);
+  	mat4.backFaceCulling = false;  
+	
+	drawTable(6,mat,mat2,mat3,mat4);
+
+    return scene;
+};
+function drawTablePrimitive(iterations,size,yOffset,heightDiff,jump,curve,height,parts,diff,paths)
+{
+	
+for (var bane= 0; bane<parts;++bane)
+    {
+        
+        yOffset = 3*size;
+        heightDiff = 2*size;
+
+        var path = [];
+	for (var t = iterations; t>=0; t--) {
+		for (var k = 0; k <= 1; k++) {
+            
+            var x = heightDiff*Math.cos(Math.PI-t*Math.PI/(iterations));
+		    var y = height+jump;
+		    var z = yOffset/2+heightDiff*Math.sin(Math.PI-t*Math.PI/(iterations));
+            if (k==0)
+            {
+                z=-1*z;
+		        path[(iterations-t)]=(new BABYLON.Vector3(x, y, z));
+            }
+            else
+                path[iterations+1+t]=(new BABYLON.Vector3(x, y, z));
+		}
+	}
+    var x = heightDiff;
+	var y = height+jump;
+	var z = -yOffset/2;
+
+    height+=jump;
+    size=size-curve;
+    curve = curve +diff;
+    path[2*iterations+2]=new BABYLON.Vector3(x,y,z)
+	paths.push(path);
+	//var lines = BABYLON.Mesh.CreateLines("par", path, scene);
+    }
+	
+
+	return size;
+}	
+
+function drawTable(size,mat,mat2,mat3,mat4)
+{ 
+
+	var iterations =30;
+    var Size = size;
+    var yOffset = size;
+    var heightDiff=3*size/2;
+    var jump=size/250;
+    var curve=0;
+    var height = 0;
+    var parts = 30;
+    var diff= Size/31250;
+    var paths = [];
+	
+    yOffset = Size;
+    heightDiff=3*Size/2;
+
+
+    Size=drawTablePrimitive(iterations,Size,yOffset,heightDiff,jump,curve,height,parts,diff,paths);
+	
+    height+=jump*parts;
+    parts=10;
+    curve = Size/2500;
+    jump=Size/2500;
+
+    Size=drawTablePrimitive(iterations,Size,yOffset,heightDiff,jump,curve,height,parts,diff,paths);
+
+    height+=jump*parts;
+    parts=15;
+    curve = Size/3571;
+    jump=Size/2777;
+
+    Size=drawTablePrimitive(iterations,Size,yOffset,heightDiff,jump,curve,height,parts,diff,paths);
+
+    height+=jump*parts;
+    parts=15;
+    curve = Size/2857;
+    jump= Size/25000;
+
+    Size=drawTablePrimitive(iterations,Size,yOffset,heightDiff,jump,curve,height,parts,diff,paths);
+    
+    height+=jump*parts;
+	parts=15;
+    curve = Size/2857;
+    jump=-Size/25000;
+
+    Size=drawTablePrimitive(iterations,Size,yOffset,heightDiff,jump,curve,height,parts,diff,paths);
+
+    height+=jump*parts;
+    parts=15;
+    curve = Size/3571;
+    jump=-Size/2777;
+
+    Size=drawTablePrimitive(iterations,Size,yOffset,heightDiff,jump,curve,height,parts,diff,paths);
+
+    height+=jump*parts;
+    parts=17;
+    curve = 0;
+    jump =-Size/250;
+
+    
+    var paths2 = [];
+
+    Size=drawTablePrimitive(iterations,Size,yOffset,heightDiff,jump,curve,height,parts,diff,paths2);
+	
+    height+=jump*parts;
+    parts=17;
+    curve = Size/680;
+    jump =-Size/2500;
+    
+    paths.push(paths2[0]);
+    var ribbon = BABYLON.Mesh.CreateRibbon("rib", paths, false, false, 0, scene);
+	ribbon.material = mat;
+
+    Size=drawTablePrimitive(iterations,Size,yOffset,heightDiff,jump,curve,height,parts,diff,paths2);
+	
+
+    var ribbon2 = BABYLON.Mesh.CreateRibbon("rib2", paths2, false, false, 0, scene);
+	ribbon2.material = mat2;
+
+
+    var paths3 = [];
+    Size+=curve;
+    iterations =30;
+    yOffset = 3.1*Size;
+    heightDiff = 2*Size;
+	for (var t = iterations; t>=0; t--) {
+		var path = [];
+		for (var k = 0; k <= 1; k++) {
+            
+            var x = heightDiff*Math.cos(Math.PI-t*Math.PI/(iterations));
+		    var y = height;
+		    var z = yOffset/2+heightDiff*Math.sin(Math.PI-t*Math.PI/(iterations));
+            if (k==1)
+                z=-1*z;
+		  path.push(new BABYLON.Vector3(x, y, z));
+		}
+		paths3.push(path);
+		//var lines = BABYLON.Mesh.CreateLines("par", path, scene);
+	}
+
+    var ribbon3 = BABYLON.Mesh.CreateRibbon("rib3", paths3, false, false, 0, scene);
+	ribbon3.material = mat3;
+
+    var card1 = drawCardPositions(6, mat4);
+    card1.translate(new BABYLON.Vector3(0,height*1.1,0),1, BABYLON.Space.LOCAL);
+    card1.rotate(BABYLON.Axis.Y, Math.PI / 2, BABYLON.Space.LOCAL);
+    card1.translate(new BABYLON.Vector3(0,0,Size*1.4),1, BABYLON.Space.LOCAL);
+
+    //var card2 = drawCardPositions(6, mat);
+    //card2.translate(new BABYLON.Vector3(2,2,2),1, BABYLON.Space.LOCAL);
+	
+}	
+
+var drawCardPositions= function(size, mat)
+{
+    var paths = [];
+    var iterations =10;
+    var Size = size/45;
+    var xOffset=Size*11;
+    var yOffset =Size*20;
+    var heightDiff=Size*1.4;
+	for (var t = iterations; t>=0; t--) {
+		var path = [];
+		for (var k = 0; k <= 1; k++) {
+            
+            var x = (xOffset-2*heightDiff)/2+heightDiff*Math.cos(Math.PI/2-t*Math.PI/(2*iterations));
+		    var y = 0;
+		    var z = yOffset/2+heightDiff*Math.sin(Math.PI/2-t*Math.PI/(2*iterations));
+            if (k==0)
+                z=-1*z;
+		  path.push(new BABYLON.Vector3(x, y, z));
+		}
+		paths.push(path);
+		//var lines = BABYLON.Mesh.CreateLines("par", path, scene);
+	}
+    for (var t = iterations; t>=0; t--) {
+		var path = [];
+		for (var k = 0; k <= 1; k++) {
+            
+            var x = -xOffset/2+heightDiff*Math.cos(Math.PI-t*Math.PI/(2*iterations));
+		    var y = 0;
+		    var z = yOffset/2+heightDiff*Math.sin(Math.PI-t*Math.PI/(2*iterations));
+            if (k==0)
+                z=-1*z;
+		  path.push(new BABYLON.Vector3(x, y, z));
+		}
+		paths.push(path);
+		//var lines = BABYLON.Mesh.CreateLines("par", path, scene);
+	}
+    
+
+	
+	var ribbon = BABYLON.Mesh.CreateRibbon("rib4", paths, false, false, 0, scene, 
+    false, BABYLON.Mesh.BACKSIDE);
+	ribbon.material = mat;
+
+    return ribbon;
+}
