@@ -231,6 +231,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\babylon.custom.js" />
     <Content Include="Scripts\babylon.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -257,8 +258,11 @@
     <Content Include="Scripts\logIn\placeholder.js" />
     <Content Include="Scripts\logIn\scripts.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\PlayingCards.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\Table.js" />
+    <Content Include="Scripts\TablePrimitive.js" />
     <Content Include="Scripts\textures\10_of_clubs.png" />
     <Content Include="Scripts\textures\10_of_diamonds.png" />
     <Content Include="Scripts\textures\10_of_hearts.png" />

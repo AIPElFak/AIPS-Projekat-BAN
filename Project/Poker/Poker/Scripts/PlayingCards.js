@@ -1,0 +1,113 @@
+﻿var drawAllPlayingCardPositions = function (Size, height, yOffset, heightDiff, firstCard, secondCard, blankCard, position) {
+    var mat = new Array(16);
+    for (var i = 0; i < 16; ++i)
+        mat[i] = blankCard;
+
+    mat[position * 2] = firstCard;
+    mat[position * 2 + 1] = secondCard;
+
+    //1 i 8  
+    drawAParOfCCards(Size, height, heightDiff * 0.8, -yOffset * 0.3, Math.PI, mat[0], mat[1]);
+    drawAParOfCCards(Size, height, heightDiff * 0.8, yOffset * 0.3, Math.PI, mat[14], mat[15]);
+
+    //2 i 7
+    drawAParOfCCards(Size, height, heightDiff * 0.8, -yOffset / 2, Math.PI * 11 / 15, mat[2], mat[3]);
+    drawAParOfCCards(Size, height, heightDiff * 0.8, yOffset / 2, -Math.PI * 11 / 15, mat[12], mat[13]);
+
+    //3 i 6
+    drawAParOfCCards(Size, height, heightDiff * 0.8, -yOffset / 2, Math.PI * 6 / 15, mat[4], mat[5]);
+    drawAParOfCCards(Size, height, heightDiff * 0.8, yOffset / 2, -Math.PI * 6 / 15, mat[10], mat[11]);
+
+    //4 i 5
+    drawAParOfCCards(Size, height, heightDiff * 0.8, -yOffset / 2, Math.PI / 15, mat[6], mat[7]);
+    drawAParOfCCards(Size, height, heightDiff * 0.8, yOffset / 2, -Math.PI / 15, mat[8], mat[9]);
+
+}
+var drawAParOfCCards = function (Size, height, distanceX, distanceY, angle, firstCard, secondCard) {
+
+    var card1 = drawCardPosition(Size, firstCard);
+    var card2 = drawCardPosition(Size, secondCard);
+
+    card1.rotate(BABYLON.Axis.Y, angle, BABYLON.Space.LOCAL);
+    card1.translate(new BABYLON.Vector3(distanceX, 0, 0), 1, BABYLON.Space.LOCAL);
+    card1.translate(new BABYLON.Vector3(0, 0, distanceY), 1, BABYLON.Space.WORLD);
+    card1.translate(new BABYLON.Vector3(0, height * 1.1, -Size * 0.115), 1, BABYLON.Space.LOCAL);
+    card1.rotate(BABYLON.Axis.Y, Math.PI * 0.8 / 2, BABYLON.Space.LOCAL);
+
+    card2.rotate(BABYLON.Axis.Y, angle, BABYLON.Space.LOCAL);
+    card2.translate(new BABYLON.Vector3(distanceX, 0, 0), 1, BABYLON.Space.LOCAL);
+    card2.translate(new BABYLON.Vector3(0, 0.1, distanceY), 1, BABYLON.Space.WORLD);
+    card2.translate(new BABYLON.Vector3(0, height * 1.1, Size * 0.115), 1, BABYLON.Space.LOCAL);
+    card2.rotate(BABYLON.Axis.Y, Math.PI * 1.2 / 2, BABYLON.Space.LOCAL);
+
+}
+var drawCardPosition = function (size, mat) {
+    var paths = [];
+    var iterations = 10;
+    var Size = size / 45;
+    var xOffset = Size * 11;
+    var yOffset = Size * 20;
+    var heightDiff = Size * 1.4;
+    for (var t = iterations; t >= 0; t--) {
+        var path = [];
+        for (var k = 0; k <= 1; k++) {
+
+            var x = (xOffset - 2 * heightDiff) / 2 + heightDiff * Math.cos(Math.PI / 2 - t * Math.PI / (2 * iterations));
+            var y = 0;
+            var z = yOffset / 2 + heightDiff * Math.sin(Math.PI / 2 - t * Math.PI / (2 * iterations));
+            if (k == 0)
+                z = -1 * z;
+            path.push(new BABYLON.Vector3(x, y, z));
+        }
+        paths.push(path);
+        //var lines = BABYLON.Mesh.CreateLines("par", path, scene);
+    }
+    for (var t = iterations; t >= 0; t--) {
+        var path = [];
+        for (var k = 0; k <= 1; k++) {
+
+            var x = -xOffset / 2 + heightDiff * Math.cos(Math.PI - t * Math.PI / (2 * iterations));
+            var y = 0;
+            var z = yOffset / 2 + heightDiff * Math.sin(Math.PI - t * Math.PI / (2 * iterations));
+            if (k == 0)
+                z = -1 * z;
+            path.push(new BABYLON.Vector3(x, y, z));
+        }
+        paths.push(path);
+        //var lines = BABYLON.Mesh.CreateLines("par", path, scene);
+    }
+
+    var faceUV = new Array(iterations * 2 + 1);
+    var maxX = (xOffset - 2 * heightDiff) / 2 + heightDiff;
+    var minX = -xOffset / 2 - heightDiff;
+    var diffX = maxX - minX;
+    var maxZ = yOffset / 2 + heightDiff;
+    var minZ = -maxZ;
+    var diffZ = maxZ - minZ;
+
+    for (var i = 0; i < iterations * 2 + 2; ++i) {
+        var ulX = (paths[i][0].x - minX) / diffX;
+        var ulZ = (paths[i][0].z - minZ) / diffZ;
+        var dlX = (paths[i][1].x - minX) / diffX;
+        var dlZ = (paths[i][1].z - minZ) / diffZ;
+        faceUV[i * 2] = new BABYLON.Vector2(ulX, ulZ);
+        faceUV[i * 2 + 1] = new BABYLON.Vector2(dlX, dlZ);
+    }
+
+    var ribbon = BABYLON.MeshBuilder.CreateRibbon("rib", {
+        pathArray: paths,
+        sideOrientation: BABYLON.Mesh.DOUBLESIDE, offset: 0, uvs: faceUV, invertUV: true
+    }, scene);
+    ribbon.material = mat;
+
+    return ribbon;
+}
+var drawTableCards = function (Size, noShownCards, cardTextures) {
+    var cards = Array(noShownCards);
+    for (var i = 0; i < noShownCards; ++i) {
+        cards[i] = drawCardPosition(Size, cardTextures[i]);
+        cards[i].rotate(BABYLON.Axis.Y, Math.PI / 2, BABYLON.Space.LOCAL);
+        cards[i].translate(new BABYLON.Vector3(-Size + Size / 2 * i, Size * 0.1, 0), 1, BABYLON.Space.LOCAL);
+    }
+
+}
