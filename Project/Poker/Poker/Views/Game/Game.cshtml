@@ -115,11 +115,18 @@
             </tbody>
         </table>
         <script src="~/Scripts/babylon.custom.js"></script>
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+        <script src="~/signalr/hubs" type="text/javascript"></script>
         <script src="~/Scripts/Variables.js"></script>
         <script src="~/Scripts/PlayingCards.js"></script>
         <script src="~/Scripts/Table.js"></script>
         <script src="~/Scripts/TablePrimitive.js"></script>
         <script src="~/Scripts/chips.js"></script>
         <script src="~/Scripts/game.js"></script>
+        <script src="~/Scripts/clientServer/communication.js"></script>
+        <script>
+            start(@Html.Raw(Json.Encode(Model)));
+        </script>
     </body>
 </html>
