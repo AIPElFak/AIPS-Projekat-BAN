@@ -1,4 +1,4 @@
-﻿function drawTablePrimitive(iterations, size, yOffset, heightDiff, jump, curve, height, parts, diff, paths) {
+﻿function drawElipticWraper(iterations, size, yOffset, heightDiff, jump, curve, height, parts, diff, paths) {
 
     for (var bane = 0; bane < parts; ++bane) {
 

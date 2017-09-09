@@ -237,6 +237,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\babyon.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\chips.js" />
     <Content Include="Scripts\game.js" />
     <Content Include="Scripts\hand.js" />
     <Content Include="Scripts\hand.min.js" />
