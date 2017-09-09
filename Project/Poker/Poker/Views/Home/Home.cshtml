@@ -171,6 +171,10 @@
     bigBlind = ["200","1000","2000","10000","20000"],
     buyInMin = ["5000","25000","50000","250000","500000"],
 	buyInMax= ["25000","125000","250000","1250000","2500000"],
+    smallBlindSign = ["100","500","1K","5K","10K"],
+    bigBlindSign = ["200","1K","2K","10K","20K"],
+    buyInMinSign = ["5K","25K","50K","250K","500K"],
+	buyInMaxSign= ["25K","125K","250K","1.25M","2.5M"],
     from = 1;
 
 	var p1 = document.getElementById("smallBlind");
@@ -188,10 +192,10 @@
 	ip3.value = buyInMin[0];
 	ip4.value = buyInMax[0];
 
-	p1.innerHTML = "$" + smallBlind[0] + "/";
-	p2.innerHTML = "$" + bigBlind[0];
-	p3.innerHTML = "$" + buyInMin[0] + "/";
-	p4.innerHTML = "$" + buyInMax[0];
+	p1.innerHTML = "$" + smallBlindSign[0] + "/";
+	p2.innerHTML = "$" + bigBlindSign[0];
+	p3.innerHTML = "$" + buyInMinSign[0] + "/";
+	p4.innerHTML = "$" + buyInMaxSign[0];
 
 $range.ionRangeSlider({
     type: "single",
@@ -237,10 +241,10 @@ var updateRange = function (direction) {
 	ip3.value = buyInMin[from-1];
 	ip4.value = buyInMax[from-1];
 
-	p1.innerHTML = "$" + smallBlind[from-1] + "/";
-	p2.innerHTML = "$" + bigBlind[from-1];
-	p3.innerHTML = "$" + buyInMin[from-1] + "/";
-	p4.innerHTML = "$" + buyInMax[from-1];
+	p1.innerHTML = "$" + smallBlindSign[from-1] + "/";
+	p2.innerHTML = "$" + bigBlindSign[from-1];
+	p3.innerHTML = "$" + buyInMinSign[from-1] + "/";
+	p4.innerHTML = "$" + buyInMaxSign[from-1];
 
     range_instance.update({
         from: from
