@@ -5,17 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Business.DomainModel
 {
     public class Table
     {
-        public ObjectId id { get; set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
         public string tableType { get; set; }
-        public List<int> freeSeats { get; set; }
-        public Table()
-        {
-            freeSeats = new List<int>();
-        }
+        public string tableBuyIn { get; set; }
+        public int freeSeats { get; set; }
     }
 }

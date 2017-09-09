@@ -7,6 +7,7 @@ using Business.Properties;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using Business.DomainModel;
+using MongoDB.Bson;
 
 namespace Business
 {
@@ -14,12 +15,14 @@ namespace Business
     {
         public MongoDatabase Database;
         public IMongoCollection<User> UserCollection;
+        public IMongoCollection<Table> TableCollection;
 
         public UserRepository()
         {
             var mongoClient = new MongoClient(Settings.Default.ConnectionString);
             var db = mongoClient.GetDatabase(Settings.Default.DB);
             UserCollection = db.GetCollection<User>("User");
+            TableCollection = db.GetCollection<Table>("Table");
         }
 
         public bool IsTaken(string username)
@@ -44,7 +47,7 @@ namespace Business
             {
                 username = username,
                 password = password,
-                Money = 500
+                Money = 100000
             };
 
             UserCollection.InsertOne(user);
@@ -56,6 +59,70 @@ namespace Business
                          select user).Single();
 
             return query;
+        }
+
+        public Table ReadTable(string id)
+        {
+            var query = (from table in TableCollection.AsQueryable<Table>()
+                         where table.Id == id
+                         select table).Single();
+
+            return query;
+        }
+        public Table FindTable(string type)
+        {
+            Table retVal = new Table()
+            {
+                freeSeats = 0,
+                tableType = "none"
+            };
+
+            var query = (from table in TableCollection.AsQueryable<Table>()
+                         where table.tableType == type
+                         select table);
+
+            if (query != null && query.Count() > 0)
+            {
+                foreach (Table table in query)
+                {
+                    if (retVal.freeSeats < table.freeSeats)
+                        retVal = table;
+                }
+
+                if (retVal.freeSeats > 0)
+                    retVal.freeSeats--;
+
+                return retVal;
+            }
+
+            return retVal;
+        }
+ 
+        public Table CreateTable(string type, string buyIn)
+        {
+            Table table = new Table()
+            {
+                tableType = type,
+                tableBuyIn = buyIn,
+                freeSeats = 7
+            };
+
+            TableCollection.InsertOne(table);
+
+            return table;
+        }
+
+        public void DeleteTable(string tableId)
+        {
+            var filter = Builders<Table>.Filter.Eq("id", tableId);
+            TableCollection.DeleteOne(filter);
+        }
+
+        public void UpdateTable(string tableId, int freeSeats)
+        {
+            var filter = Builders<Table>.Filter.Eq("id", tableId);
+            var update = Builders<Table>.Update.Set("freeSeats", freeSeats).CurrentDate("lastModified");
+            TableCollection.UpdateOne(filter, update);
         }
     }
 }

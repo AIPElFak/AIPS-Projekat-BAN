@@ -10,5 +10,6 @@ namespace Business.DomainModel
     {
         public int number { get; set; }
         public string sign { get; set; }
+        public string name { get; set; }
     }
 }
