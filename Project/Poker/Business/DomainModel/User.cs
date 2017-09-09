@@ -13,7 +13,7 @@ namespace Business.DomainModel
         public ObjectId id { get; set; }
         public string username { get; set; }
         public string password { get; set; }
-        public int Money { get; set; }
+        public int money { get; set; }
         //ubaciti sliku (avatar)
     }
 }
