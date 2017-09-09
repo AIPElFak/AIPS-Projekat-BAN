@@ -358,3 +358,26 @@ a:hover {
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 6px rgb(67, 88, 239); 
 }
+
+.blind
+{
+    width:50%;
+    float:left;
+}
+
+#smallBlind
+{
+    text-align:end;
+}
+#bigBlind
+{
+    text-align:start;
+}
+#buyInMin
+{
+    text-align:end;
+}
+#buyInMax
+{
+    text-align:start;
+}
