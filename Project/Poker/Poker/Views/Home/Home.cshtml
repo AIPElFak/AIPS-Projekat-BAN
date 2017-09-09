@@ -100,42 +100,57 @@
                 </tr>
                 <tr>
                     <td>
-                        <table class="bottom-table">
-                            <tbody class="bottom-body">
-                                <tr>
-                                    <td class="stakes">
-                                        <div class="myDiv">
-                                            <p id="myP1"></p>
-                                            <p class="myText">Stakes</p>
-                                        </div>
-                                        <div>
-                                            <p id="myP2"></p>
-                                            <p class="myText">Buy-In Range</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="sld">
-                                            <button class="minus js-btn-minus"><div class="mySpan">-</div></button>
-                                            <div style="width:88%; float:left; margin-top:5px;">
-                                                <div class="range-slider">
-                                                    <input type="text" class="js-range-slider" value="" />
-                                                </div>
+                        <form action="/Home/Play" method="post">
+                            <table class="bottom-table">
+
+                                <tbody class="bottom-body">
+
+                                    <tr>
+                                        <td class="stakes">
+
+                                            <div class="myDiv">
+                                                <p class="blind" id="smallBlind"></p>
+                                                <p class="blind" id="bigBlind"></p>
+                                                <p class="myText">Stakes</p>
+                                                <input type="hidden" name="smallblind" id="small-blind" value="" />
+                                                <input type="hidden" name="bigblind" id="big-blind" value="" />
                                             </div>
-                                            <button class="plus js-btn-plus"><div class="mySpan2">+</div></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="display:block;">
-                                        <div>
-                                            <button class="pure-button fuller-button blue table-button">PLAY</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                            <div>
+                                                <p class="blind" id="buyInMin"></p>
+                                                <p class="blind" id="buyInMax"></p>
+                                                <p class="myText">Buy-In Range</p>
+                                                <input type="hidden" name="buyinmin" id="buy-in-min" value="" />
+                                                <input type="hidden" name="buyinmax" id="buy-in-max" value="" />
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="sld">
+                                                <button type="button" class="minus js-btn-minus"><div class="mySpan">-</div></button>
+                                                <div style="width:88%; float:left; margin-top:5px;">
+                                                    <div class="range-slider">
+                                                        <input type="text" class="js-range-slider" value="" />
+                                                    </div>
+                                                </div>
+                                                <button type="button" class="plus js-btn-plus"><div class="mySpan2">+</div></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="display:block;">
+                                            <div>
+                                                <button type="submit" class="pure-button fuller-button blue table-button">PLAY</button>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+                        </form>
                     </td>
                 </tr>
             </tbody>
@@ -152,14 +167,31 @@
     min = 1,
     max = 5,
     step = 1,
-	val = ["$100/$200","$500/$1K","$1K/$2K","$5K/$10K","$10K/$20K"],
-	val2= ["$5K/$25K","$25K/125K","$50K/$250K","$250K/$1.25M","$500K/$2.5M"],
+	smallBlind = ["100","500","1000","5000","10000"],
+    bigBlind = ["200","1000","2000","10000","20000"],
+    buyInMin = ["5000","25000","50000","250000","500000"],
+	buyInMax= ["25000","125000","250000","1250000","2500000"],
     from = 1;
 
-	var p1 = document.getElementById("myP1");
-	var p2 = document.getElementById("myP2");
-	p1.innerHTML = val[0];
-	p2.innerHTML = val2[0];
+	var p1 = document.getElementById("smallBlind");
+	var p2 = document.getElementById("bigBlind");
+	var p3 = document.getElementById("buyInMin");
+	var p4 = document.getElementById("buyInMax");
+
+	var ip1 = document.getElementById("small-blind");
+	var ip2 = document.getElementById("big-blind");
+	var ip3 = document.getElementById("buy-in-min");
+	var ip4 = document.getElementById("buy-in-max");
+
+	ip1.value = smallBlind[0];
+	ip2.value = bigBlind[0];
+	ip3.value = buyInMin[0];
+	ip4.value = buyInMax[0];
+
+	p1.innerHTML = "$" + smallBlind[0] + "/";
+	p2.innerHTML = "$" + bigBlind[0];
+	p3.innerHTML = "$" + buyInMin[0] + "/";
+	p4.innerHTML = "$" + buyInMax[0];
 
 $range.ionRangeSlider({
     type: "single",
@@ -190,10 +222,25 @@ var updateRange = function (direction) {
         from = max;
     }
 
-	var p1 = document.getElementById('myP1');
-	var p2 = document.getElementById('myP2');
-	p1.innerHTML = val[from-1];
-	p2.innerHTML = val2[from-1];
+	var p1 = document.getElementById("smallBlind");
+	var p2 = document.getElementById("bigBlind");
+	var p3 = document.getElementById("buyInMin");
+	var p4 = document.getElementById("buyInMax");
+
+	var ip1 = document.getElementById("small-blind");
+	var ip2 = document.getElementById("big-blind");
+	var ip3 = document.getElementById("buy-in-min");
+	var ip4 = document.getElementById("buy-in-max");
+
+	ip1.value = smallBlind[from-1];
+	ip2.value = bigBlind[from-1];
+	ip3.value = buyInMin[from-1];
+	ip4.value = buyInMax[from-1];
+
+	p1.innerHTML = "$" + smallBlind[from-1] + "/";
+	p2.innerHTML = "$" + bigBlind[from-1];
+	p3.innerHTML = "$" + buyInMin[from-1] + "/";
+	p4.innerHTML = "$" + buyInMax[from-1];
 
     range_instance.update({
         from: from

@@ -16,5 +16,13 @@ namespace Poker.Controllers
             m.Load(username);
             return View("Home",m);
         }
+        [HttpPost]
+        public ActionResult Play(string smallblind,string bigblind, string buyinmin,string buyinmax)
+        {
+            GameModel m = new GameModel();
+            string username = (string)Session["username"];
+            m.Load(username,smallblind,bigblind,buyinmin,buyinmax);
+            return View("../Game/Game", m);
+        }
     }
 }
