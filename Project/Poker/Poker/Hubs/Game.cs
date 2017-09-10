@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Business.DomainModel;
 using Business;
+using Poker.Controllers;
 
 namespace Poker.Hubs
 {
@@ -71,6 +72,8 @@ namespace Poker.Hubs
         public string username { get; set; }
         public int currentMoney { get; set; }
         public int pileNumber { get; set; }
+        public Card card1 { get; set; }
+        public Card card2 { get; set; }
     }
 
     public class Game
@@ -81,10 +84,12 @@ namespace Poker.Hubs
         public IDictionary<int, Player> Players { get; set; }
         public bool[] UsedSeats { get; set; }
         public List<int> CurrentHand { get; set; }
+        public int currentPlayer { get; set; }
         public List<int> piles { get; set; }
         public int lastRase { get; set; }
         public List<Card> deck { get; set; }
-        public List<Command> startCommands { get; set; }
+        public List<Card> cardsOnTable { get; set; }
+        public Command CurrentCommand { get; set; }
 
         public Game(string name)
         {
@@ -93,11 +98,11 @@ namespace Poker.Hubs
             Players = new Dictionary<int, Player>();
             UsedSeats = new bool[8];
             CurrentHand = new List<int>();
-            deck = shuffle();
+            //deck = shuffle();
             piles = new List<int>();
-            startCommands = new List<Command>();
+            cardsOnTable = new List<Card>();
             UserRepository rep = new UserRepository();
-            Table table = rep.ReadTable(name);
+            table = rep.ReadTable(name);
         }
 
         public List<Card> shuffle()
@@ -120,7 +125,7 @@ namespace Poker.Hubs
             return cards;
         }
 
-        public int addPlayer()
+        public int addPlayer(string username)
         {
             if (FreeSeats == 0)
                 return -1;
@@ -133,34 +138,41 @@ namespace Poker.Hubs
                     break;
                 }
 
+            UserRepository rep = new UserRepository();
+            User user = rep.ReadByUsername(username);
             Player playerAdd = new Player()
             {
-                username = (string)HttpContext.Current.Session["username"],
-                currentMoney = (int)HttpContext.Current.Session["money"],
+                username = username,
+                currentMoney = ((user.money > table.BuyInMax)? table.BuyInMax : table.BuyInMin),
                 pileNumber = 0
             };
             Players.Add(i, playerAdd);
             FreeSeats--;
 
-            if (Players.Count == 2)
-            {
-                GameHub hub = new GameHub();
-                foreach (KeyValuePair<int, Player> player in Players)
-                {
-                    CurrentHand.Add(player.Key);
-                }
-                piles.Add(0);
-                lastRase = 0;
-                startCommands.Clear();
-                startCommands.Add(new Deal());
-                startCommands.Add(new SmallBind());
-                startCommands.Add(new BigBind());
-                hub.startGame(Name, CurrentHand);
-            }
-
             return i;
         }
 
+        public void newHand()
+        {
+            piles.Clear();
+            piles.Add(0);
+            lastRase = 0;
+            deck = shuffle();
+            cardsOnTable.Clear();
+
+            CurrentHand.Clear();
+            foreach (KeyValuePair<int, Player> player in Players)
+            {
+                CurrentHand.Add(player.Key);
+            }
+
+            int tmp = CurrentHand[0];
+            for (int i = 0; i < CurrentHand.Count - 1; i++)
+                CurrentHand[i] = CurrentHand[i + 1];
+            CurrentHand[CurrentHand.Count - 1] = tmp;
+
+            currentPlayer = (0 - 2) % CurrentHand.Count;
+        }
 
     }
 }

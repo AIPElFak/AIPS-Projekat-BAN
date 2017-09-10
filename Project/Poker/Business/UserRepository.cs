@@ -69,16 +69,16 @@ namespace Business
 
             return query;
         }
-        public Table FindTable(string type)
+        public Table FindTable(int smallBlind)
         {
             Table retVal = new Table()
             {
                 freeSeats = 0,
-                tableType = "none"
+                smallBlind = smallBlind
             };
 
             var query = (from table in TableCollection.AsQueryable<Table>()
-                         where table.tableType == type
+                         where table.smallBlind == smallBlind
                          select table);
 
             if (query != null && query.Count() > 0)
@@ -98,12 +98,14 @@ namespace Business
             return retVal;
         }
  
-        public Table CreateTable(string type, string buyIn)
+        public Table CreateTable(int smallBlind, int bigBlind, int buyInMin, int buyInMax)
         {
             Table table = new Table()
             {
-                tableType = type,
-                tableBuyIn = buyIn,
+                smallBlind = smallBlind,
+                bigBlind = bigBlind,
+                BuyInMin = buyInMin,
+                BuyInMax = buyInMax,
                 freeSeats = 7
             };
 

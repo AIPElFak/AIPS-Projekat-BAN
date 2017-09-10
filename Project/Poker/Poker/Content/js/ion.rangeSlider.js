@@ -298,7 +298,7 @@
             to_shadow: false,
 
             prettify_enabled: true,
-            prettify_separator: " ",
+            prettify_separator: ".",
             prettify: null,
 
             force_edges: true,
@@ -313,7 +313,7 @@
             hide_min_max: true,
             hide_from_to: true,
 
-            prefix: "",
+            prefix: "$",
             postfix: "",
             max_postfix: "",
             decorate_both: true,

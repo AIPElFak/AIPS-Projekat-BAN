@@ -26,18 +26,18 @@ namespace Poker.Hubs
             }
         }
 
-        public int findOrAddGame(string name)
+        public int findOrAddGame(string name, string username)
         {
             Game game;
             if (listOfGames.TryGetValue(name, out game))
             {
-                return game.addPlayer();
+                return game.addPlayer(username);
             }
             else
             {
                 game = new Game(name);
                 listOfGames.Add(name, game);
-                return listOfGames[name].addPlayer();
+                return listOfGames[name].addPlayer(username);
             }
         }
     }

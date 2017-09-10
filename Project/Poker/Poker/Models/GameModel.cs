@@ -13,6 +13,7 @@ namespace Poker.Models
         public int smallBlind { get; set; }
         public int bigBlind { get; set; }
         public int buyIn { get; set; }
+        public string gameName { get; set; }
 
         public void Load(string username, string smallblind,string bigblind, string buyinmin, string buyinmax)
         {
