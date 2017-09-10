@@ -14,8 +14,10 @@ namespace Business.DomainModel
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
-        public string tableType { get; set; }
-        public string tableBuyIn { get; set; }
+        public int smallBlind { get; set; }
+        public int bigBlind { get; set; }
+        public int BuyInMin { get; set; }
+        public int BuyInMax { get; set; }
         public int freeSeats { get; set; }
     }
 }

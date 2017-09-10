@@ -43,6 +43,7 @@ bin/
 csx/
 obj/
 rcf/
+.vs/
 
 # Windows Azure Publish Settings contain security keys for accessing your Windows Azure account
 .publishsettings
