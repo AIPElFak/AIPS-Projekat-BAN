@@ -52,7 +52,8 @@
                                                             </tr>
                                                             <tr>
                                                                 <div class="fake-input">
-                                                                    <input class="textbox MyTextboxB MyTextbox" type="text" readonly="readonly" value="$@Model.money">
+                                                                    <input id="MyTextboxBmoney" class="textbox MyTextboxB MyTextbox" type="text" readonly="readonly" value="$@Model.money">
+                                                                    <input id="money" type="hidden" value="@Model.money" />
                                                                     <img src="~/Content/images/coin.png" width="25px">
                                                                 </div>
                                                             </tr>
@@ -141,7 +142,7 @@
                                     <tr>
                                         <td style="display:block;">
                                             <div>
-                                                <button type="submit" class="pure-button fuller-button blue table-button">PLAY</button>
+                                                <button id="play" type="submit" class="pure-button fuller-button blue table-button">PLAY</button>
                                             </div>
 
                                         </td>
@@ -197,6 +198,13 @@
 	p3.innerHTML = "$" + buyInMinSign[0] + "/";
 	p4.innerHTML = "$" + buyInMaxSign[0];
 
+	var play = document.getElementById("play");
+	if(parseInt(document.getElementById("money").value) < parseInt(buyInMin[0]))
+	{
+	    play.disabled = true;
+	    play.style.boxShadow = "0 0 0 rgba(0,170,170,0.7)";
+	}
+
 $range.ionRangeSlider({
     type: "single",
     min: min,
@@ -245,6 +253,17 @@ var updateRange = function (direction) {
 	p2.innerHTML = "$" + bigBlindSign[from-1];
 	p3.innerHTML = "$" + buyInMinSign[from-1] + "/";
 	p4.innerHTML = "$" + buyInMaxSign[from-1];
+
+	if(parseInt(document.getElementById("money").value) < parseInt(buyInMin[from-1]))
+	{
+	    play.disabled = true;
+	    play.style.boxShadow = "0 0 0 rgba(0,170,170,0.7)";
+	}
+	else
+	{
+	    play.disabled = false;
+	    play.style.boxShadow = "0 0 1.5em rgba(0,170,170,0.7)";
+	}
 
     range_instance.update({
         from: from

@@ -52,6 +52,7 @@
                                         <canvas style="width:100%; outline:none;" touch-action="none" id="renderCanvas" width="801" height="568" tabindex="1" >
                                             
                                         </canvas>
+                                        <input type="hidden" id="money" value="@Model.money" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -140,8 +141,8 @@
         <script>
 
     var $range = $(".js-range-slider"),
-    min = 1000,
-    max = 5500,
+    min = 100,
+    max = document.getElementById("money").value,
     step = 50,
     from = 1000,
     disable = true;
