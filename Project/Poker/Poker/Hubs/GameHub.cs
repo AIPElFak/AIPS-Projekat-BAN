@@ -107,6 +107,7 @@ namespace Poker.Hubs
                 {
                     int winner = game.WhoIsWinner();
                     Clients.All.showWinner(winner);
+                    game.SetWinning(winner);
 
                     game.newHand();
                     playDeal(game.Name);

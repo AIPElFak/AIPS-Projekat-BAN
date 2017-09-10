@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Business.DomainModel;
 using Business;
 using Poker.Controllers;
+using HoldemHand;
 
 namespace Poker.Hubs
 {
@@ -60,6 +61,56 @@ namespace Poker.Hubs
                     break;
                 case 4:
                     retVal += "spades";
+                    break;
+            }
+
+            return retVal;
+        }
+
+        public string getStringForLib()
+        {
+            string retVal = "";
+
+            switch (number)
+            {
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                case 10:
+                    retVal = number.ToString();
+                    break;
+                case 11:
+                    retVal = "j";
+                    break;
+                case 12:
+                    retVal = "q";
+                    break;
+                case 13:
+                    retVal = "k";
+                    break;
+                case 1:
+                    retVal = "a";
+                    break;
+            }
+
+            switch (sign)
+            {
+                case 1:
+                    retVal += "c";
+                    break;
+                case 2:
+                    retVal += "d";
+                    break;
+                case 3:
+                    retVal += "h";
+                    break;
+                case 4:
+                    retVal += "s";
                     break;
             }
 
@@ -208,7 +259,39 @@ namespace Poker.Hubs
 
         public int WhoIsWinner()
         {
+            string board = "";
+            for (int i = 0; i < cardsOnTable.Count; i++)
+            {
+                board += cardsOnTable[i].getStringForLib();
+            }
 
+            List<HoldemHand.Hand> hands = new List<HoldemHand.Hand>();
+            List<HoldemHand.Hand> sortedHands = new List<HoldemHand.Hand>();
+            for (int i = 0; i < CurrentHand.Count; i++)
+            {
+                Player player = Players[CurrentHand[i]];
+                HoldemHand.Hand hand = new HoldemHand.Hand(player.card1.getStringForLib() + " " +
+                                        player.card2.getStringForLib(), board);
+                hands.Add(hand);
+            }
+
+
+            sortedHands = hands.OrderByDescending(x => x.HandValue).ToList();
+
+            for (int i = 0; i < CurrentHand.Count; i++)
+            {
+                if (hands[i] == sortedHands[0])
+                {
+                    return CurrentHand[i];
+                }
+            }
+
+            return CurrentHand[0];
+        }
+
+        public void SetWinning(int position)
+        {
+            Players[position].currentMoney += piles[0]; 
         }
     }
 }
