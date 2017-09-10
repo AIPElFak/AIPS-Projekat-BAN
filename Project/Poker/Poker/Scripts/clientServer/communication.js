@@ -16,21 +16,60 @@ function start(model) {
 }
 
 //functions for hub to call
-gameHub.client.myPosition = function (position) {
+gameHub.client.myPosition = function (username, position, amount) {
     clientPos = position;
-    //draw client
+    positionPlayer(position);
+    setPlayerStats(username, position, amount);
 };
 
-gameHub.client.displayPlayer = function (username, position) {
-    var i = 5;
-    //draw other player in pos
+gameHub.client.otherPlayers = function (username, position, amount) {
+    setPlayerCard(position, "back", "back");
+    setPlayerStats(username, position, amount);
+};
+
+gameHub.client.displayPlayer = function (username, position, amount) {
+    setPlayerStats(username, position, amount);
 };
 
 gameHub.client.getCards = function (card1, card2, pos) {
     if (clientPos === pos) {
-        //draw cards in front of client
+        setPlayerCard(pos, card1, card2);
     }
     else {
-        //draw cards for other player
+        setPlayerCard(pos, "back", "back");
     }
+};
+
+gameHub.client.showSmallBlind = function (smallBlind, pos) {
+    resetPlayerChips();
+    setPlayerChips(pos, smallBlind);
+};
+
+gameHub.client.showBigBlind = function (bigBlind, pos) {
+    resetPlayerChips();
+    setPlayerChips(pos, bigBlind);
+};
+
+gameHub.client.youAreNext = function (pos, amount, bigBlind) {
+    if (pos == clientPos) {
+        var result = playMan(pos, amount, bigBlind);
+
+        gameHub.server.play(result, gameModel.gameName);
+    }
+};
+
+gameHub.client.displayPlayed = function (pos, result) {
+    displayMove(pos, result);
+};
+
+gameHub.client.displayCardsOnTable = function (cards) {
+    setTableCards(pos, card)
+    for (var i = 0; i < cards.lenght; i++)
+    {
+        setTableCards(i, cards[i]);
+    }
+};
+
+gameHub.client.showWinner = function (pos) {
+    //showWinner
 };
