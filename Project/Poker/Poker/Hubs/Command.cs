@@ -8,9 +8,8 @@ namespace Poker.Hubs
     public abstract class Command
     {
         public Game thisGame { get; set; }
-        public GameHub gameHub {get; set; }
         protected Command() { }
-        public abstract void Execute(int position);
+        public abstract void Execute();
         public static Command makeCommand(Game game, string commandName, int money = 0)
         {
             switch (commandName)
@@ -38,25 +37,22 @@ namespace Poker.Hubs
         public Deal(Game game)
         {
             this.thisGame = game;
-            this.gameHub = new GameHub();
         }
-        public override void Execute(int position)
+        public override void Execute()
         {
-            int currentPos = position;
+            int currentPos = thisGame.currentPlayer;
             for (int i = 0; i < thisGame.CurrentHand.Count; i++)
             {
                 currentPos = (currentPos + 1) % thisGame.CurrentHand.Count;
 
-                Card card1 = thisGame.deck[thisGame.deck.Count];
+                Card card1 = thisGame.deck[thisGame.deck.Count - 1];
                 thisGame.deck.RemoveAt(thisGame.deck.Count - 1);
-                Card card2 = thisGame.deck[thisGame.deck.Count];
+                Card card2 = thisGame.deck[thisGame.deck.Count - 1];
                 thisGame.deck.RemoveAt(thisGame.deck.Count - 1);
 
-                gameHub.sendCards(card1, card2, position);
+                thisGame.Players[thisGame.CurrentHand[currentPos]].card1 = card1;
+                thisGame.Players[thisGame.CurrentHand[currentPos]].card2 = card2;
             }
-
-            thisGame.currentPlayer = (thisGame.currentPlayer + 1) % thisGame.CurrentHand.Count;
-            gameHub.play(thisGame.Name, thisGame.CurrentHand[thisGame.currentPlayer], "smallBind", 0);
         }
     }
 
@@ -65,14 +61,10 @@ namespace Poker.Hubs
         public SmallBlind(Game game)
         {
             this.thisGame = game;
-            this.gameHub = new GameHub();
         }
-        public override void Execute(int position)
+        public override void Execute()
         {
-            thisGame.Players[position].currentMoney -= thisGame.table.smallBlind;
-            gameHub.smallBlind(thisGame.table.smallBlind, position);
-            thisGame.currentPlayer = (thisGame.currentPlayer + 1) % thisGame.CurrentHand.Count;
-            gameHub.play(thisGame.Name, thisGame.CurrentHand[thisGame.currentPlayer], "bigBind", 0);
+
         }
     }
 
@@ -81,15 +73,10 @@ namespace Poker.Hubs
         public BigBlind(Game game)
         {
             this.thisGame = game;
-            this.gameHub = new GameHub();
         }
-        public override void Execute(int position)
+        public override void Execute()
         {
-            thisGame.Players[position].currentMoney -= thisGame.table.bigBlind;
-            gameHub.bigBlind(thisGame.table.bigBlind, position);
-            thisGame.currentPlayer = (thisGame.currentPlayer + 1) % thisGame.CurrentHand.Count;
-            thisGame.lastRase = position;
-            gameHub.askPlayer(thisGame.CurrentHand[thisGame.currentPlayer]);
+
         }
     }
 
@@ -100,9 +87,8 @@ namespace Poker.Hubs
         {
             this.thisGame = game;
             this.money = money;
-            this.gameHub = new GameHub();
         }
-        public override void Execute(int position)
+        public override void Execute()
         {
 
         }
@@ -113,9 +99,8 @@ namespace Poker.Hubs
         public Fold(Game game)
         {
             this.thisGame = game;
-            this.gameHub = new GameHub();
         }
-        public override void Execute(int position)
+        public override void Execute()
         {
 
         }
@@ -128,9 +113,8 @@ namespace Poker.Hubs
         {
             this.thisGame = game;
             this.money = money;
-            this.gameHub = new GameHub();
         }
-        public override void Execute(int position)
+        public override void Execute()
         {
 
         }
@@ -141,9 +125,8 @@ namespace Poker.Hubs
         public DoNothing(Game game)
         {
             this.thisGame = game;
-            this.gameHub = new GameHub();
         }
-        public override void Execute(int position)
+        public override void Execute()
         {
 
         }

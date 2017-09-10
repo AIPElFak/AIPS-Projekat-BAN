@@ -26,42 +26,7 @@ gameHub.client.displayPlayer = function (username, position) {
     //draw other player in pos
 };
 
-gameHub.client.startGame = function (handPositions, lead) {
-    currentHand = handPositions;
-    var currentHandLeader = 0;
-    if (currentHandLeader === clientPos) {
-        gameHub.server.newHand();
-    }
-};
-
 gameHub.client.getCards = function (card1, card2, pos) {
-    if (clientPos === pos) {
-        //draw cards in front of client
-    }
-    else {
-        //draw cards for other player
-    }
-};
-
-gameHub.client.showSmallBlind = function (money, pos) {
-    if (clientPos === pos) {
-        //draw cards in front of client
-    }
-    else {
-        //draw cards for other player
-    }
-};
-
-gameHub.client.showBigBlind = function (money, pos) {
-    if (clientPos === pos) {
-        //draw cards in front of client
-    }
-    else {
-        //draw cards for other player
-    }
-};
-
-gameHub.client.askMe = function (pos) {
     if (clientPos === pos) {
         //draw cards in front of client
     }

@@ -21,42 +21,34 @@ namespace Poker.Hubs
 
             Clients.Caller.myPosition(pos);
             Clients.Others.displayPlayer(username, pos);
+
+            Game game = games.listOfGames[tableName];
+            if (game.Players.Count == 2)
+            {
+                game.newHand();
+                playDeal(game.Name);
+            }
         }
 
-        public void startGame(string tableName, List<int> currentHand)
+        public void playDeal(string tableName)
         {
-            Clients.All.startGame(currentHand, 0);
+            Game game = games.listOfGames[tableName];
+            game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], "deal", 0);
+            game.CurrentCommand.Execute();
+
+            foreach (int pos in game.CurrentHand)
+            {
+                Clients.All.getCards(game.Players[pos].card1.getString(), game.Players[pos].card2.getString(), pos);
+            }
+
+            game.currentPlayer = (game.currentPlayer + 1) % game.CurrentHand.Count;
+            playSmallBlind(game.Name);
         }
 
-        public void newHand(string tableName)
+        public void playSmallBlind(string tableName)
         {
-            games.listOfGames[tableName].newHand();
+            int a = 3;
         }
 
-        public void play(string tableName, int position, string command, int money)
-        {
-            games.listOfGames[tableName].CurrentCommand = Command.makeCommand(games.listOfGames[tableName], command, money);
-            games.listOfGames[tableName].CurrentCommand.Execute(position);
-        }
-
-        public void sendCards(Card card1, Card card2, int pos)
-        {
-            Clients.All.getCards(card1.getString(), card2.getString(), pos);
-        }
-
-        public void smallBlind(int money, int pos)
-        {
-            Clients.All.showSmallBlind(money, pos);
-        }
-
-        public void bigBlind(int money, int pos)
-        {
-            Clients.All.showBigBlind(money, pos);
-        }
-
-        public void askPlayer(int pos)
-        {
-            Clients.All.askMe(pos);
-        }
     }
 }

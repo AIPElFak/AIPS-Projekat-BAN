@@ -143,17 +143,11 @@ namespace Poker.Hubs
             Player playerAdd = new Player()
             {
                 username = username,
-                currentMoney = ((user.Money > table.BuyInMax)? table.BuyInMax : table.BuyInMin),
+                currentMoney = ((user.money > table.BuyInMax)? table.BuyInMax : table.BuyInMin),
                 pileNumber = 0
             };
             Players.Add(i, playerAdd);
             FreeSeats--;
-
-            if (Players.Count == 2)
-            {
-                GameHub hub = new GameHub();
-                hub.startGame(Name, CurrentHand);
-            }
 
             return i;
         }
@@ -178,11 +172,7 @@ namespace Poker.Hubs
             CurrentHand[CurrentHand.Count - 1] = tmp;
 
             currentPlayer = (0 - 2) % CurrentHand.Count;
-
-            GameHub hub = new GameHub();
-            hub.play(Name, CurrentHand[currentPlayer], "deal", 0);
         }
-
 
     }
 }
