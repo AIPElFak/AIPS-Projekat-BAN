@@ -495,7 +495,7 @@
                 // callbacks called
                 this.callOnStart();
             }
-
+            
             this.updateScene();
         },
 
@@ -796,7 +796,7 @@
                 $("*").prop("unselectable", false);
             }
           
-            document.getElementById("raise").innerHTML = "Confirm " + this.decorate(this._prettify(this.result.from),this.result.from);
+           
             this.updateScene();
             this.restoreOriginalMinInterval();
 
@@ -1194,6 +1194,8 @@
 
             this.calcMinMax();
             this.calcLabels();
+            if (!this.options.disable)
+                document.getElementById("raise").innerHTML = "Confirm " + this.decorate(this._prettify(this.result.from), this.result.from);
         },
 
 
