@@ -64,7 +64,9 @@ namespace Poker.Hubs
         }
         public override void Execute()
         {
-
+            thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].currentMoney -= thisGame.table.smallBlind;
+            thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].stakesMoney += thisGame.table.smallBlind;
+            thisGame.piles[0] += thisGame.table.smallBlind;
         }
     }
 
@@ -76,7 +78,11 @@ namespace Poker.Hubs
         }
         public override void Execute()
         {
-
+            thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].currentMoney -= thisGame.table.bigBlind;
+            thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].stakesMoney += thisGame.table.bigBlind;
+            thisGame.piles[0] += thisGame.table.bigBlind;
+            thisGame.lastRasePlayer = thisGame.currentPlayer;
+            thisGame.currentPlayer = thisGame.table.bigBlind;
         }
     }
 
@@ -90,7 +96,11 @@ namespace Poker.Hubs
         }
         public override void Execute()
         {
-
+            thisGame.currentRase += money;
+            thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].currentMoney -=
+                (thisGame.currentRase - thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].stakesMoney);
+            thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].stakesMoney = thisGame.currentRase;
+            thisGame.piles[0] += (thisGame.currentRase - thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].stakesMoney);
         }
     }
 
@@ -102,7 +112,8 @@ namespace Poker.Hubs
         }
         public override void Execute()
         {
-
+            thisGame.CurrentHand.RemoveAt(thisGame.currentPlayer);
+            thisGame.currentPlayer = (thisGame.currentPlayer - 1) % thisGame.CurrentHand.Count;
         }
     }
 
@@ -116,7 +127,11 @@ namespace Poker.Hubs
         }
         public override void Execute()
         {
-
+            thisGame.currentRase += money;
+            thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].currentMoney -=
+                (thisGame.currentRase - thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].stakesMoney);
+            thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].stakesMoney = thisGame.currentRase;
+            thisGame.piles[0] += (thisGame.currentRase - thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].stakesMoney);
         }
     }
 

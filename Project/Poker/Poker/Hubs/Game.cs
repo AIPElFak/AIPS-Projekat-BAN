@@ -71,6 +71,7 @@ namespace Poker.Hubs
     {
         public string username { get; set; }
         public int currentMoney { get; set; }
+        public int stakesMoney { get; set; }
         public int pileNumber { get; set; }
         public Card card1 { get; set; }
         public Card card2 { get; set; }
@@ -86,10 +87,12 @@ namespace Poker.Hubs
         public List<int> CurrentHand { get; set; }
         public int currentPlayer { get; set; }
         public List<int> piles { get; set; }
-        public int lastRase { get; set; }
+        public int lastRasePlayer { get; set; }
+        public int currentRase { get; set; }
         public List<Card> deck { get; set; }
         public List<Card> cardsOnTable { get; set; }
         public Command CurrentCommand { get; set; }
+        public int numOfHands { get; set; }
 
         public Game(string name)
         {
@@ -103,6 +106,7 @@ namespace Poker.Hubs
             cardsOnTable = new List<Card>();
             UserRepository rep = new UserRepository();
             table = rep.ReadTable(name);
+            numOfHands = 0;
         }
 
         public List<Card> shuffle()
@@ -144,7 +148,8 @@ namespace Poker.Hubs
             {
                 username = username,
                 currentMoney = ((user.money > table.BuyInMax)? table.BuyInMax : table.BuyInMin),
-                pileNumber = 0
+                pileNumber = 0,
+                stakesMoney = 0
             };
             Players.Add(i, playerAdd);
             FreeSeats--;
@@ -154,9 +159,10 @@ namespace Poker.Hubs
 
         public void newHand()
         {
+            numOfHands = (numOfHands + 1) % Players.Count;
             piles.Clear();
             piles.Add(0);
-            lastRase = 0;
+            lastRasePlayer = 0;
             deck = shuffle();
             cardsOnTable.Clear();
 
@@ -166,13 +172,43 @@ namespace Poker.Hubs
                 CurrentHand.Add(player.Key);
             }
 
-            int tmp = CurrentHand[0];
-            for (int i = 0; i < CurrentHand.Count - 1; i++)
-                CurrentHand[i] = CurrentHand[i + 1];
-            CurrentHand[CurrentHand.Count - 1] = tmp;
+            for (int j = 0; j < numOfHands; j++)
+            {
+                int tmp = CurrentHand[0];
+                for (int i = 0; i < CurrentHand.Count - 1; i++)
+                    CurrentHand[i] = CurrentHand[i + 1];
+                CurrentHand[CurrentHand.Count - 1] = tmp;
+            }
 
-            currentPlayer = (0 - 2) % CurrentHand.Count;
+            currentPlayer = (0 - 3) % CurrentHand.Count;
         }
 
+        public void endCircle() 
+        {
+            if (cardsOnTable.Count == 0)
+            {
+                cardsOnTable.Add(deck[deck.Count - 1]);
+                deck.RemoveAt(deck.Count - 1);
+                cardsOnTable.Add(deck[deck.Count - 1]);
+                deck.RemoveAt(deck.Count - 1);
+                cardsOnTable.Add(deck[deck.Count - 1]);
+                deck.RemoveAt(deck.Count - 1);
+            }
+            else if (cardsOnTable.Count == 3)
+            {
+                cardsOnTable.Add(deck[deck.Count - 1]);
+                deck.RemoveAt(deck.Count - 1);
+            }
+            else if (cardsOnTable.Count == 4)
+            {
+                cardsOnTable.Add(deck[deck.Count - 1]);
+                deck.RemoveAt(deck.Count - 1);
+            }
+        }
+
+        public int WhoIsWinner()
+        {
+
+        }
     }
 }
