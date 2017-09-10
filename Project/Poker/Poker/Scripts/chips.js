@@ -3,18 +3,18 @@
     var Size = size / 19;
     //1 i 8
     drawChipPile(Size, PlayerChips[0], height, heightDiff * 0.8, -yOffset * 0.3, Math.PI);
-    drawChipPile(Size, PlayerChips[7], height, heightDiff * 0.8, yOffset * 0.3, Math.PI);
+    drawChipPile(Size, PlayerChips[1], height, heightDiff * 0.8, yOffset * 0.3, Math.PI);
 
     //2 i 7
-    drawChipPile(Size, PlayerChips[1], height, heightDiff * 0.8, -yOffset / 2, Math.PI * 11 / 15);
-    drawChipPile(Size, PlayerChips[6], height, heightDiff * 0.8, yOffset / 2, -Math.PI * 11 / 15);
+    drawChipPile(Size, PlayerChips[7], height, heightDiff * 0.8, -yOffset / 2, Math.PI * 11 / 15);
+    drawChipPile(Size, PlayerChips[2], height, heightDiff * 0.8, yOffset / 2, -Math.PI * 11 / 15);
 
     //3 i 6
-    drawChipPile(Size, PlayerChips[2], height, heightDiff * 0.8, -yOffset / 2, Math.PI * 6 / 15);
-    drawChipPile(Size, PlayerChips[5], height, heightDiff * 0.8, yOffset / 2, - Math.PI * 6 / 15);
+    drawChipPile(Size, PlayerChips[6], height, heightDiff * 0.8, -yOffset / 2, Math.PI * 6 / 15);
+    drawChipPile(Size, PlayerChips[3], height, heightDiff * 0.8, yOffset / 2, - Math.PI * 6 / 15);
 
     //4 i 5
-    drawChipPile(Size, PlayerChips[3], height, heightDiff * 0.8, -yOffset / 2, Math.PI / 15);
+    drawChipPile(Size, PlayerChips[5], height, heightDiff * 0.8, -yOffset / 2, Math.PI / 15);
     drawChipPile(Size, PlayerChips[4], height, heightDiff * 0.8, yOffset / 2, - Math.PI / 15);
 }
 
