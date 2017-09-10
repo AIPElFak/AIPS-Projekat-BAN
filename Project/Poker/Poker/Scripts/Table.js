@@ -106,6 +106,7 @@
     var ribbon3 = BABYLON.Mesh.CreateRibbon("rib3", paths3, false, false, 0, scene);
     ribbon3.material = mat3;
 
-    drawAllPlayingCardPositions(Size, height, yOffset, heightDiff, firstCard, secondCard, blankCard, position);
+    drawAllPlayingCardPositions(Size, height, yOffset, heightDiff, PlayerCards);
+    drawAllPlayingChipPositions(Size, height, yOffset, heightDiff);
 
 }

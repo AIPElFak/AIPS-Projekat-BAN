@@ -47,7 +47,7 @@ namespace Business
             {
                 username = username,
                 password = password,
-                Money = 100000
+                money = 100000
             };
 
             UserCollection.InsertOne(user);
@@ -125,6 +125,13 @@ namespace Business
             var filter = Builders<Table>.Filter.Eq("id", tableId);
             var update = Builders<Table>.Update.Set("freeSeats", freeSeats).CurrentDate("lastModified");
             TableCollection.UpdateOne(filter, update);
+        }
+
+        public void UpdateMoney(string username,int money)
+        {
+            var filter = Builders<User>.Filter.Eq("username", username);
+            var update = Builders<User>.Update.Set("money", money);
+            UserCollection.UpdateOneAsync(filter, update);
         }
     }
 }

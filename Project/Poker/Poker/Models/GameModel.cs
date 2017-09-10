@@ -18,7 +18,7 @@ namespace Poker.Models
         public void Load(string username, string smallblind,string bigblind, string buyinmin, string buyinmax)
         {
             UserRepository user = new UserRepository();
-            this.money = user.ReadByUsername(username).Money;
+            int mon = user.ReadByUsername(username).money;
             this.username = username;
 
             this.smallBlind = Int32.Parse(smallblind);
@@ -27,10 +27,13 @@ namespace Poker.Models
             int min = Int32.Parse(buyinmin);
             int max = Int32.Parse(buyinmax);
 
-            if (money > max)
+            if (mon > max)
                 this.buyIn = max;
             else
                 this.buyIn = min;
+            this.money = buyIn;
+
+            user.UpdateMoney(username, mon - this.money);
         }
     }
 }

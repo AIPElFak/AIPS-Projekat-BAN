@@ -13,6 +13,8 @@
     <link href="~/Content/css/style.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat|Acme|Baloo+Bhaijaan" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="~/Content/css/ion.rangeSlider.css" />
+    <link rel="stylesheet" href="~/Content/css/my.rangeSlider.skinFlat.css" />
 </head>
     <body>
         <table align="center" border="0" cellpadding="0" cellspacing="0" width="1000">
@@ -47,7 +49,16 @@
                             <tbody class="bottom-body">
                                 <tr>
                                     <td>
-                                        <canvas touch-action="none" id="renderCanvas" width="801" height="568" tabindex="1"></canvas>
+                                        <canvas style="width:100%; outline:none;" touch-action="none" id="renderCanvas" width="801" height="568" tabindex="1" >
+                                            
+                                        </canvas>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="slider" style="height:50px; width:45%; float:right;" class="range-slider">
+                                            <input type="text" class="js-range-slider" value="" />
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -60,9 +71,9 @@
                             <tbody>
                                 <tr style="vertical-align:top; height:60px;">
                                     <td>
-                                        <button class="poker-buttons">Fold</button>
-                                        <button class="poker-buttons">Check</button>
+                                        <button id="raise" class="poker-buttons">Raise</button>
                                         <button class="poker-buttons">Call</button>
+                                        <button class="poker-buttons">Fold</button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -124,6 +135,58 @@
         <script src="~/Scripts/TablePrimitive.js"></script>
         <script src="~/Scripts/chips.js"></script>
         <script src="~/Scripts/game.js"></script>
+        <script src="~/Content/js/jquery-1.12.3.min.js"></script>
+        <script src="~/Scripts/mySlider.js"></script>
+
+        <script>
+
+    var $range = $(".js-range-slider"),
+    min = 1000,
+    max = 5500,
+    step = 50,
+    from = 1000,
+    disable = true;
+
+$range.ionRangeSlider({
+    type: "single",
+    min: min,
+    max: max,
+    step: step,
+    from: from,
+    disable : disable,
+    onFinish: function (data) {
+        from = data.from;
+    }
+});
+
+document.getElementById("raise").onclick = function () {
+    disable = false;
+ 
+    range_instance.update({
+        disable: disable
+    });
+};
+
+var range_instance = $range.data("ionRangeSlider");
+
+var updateRange = function (direction) {
+    from += step * direction;
+    if (from < min) {
+        from = min;
+    } else if (from > max) {
+        from = max;
+    }
+
+    if (!disable)
+    {
+        document.getElementById("raise").innerHTML = "Confirm " + from;
+    }
+
+    range_instance.update({
+        from: from
+    });
+};
+            </script>
         <script src="~/Scripts/clientServer/communication.js"></script>
         <script>
             start(@Html.Raw(Json.Encode(Model)));

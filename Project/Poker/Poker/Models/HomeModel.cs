@@ -14,7 +14,7 @@ namespace Poker.Models
         public void Load(string username)
         {
             UserRepository user = new UserRepository();
-            this.money = user.ReadByUsername(username).Money.ToString();
+            this.money = user.ReadByUsername(username).money.ToString();
             this.username = username;
         }
     }

@@ -8,6 +8,9 @@
     TableCards[position] = newCard;
     noShownCards = position + 1;
 }
+var setPlayerChips = function (position, amount) {
+    PlayerChips[position] = amount;
+}
 
 var setPlayerCard = function (position, card1, card2) {
     var firstCard = new BABYLON.StandardMaterial("mat6", scene);
@@ -47,6 +50,7 @@ var engine = new BABYLON.Engine(canvas, true);
 
 var TableCards = new Array(5);
 var PlayerCards = new Array(16);
+var PlayerChips = [4444000, 14894624, 245898864, 457864231, 154485632, 24789654, 14785689, 2224564];
 var noShownCards = 0;
 
 var scene = new BABYLON.Scene(engine);

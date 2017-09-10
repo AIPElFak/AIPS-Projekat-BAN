@@ -2,7 +2,7 @@
 
     for (var bane = 0; bane < parts; ++bane) {
 
-        yOffset = 3 * size;
+        
         heightDiff = 2 * size;
 
         var path = [];

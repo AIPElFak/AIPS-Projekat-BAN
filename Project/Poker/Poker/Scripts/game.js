@@ -2,7 +2,7 @@
 
 var createScene = function () {
     
-    scene.clearColor = new BABYLON.Color3(0.5, 0.5, 0.8);
+    scene.clearColor = new BABYLON.Color3(0,0,0.1445);
     // camera
     var camera = new BABYLON.ArcRotateCamera("camera1", 0, 0, 0, new BABYLON.Vector3(0, 0, 0), scene);
     camera.setPosition(new BABYLON.Vector3(0, 10, -50));
@@ -29,7 +29,7 @@ var createScene = function () {
     mat3.diffuseColor = new BABYLON.Color3(0.6863, 0.0824, 0.0824);
     mat3.backFaceCulling = false;
 
-    var size = 6;
+    var size = 7.5;
 
     drawTable(size, mat, mat2, mat3, PlayerCards);
     drawTableCards(size, noShownCards, TableCards);
