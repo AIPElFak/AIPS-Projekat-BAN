@@ -3,18 +3,18 @@
 
     //1 i 8  
     drawAParOfCCards(Size, height, heightDiff * 0.8, -yOffset * 0.3, Math.PI, mat[0], mat[1]);
-    drawAParOfCCards(Size, height, heightDiff * 0.8, yOffset * 0.3, Math.PI, mat[14], mat[15]);
+    drawAParOfCCards(Size, height, heightDiff * 0.8, yOffset * 0.3, Math.PI, mat[2], mat[3]);
 
     //2 i 7
-    drawAParOfCCards(Size, height, heightDiff * 0.8, -yOffset / 2, Math.PI * 11 / 15, mat[2], mat[3]);
-    drawAParOfCCards(Size, height, heightDiff * 0.8, yOffset / 2, -Math.PI * 11 / 15, mat[12], mat[13]);
+    drawAParOfCCards(Size, height, heightDiff * 0.8, -yOffset / 2, Math.PI * 11 / 15, mat[14], mat[15]);
+    drawAParOfCCards(Size, height, heightDiff * 0.8, yOffset / 2, -Math.PI * 11 / 15, mat[4], mat[5]);
 
     //3 i 6
-    drawAParOfCCards(Size, height, heightDiff * 0.8, -yOffset / 2, Math.PI * 6 / 15, mat[4], mat[5]);
-    drawAParOfCCards(Size, height, heightDiff * 0.8, yOffset / 2, -Math.PI * 6 / 15, mat[10], mat[11]);
+    drawAParOfCCards(Size, height, heightDiff * 0.8, -yOffset / 2, Math.PI * 6 / 15, mat[12], mat[13]);
+    drawAParOfCCards(Size, height, heightDiff * 0.8, yOffset / 2, -Math.PI * 6 / 15, mat[6], mat[7]);
 
     //4 i 5
-    drawAParOfCCards(Size, height, heightDiff * 0.8, -yOffset / 2, Math.PI / 15, mat[6], mat[7]);
+    drawAParOfCCards(Size, height, heightDiff * 0.8, -yOffset / 2, Math.PI / 15, mat[10], mat[11]);
     drawAParOfCCards(Size, height, heightDiff * 0.8, yOffset / 2, -Math.PI / 15, mat[8], mat[9]);
 
 }
