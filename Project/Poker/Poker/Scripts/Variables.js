@@ -11,6 +11,15 @@
 var setPlayerChips = function (position, amount) {
     PlayerChips[position] = amount;
 }
+var resetPlayerChips = function()
+{
+    for (var i = 0; i < 8; ++i)
+        activePlayers[i] = false;
+}
+var setPlayerTableChips = function (position, amount)
+{
+    PlayerTableChips[position] = amount;
+}
 
 var setPlayerCard = function (position, card1, card2) {
     var firstCard = new BABYLON.StandardMaterial("mat6", scene);
@@ -27,7 +36,14 @@ var setPlayerCard = function (position, card1, card2) {
 
     PlayerCards[position * 2] = firstCard;
     PlayerCards[position * 2 + 1] = secondCard;
+
+    activePlayers[position] = true;
 }
+var setPlayerStats = function (username, position, amount)
+{ }
+var positionPlayer = function (position)
+{ }
+
 
 var resetAllCards = function () {
     noShownCards = 0;
@@ -45,11 +61,14 @@ var resetAllCards = function () {
         TableCards[i] = blankCard;
 }
 
+
 var canvas = document.querySelector("#renderCanvas");
 var engine = new BABYLON.Engine(canvas, true);
 
 var TableCards = new Array(5);
 var PlayerCards = new Array(16);
+var PlayerTableChips = new Array(16);
+var activePlayers = new Array(8);
 var PlayerChips = [4444000, 14894624, 245898864, 457864231, 154485632, 24789654, 14785689, 2224564];
 var noShownCards = 0;
 
