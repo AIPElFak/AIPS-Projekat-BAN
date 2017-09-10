@@ -40,10 +40,58 @@ var setPlayerCard = function (position, card1, card2) {
     activePlayers[position] = true;
 }
 var setPlayerStats = function (username, position, amount)
-{ }
+{
+    Usernames[position] = username;
+    PlayerTableChips[position] = amount;
+}
+// to do
 var positionPlayer = function (position)
-{ }
+{
+    //fixCamera(position);
+}
+var playMan = function (position, amount, bigBlind)
+{
+    var startTime = new Date().getTime() / 1000;
+    var endTIme = new Date().getTime() / 1000;
+    enableButtons();
 
+    var call = document.getElementById(call);
+    if (amount == 0)
+        call.innerHTML = "Check";
+    else
+        call.innerHTML = "Call " + amount;
+
+    var min = document.getElementsByClassName("irs-min");
+    var max = document.getElementsByClassName("irs-max");
+
+    min[0].innerHTML = bigBlind;
+    max[0].innerHTML = PlayerTableChips[position] - amount;
+
+    while (!readyToPlay && endTIme - startTime < 30)
+    {
+        endTIme = new Date().getTime() / 1000;
+    }
+
+    readyToPlay = false;
+
+    return raiseAmount;
+}
+
+var displayMove = function (position, amount)
+{
+    PlayerTableChips[position] -= amount;
+    PlayerChips[position] = amount;
+}
+
+var pileUp = function ()
+{
+    for (var i = 0; i < 8; ++i)
+        if (activePlayers[i])
+        {
+            PileChips += PlayerChips[i];
+            PlayerChips[i] = 0;
+        }
+}
 
 var resetAllCards = function () {
     noShownCards = 0;
@@ -67,10 +115,18 @@ var engine = new BABYLON.Engine(canvas, true);
 
 var TableCards = new Array(5);
 var PlayerCards = new Array(16);
-var PlayerTableChips = new Array(16);
+
+var Usernames = new Array(8);
+
+var PlayerTableChips = [0, 0, 0, 0, 0, 0, 0, 0];
+var PlayerChips = [0, 0, 0, 0, 0, 0, 0, 0];
+var PileChips = 0;
+
 var activePlayers = new Array(8);
-var PlayerChips = [4444000, 14894624, 245898864, 457864231, 154485632, 24789654, 14785689, 2224564];
 var noShownCards = 0;
+
+var readyToPlay = false;
+var raiseAmount = 0;
 
 var scene = new BABYLON.Scene(engine);
 resetAllCards();
