@@ -1194,8 +1194,10 @@
 
             this.calcMinMax();
             this.calcLabels();
-            if (!this.options.disable)
+            if (!this.options.disable) {
                 document.getElementById("raise").innerHTML = "Confirm " + this.decorate(this._prettify(this.result.from), this.result.from);
+                document.getElementById("raiseMoney").value = this.result.from;
+            }
         },
 
 

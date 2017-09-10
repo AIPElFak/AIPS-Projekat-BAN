@@ -10,7 +10,7 @@ var fold = function () {
     disableButtons();
 }
 var raise = function () {
-    raiseAmount = 0;
+    raiseAmount = parseInt(document.getElementById(raiseMoney).value);
     readyToPlay = true;
     disableButtons();
 }
