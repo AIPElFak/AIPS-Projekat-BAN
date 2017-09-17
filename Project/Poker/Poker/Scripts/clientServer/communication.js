@@ -46,7 +46,7 @@ gameHub.client.showSmallBlind = function (smallBlind, pos) {
 };
 
 gameHub.client.showBigBlind = function (bigBlind, pos) {
-    resetPlayerChips();
+    //resetPlayerChips();
     setPlayerChips(pos, bigBlind);
 };
 
