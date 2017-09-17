@@ -82,7 +82,7 @@ namespace Poker.Hubs
             thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].stakesMoney += thisGame.table.bigBlind;
             thisGame.piles[0] += thisGame.table.bigBlind;
             thisGame.lastRasePlayer = thisGame.currentPlayer;
-            thisGame.currentPlayer = thisGame.table.bigBlind;
+            thisGame.currentRase = thisGame.table.bigBlind;
         }
     }
 

@@ -75,7 +75,7 @@
                                     <td>
                                         <button id="raise" class="poker-buttons">Raise</button>
                                         <button id="call" class="poker-buttons">Call</button>
-                                        <button id="fold "class="poker-buttons">Fold</button>
+                                        <button id="fold"class="poker-buttons">Fold</button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -127,7 +127,9 @@
                 </tr>
             </tbody>
         </table>
+        <script src="~/Scripts/Model.js"></script>
         <script src="~/Scripts/babylon.custom.js"></script>
+        <script src="~/Scripts/buttons.js"></script>
         <script src="~/Content/js/jquery-1.12.3.min.js"></script>
         <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
         <script src="~/signalr/hubs" type="text/javascript"></script>
@@ -159,15 +161,52 @@ $range.ionRangeSlider({
         from = data.from;
     }
 });
+            enableRaise = function()
+            {
+                disable = false;
 
-document.getElementById("raise").onclick = function () {
-    disable = false;
- 
-    range_instance.update({
-        disable: disable
-    });
-};
+                range_instance.update({
+                    disable: disable
+                });
+            }
+            disableRaise = function()
+            {
+                disable = true;
+                raise();
+                range_instance.update({
+                    disable: disable
+                });
+                document.getElementById("call").innerHTML = "Check";
+                document.getElementById("raise").innerHTML = "Raise";
 
+            }
+            document.getElementById("raise").onclick = function () {
+                if (disable)
+                    enableRaise();
+                else
+                    disableRaise();
+            };
+
+            
+            document.getElementById("call").onclick = function () {
+                
+                disable = true;
+                range_instance.update({
+                    disable: disable
+                });
+                document.getElementById("call").innerHTML = "Check";
+                document.getElementById("raise").innerHTML = "Raise";
+                check();
+            };
+            document.getElementById("fold").onclick = function () {
+                disable = true;
+                range_instance.update({
+                    disable: disable
+                });
+                fold();
+                document.getElementById("call").innerHTML = "Check";
+                document.getElementById("raise").innerHTML = "Raise";
+            };
 var range_instance = $range.data("ionRangeSlider");
 
 var updateRange = function (direction) {

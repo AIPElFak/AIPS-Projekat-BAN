@@ -1,27 +1,27 @@
-﻿var drawAllPlayingCardPositions = function (Size, height, yOffset, heightDiff, mat) {
+﻿var drawAllPlayingCardPositions = function (Size, height, yOffset, heightDiff) {
     
 
     //1 i 8  
-    drawAParOfCCards(Size, height, heightDiff * 0.8, -yOffset * 0.3, Math.PI, mat[0], mat[1]);
-    drawAParOfCCards(Size, height, heightDiff * 0.8, yOffset * 0.3, Math.PI, mat[2], mat[3]);
+    drawAParOfCCards(Size, height, heightDiff * 0.8, -yOffset * 0.3, Math.PI, 0);
+    drawAParOfCCards(Size, height, heightDiff * 0.8, yOffset * 0.3, Math.PI, 7);
 
     //2 i 7
-    drawAParOfCCards(Size, height, heightDiff * 0.8, -yOffset / 2, Math.PI * 11 / 15, mat[14], mat[15]);
-    drawAParOfCCards(Size, height, heightDiff * 0.8, yOffset / 2, -Math.PI * 11 / 15, mat[4], mat[5]);
+    drawAParOfCCards(Size, height, heightDiff * 0.8, -yOffset / 2, Math.PI * 11 / 15, 1);
+    drawAParOfCCards(Size, height, heightDiff * 0.8, yOffset / 2, -Math.PI * 11 / 15, 6);
 
     //3 i 6
-    drawAParOfCCards(Size, height, heightDiff * 0.8, -yOffset / 2, Math.PI * 6 / 15, mat[12], mat[13]);
-    drawAParOfCCards(Size, height, heightDiff * 0.8, yOffset / 2, -Math.PI * 6 / 15, mat[6], mat[7]);
+    drawAParOfCCards(Size, height, heightDiff * 0.8, -yOffset / 2, Math.PI * 6 / 15, 2);
+    drawAParOfCCards(Size, height, heightDiff * 0.8, yOffset / 2, -Math.PI * 6 / 15, 5);
 
     //4 i 5
-    drawAParOfCCards(Size, height, heightDiff * 0.8, -yOffset / 2, Math.PI / 15, mat[10], mat[11]);
-    drawAParOfCCards(Size, height, heightDiff * 0.8, yOffset / 2, -Math.PI / 15, mat[8], mat[9]);
+    drawAParOfCCards(Size, height, heightDiff * 0.8, -yOffset / 2, Math.PI / 15, 3);
+    drawAParOfCCards(Size, height, heightDiff * 0.8, yOffset / 2, -Math.PI / 15, 4);
 
 }
-var drawAParOfCCards = function (Size, height, distanceX, distanceY, angle, firstCard, secondCard) {
+var drawAParOfCCards = function (Size, height, distanceX, distanceY, angle, position) {
 
-    var card1 = drawCardPosition(Size, firstCard);
-    var card2 = drawCardPosition(Size, secondCard);
+    var card1 = drawCardPosition(Size);
+    var card2 = drawCardPosition(Size);
 
     card1.rotate(BABYLON.Axis.Y, angle, BABYLON.Space.LOCAL);
     card1.translate(new BABYLON.Vector3(distanceX, 0, 0), 1, BABYLON.Space.LOCAL);
@@ -35,8 +35,11 @@ var drawAParOfCCards = function (Size, height, distanceX, distanceY, angle, firs
     card2.translate(new BABYLON.Vector3(0, height * 1.1, Size * 0.115), 1, BABYLON.Space.LOCAL);
     card2.rotate(BABYLON.Axis.Y, Math.PI * 1.2 / 2, BABYLON.Space.LOCAL);
 
+    model.playerCards[position] = new Array();
+    model.playerCards[position][0] = card1;
+    model.playerCards[position][1] = card2;
 }
-var drawCardPosition = function (size, mat) {
+var drawCardPosition = function (size) {
     var paths = [];
     var iterations = 10;
     var Size = size / 45;
@@ -93,16 +96,16 @@ var drawCardPosition = function (size, mat) {
         pathArray: paths,
         sideOrientation: BABYLON.Mesh.DOUBLESIDE, offset: 0, uvs: faceUV, invertUV: true
     }, scene);
-    ribbon.material = mat;
 
     return ribbon;
 }
-var drawTableCards = function (Size, noShownCards, cardTextures) {
-    var cards = Array(noShownCards);
-    for (var i = 0; i < noShownCards; ++i) {
-        cards[i] = drawCardPosition(Size, cardTextures[i]);
-        cards[i].rotate(BABYLON.Axis.Y, Math.PI / 2, BABYLON.Space.LOCAL);
-        cards[i].translate(new BABYLON.Vector3(-Size + Size / 2 * i, Size * 0.1, 0), 1, BABYLON.Space.LOCAL);
+var drawTableCards = function (Size) {
+
+    for (var i = 0; i < 5; ++i) {
+        var card = drawCardPosition(Size);
+        card.rotate(BABYLON.Axis.Y, Math.PI / 2, BABYLON.Space.LOCAL);
+        card.translate(new BABYLON.Vector3(-Size + Size / 2 * i, Size * 0.1, 0), 1, BABYLON.Space.LOCAL);
+        model.tableCards[i] = card; 
     }
 
 }

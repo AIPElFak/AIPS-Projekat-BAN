@@ -1,15 +1,9 @@
 ﻿var setTableCard = function (position, card) {
-    var newCard = new BABYLON.StandardMaterial("mat5", scene);
-    newCard.alpha = 1;
-    newCard.diffuseColor = new BABYLON.Color3(1, 1, 1);
-    newCard.backFaceCulling = false;
-    newCard.diffuseTexture = new BABYLON.Texture("../Scripts/textures/" + card + ".png", scene);
-
-    TableCards[position] = newCard;
-    noShownCards = position + 1;
+    model.setTableCard(position, card);
+    model.sounds["flop"].play();
 }
 var setPlayerChips = function (position, amount) {
-    PlayerChips[position] = amount;
+    model.setPlayerChips(position, amount);
 }
 var resetPlayerChips = function()
 {
@@ -22,22 +16,7 @@ var setPlayerTableChips = function (position, amount)
 }
 
 var setPlayerCard = function (position, card1, card2) {
-    var firstCard = new BABYLON.StandardMaterial("mat6", scene);
-    firstCard.alpha = 1;
-    firstCard.diffuseColor = new BABYLON.Color3(1, 1, 1);
-    firstCard.backFaceCulling = false;
-    firstCard.diffuseTexture = new BABYLON.Texture("../Scripts/textures/" + card + ".png", scene);
-
-    var secondCard = new BABYLON.StandardMaterial("mat7", scene);
-    secondCard.alpha = 1;
-    secondCard.diffuseColor = new BABYLON.Color3(1, 1, 1);
-    secondCard.backFaceCulling = false;
-    secondCard.diffuseTexture = new BABYLON.Texture("../Scripts/textures/" + card + ".png", scene);
-
-    PlayerCards[position * 2] = firstCard;
-    PlayerCards[position * 2 + 1] = secondCard;
-
-    activePlayers[position] = true;
+    model.setPlayerCards(position, card1, card2);
 }
 var setPlayerStats = function (username, position, amount)
 {
@@ -51,11 +30,10 @@ var positionPlayer = function (position)
 }
 var playMan = function (position, amount, bigBlind)
 {
-    var startTime = new Date().getTime() / 1000;
-    var endTIme = new Date().getTime() / 1000;
+    
     enableButtons();
 
-    var call = document.getElementById(call);
+    var call = document.getElementById("call");
     if (amount == 0)
         call.innerHTML = "Check";
     else
@@ -67,19 +45,41 @@ var playMan = function (position, amount, bigBlind)
     min[0].innerHTML = bigBlind;
     max[0].innerHTML = PlayerTableChips[position] - amount;
 
-    while (!readyToPlay && endTIme - startTime < 30)
-    {
-        endTIme = new Date().getTime() / 1000;
-    }
-
-    readyToPlay = false;
-
-    return raiseAmount;
+    
+    timer = setTimeout(commitAction, 20000);
+    model.sounds["wait"].play();
 }
-
+var commitAction = function()
+{
+    if (!readyToPlay)
+    {
+        var call = document.getElementById("call");
+        if (call.innerHTML == "Check") {
+            gameHub.server.play(0, gameModel.gameName);
+            model.sounds["check"].play();
+        }
+        else {
+            call.innerHTML = "Check";
+            gameHub.server.play(-1, gameModel.gameName);
+            model.sounds["fold"].play();
+        }
+    }
+    else
+    {
+        clearTimeout(timer);
+        readyToPlay = false;
+        gameHub.server.play(raiseAmount, gameModel.gameName);
+        if (raiseAmount < 0)
+            model.sounds["fold"].play();
+        if (raiseAmount == 0)
+            model.sounds["ckeck"].play();
+        if (raiseAmount > 0)
+            model.sounds["raise"].play();
+    }
+}
 var displayMove = function (position, amount)
 {
-    PlayerTableChips[position] -= amount;
+    model.changePlayerChipAmount(position, amount);
     PlayerChips[position] = amount;
 }
 
@@ -112,7 +112,7 @@ var resetAllCards = function () {
 
 var canvas = document.querySelector("#renderCanvas");
 var engine = new BABYLON.Engine(canvas, true);
-
+var timer;
 var TableCards = new Array(5);
 var PlayerCards = new Array(16);
 
@@ -129,6 +129,8 @@ var readyToPlay = false;
 var raiseAmount = 0;
 
 var scene = new BABYLON.Scene(engine);
+model.scene = scene;
+model.init();
 resetAllCards();
 
 

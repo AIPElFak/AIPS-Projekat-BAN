@@ -3,16 +3,19 @@
     raiseAmount = 0;
     readyToPlay = true;
     disableButtons();
+    commitAction();
 }
 var fold = function () {
     raiseAmount = -1;
     readyToPlay = true;
     disableButtons();
+    commitAction();
 }
 var raise = function () {
-    raiseAmount = parseInt(document.getElementById(raiseMoney).value);
+    raiseAmount = parseInt(document.getElementById("raiseMoney").value);
     readyToPlay = true;
     disableButtons();
+    commitAction();
 }
 
 var disableButtons = function () {

@@ -1,6 +1,4 @@
-﻿
-
-var createScene = function () {
+﻿var createScene = function () {
     
     scene.clearColor = new BABYLON.Color3(0,0,0.1445);
     // camera
@@ -31,8 +29,8 @@ var createScene = function () {
 
     var size = 7.5;
 
-    drawTable(size, mat, mat2, mat3, PlayerCards);
-    drawTableCards(size, noShownCards, TableCards);
+    drawTable(size, mat, mat2, mat3);
+    drawTableCards(size);
 
     return scene;
 };

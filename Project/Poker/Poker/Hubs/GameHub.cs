@@ -118,7 +118,7 @@ namespace Poker.Hubs
                     for (int i = 0; i < game.cardsOnTable.Count; i++)
                         cards.Add(game.cardsOnTable[i].getString());
 
-                    Clients.All.displayCardsOnTable(cards);
+                    Clients.All.displayCardsOnTable(game.CurrentHand[game.currentPlayer], cards);
                     Clients.All.youAreNext(game.CurrentHand[game.currentPlayer],
                         game.currentRase - game.Players[game.CurrentHand[game.currentPlayer]].stakesMoney, game.table.bigBlind);
                 }

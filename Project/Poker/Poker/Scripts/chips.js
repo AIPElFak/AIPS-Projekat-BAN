@@ -2,23 +2,23 @@
 {
     var Size = size / 19;
     //1 i 8
-    drawChipPile(Size, PlayerChips[0], height, heightDiff * 0.8, -yOffset * 0.3, Math.PI);
-    drawChipPile(Size, PlayerChips[1], height, heightDiff * 0.8, yOffset * 0.3, Math.PI);
+    drawChipPile(Size, height, heightDiff * 0.8, -yOffset * 0.3, Math.PI, 0);
+    drawChipPile(Size, height, heightDiff * 0.8, yOffset * 0.3, Math.PI, 7);
 
     //2 i 7
-    drawChipPile(Size, PlayerChips[7], height, heightDiff * 0.8, -yOffset / 2, Math.PI * 11 / 15);
-    drawChipPile(Size, PlayerChips[2], height, heightDiff * 0.8, yOffset / 2, -Math.PI * 11 / 15);
+    drawChipPile(Size, height, heightDiff * 0.8, -yOffset / 2, Math.PI * 11 / 15, 1);
+    drawChipPile(Size, height, heightDiff * 0.8, yOffset / 2, -Math.PI * 11 / 15, 6);
 
     //3 i 6
-    drawChipPile(Size, PlayerChips[6], height, heightDiff * 0.8, -yOffset / 2, Math.PI * 6 / 15);
-    drawChipPile(Size, PlayerChips[3], height, heightDiff * 0.8, yOffset / 2, - Math.PI * 6 / 15);
+    drawChipPile(Size, height, heightDiff * 0.8, -yOffset / 2, Math.PI * 6 / 15, 2);
+    drawChipPile(Size, height, heightDiff * 0.8, yOffset / 2, - Math.PI * 6 / 15, 5);
 
     //4 i 5
-    drawChipPile(Size, PlayerChips[5], height, heightDiff * 0.8, -yOffset / 2, Math.PI / 15);
-    drawChipPile(Size, PlayerChips[4], height, heightDiff * 0.8, yOffset / 2, - Math.PI / 15);
+    drawChipPile(Size, height, heightDiff * 0.8, -yOffset / 2, Math.PI / 15, 3);
+    drawChipPile(Size, height, heightDiff * 0.8, yOffset / 2, - Math.PI / 15, 4);
 }
 
-var drawChip = function (size, texture) {
+var drawChip = function (size) {
     var iterations = 30;
     var Size = size;
     var yOffset = 0;
@@ -32,7 +32,7 @@ var drawChip = function (size, texture) {
 
     heightDiff = 2 * Size;
 
-    var ribbon1 = drawElipticBase(iterations, heightDiff, height, yOffset, texture);
+    var ribbon1 = drawElipticBase(iterations, heightDiff, height, yOffset);
 
     heightDiff = 3 * Size / 2;
 
@@ -47,12 +47,11 @@ var drawChip = function (size, texture) {
     Size = drawElipticWraper(iterations, Size, yOffset, heightDiff, jump, curve, height, parts, diff, paths);
 
     var ribbon = BABYLON.Mesh.CreateRibbon("rib", paths, false, false, 0, scene);
-    ribbon.material = texture;
 
 
     heightDiff = 2 * Size;
 
-    var ribbon2 = drawElipticBase(iterations, heightDiff, height, yOffset, texture);
+    var ribbon2 = drawElipticBase(iterations, heightDiff, height, yOffset);
 
     var ribbons = [];
     ribbons.push(ribbon);
@@ -62,7 +61,7 @@ var drawChip = function (size, texture) {
     return ribbons;
 }
 
-function drawElipticBase(iterations, heightDiff, height, yOffset, texture) {
+function drawElipticBase(iterations, heightDiff, height, yOffset) {
     var paths = [];
 
     for (var t = iterations; t >= 0; t--) {
@@ -101,79 +100,63 @@ function drawElipticBase(iterations, heightDiff, height, yOffset, texture) {
         pathArray: paths,
         sideOrientation: BABYLON.Mesh.DOUBLESIDE, offset: 0, uvs: faceUV, invertUV: true
     }, scene);
-    ribbon.material = texture;
 
     return ribbon;
 }
 
 
-var drawChipPile = function (size, sum, height, distanceX, distanceY, angle) {
-    var tempSum = sum;
-
-    var chips = findChipsForSum(tempSum, 6);
+var drawChipPile = function (size, height, distanceX, distanceY, angle, position) {
+    
+    
     var xStackOffsets = [0, size *4 , size*3.5, size*7.5];
     var zStackOffsets = [0, -size * 2, size * 2.5, size * 0.5];
     var firstChip;
 
+    model.playerChips[position] = new Array();
     for (var i = 0; i < 4; ++i) {
         if (i==0)
-            firstChip = drawStackOfChips(size, chips, height, distanceX, distanceY, angle - Math.PI * 3 / 30, xStackOffsets[i], zStackOffsets[i]);
+            firstChip = drawStackOfChips(0,size, 5, height, distanceX, distanceY, angle - Math.PI * 3 / 30, xStackOffsets[i], zStackOffsets[i], position);
         else
-            drawStackOfChips(size, chips, height, distanceX, distanceY, angle - Math.PI * 3 / 30, xStackOffsets[i], zStackOffsets[i]);
-        tempSum = removeChipsFromSum(tempSum, chips);
-        chips = findChipsForSum(tempSum, 5-i);
+            drawStackOfChips(i, size, 5, height, distanceX, distanceY, angle - Math.PI * 3 / 30, xStackOffsets[i], zStackOffsets[i], position);
+        
     }
 
-    var chipAmount = drawChipAmount(size, sum);
+    //var chipAmount = drawChipAmount(size, sum);
 
-    chipAmount.rotate(BABYLON.Axis.Y, angle - Math.PI * 3 / 30 , BABYLON.Space.LOCAL);
-    chipAmount.translate(new BABYLON.Vector3(0, size*6, 0), 1, BABYLON.Space.LOCAL);
-    chipAmount.translate(new BABYLON.Vector3(distanceX, 0, 0), 1, BABYLON.Space.LOCAL);
-    chipAmount.translate(new BABYLON.Vector3(0, 0, distanceY), 1, BABYLON.Space.WORLD);
-    chipAmount.translate(new BABYLON.Vector3(0, height * 1.1, -size * 0.115), 1, BABYLON.Space.LOCAL);
+    //chipAmount.rotate(BABYLON.Axis.Y, angle - Math.PI * 3 / 30 , BABYLON.Space.LOCAL);
+    //chipAmount.translate(new BABYLON.Vector3(0, size*6, 0), 1, BABYLON.Space.LOCAL);
+    //chipAmount.translate(new BABYLON.Vector3(distanceX, 0, 0), 1, BABYLON.Space.LOCAL);
+    //chipAmount.translate(new BABYLON.Vector3(0, 0, distanceY), 1, BABYLON.Space.WORLD);
+    //chipAmount.translate(new BABYLON.Vector3(0, height * 1.1, -size * 0.115), 1, BABYLON.Space.LOCAL);
     //chipAmount.rotate(BABYLON.Axis.Y, -Math.PI/2, BABYLON.Space.LOCAL);
     
 }
-var removeChipsFromSum = function (sum, chips)
-{
-    var tempSum = sum;
-    chips.forEach(function (element) {
-        tempSum -= element;
-    })
 
-    return tempSum;
-}
-var drawStackOfChips = function (Size, chips, height, distanceX, distanceY,angle, xStackOffset,zStackOffset) {
+var drawStackOfChips = function (stackNumber, Size, chips, height, distanceX, distanceY,angle, xStackOffset,zStackOffset, position) {
     var yOffset = 0;
     var firstChip;
     var first = true;
+    for (var i = 0; i < chips;++i)
+    {    
 
-    chips.forEach(function (element) {
-
-
-        var texture = new BABYLON.StandardMaterial("mat4", scene);
-        texture.alpha = 1;
-        texture.diffuseColor = new BABYLON.Color3(1, 1, 1);
-        texture.backFaceCulling = false;
-        texture.diffuseTexture = new BABYLON.Texture("../Scripts/textures/"+element+".png", scene);
-
-        var chip = drawChip(Size, texture);
+        var chip = drawChip(Size);
         if (first) {
             firstChip = first;
             first = false;
         }
-        
-        for (var i = 0; i < 3; ++i)
+        model.playerChips[position][stackNumber * chips + i] = new Array();
+        for (var j = 0; j < 3; ++j)
         {
-            chip[i].rotate(BABYLON.Axis.Y, angle, BABYLON.Space.LOCAL);
-            chip[i].translate(new BABYLON.Vector3(0, yOffset, 0), 1, BABYLON.Space.LOCAL);
-            chip[i].translate(new BABYLON.Vector3(distanceX, 0, 0), 1, BABYLON.Space.LOCAL);
-            chip[i].translate(new BABYLON.Vector3(0, 0, distanceY), 1, BABYLON.Space.WORLD);
-            chip[i].translate(new BABYLON.Vector3(zStackOffset, height * 1.1, -Size * 0.115 + xStackOffset), 1, BABYLON.Space.LOCAL);
+            chip[j].rotate(BABYLON.Axis.Y, angle, BABYLON.Space.LOCAL);
+            chip[j].translate(new BABYLON.Vector3(0, yOffset, 0), 1, BABYLON.Space.LOCAL);
+            chip[j].translate(new BABYLON.Vector3(distanceX, 0, 0), 1, BABYLON.Space.LOCAL);
+            chip[j].translate(new BABYLON.Vector3(0, 0, distanceY), 1, BABYLON.Space.WORLD);
+            chip[j].translate(new BABYLON.Vector3(zStackOffset, height * 1.1, -Size * 0.115 + xStackOffset), 1, BABYLON.Space.LOCAL);
+            model.playerChips[position][stackNumber * chips + i].push(chip[j]);
         }
 
         yOffset += 0.75 * Size;
-    })
+    }
     return firstChip;
 }
 

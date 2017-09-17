@@ -239,6 +239,13 @@
     <Content Include="Content\logIn\favicon.png" />
     <Content Include="Content\logIn\form-elements.css" />
     <Content Include="Content\logIn\style.css" />
+    <Content Include="Content\sounds\wait.mp3" />
+    <Content Include="Content\sounds\sawing-wood-daniel_simon.mp3" />
+    <Content Include="Content\sounds\raise.mp3" />
+    <Content Include="Content\sounds\check.mp3" />
+    <Content Include="Content\sounds\fold.mp3" />
+    <Content Include="Content\sounds\flop.mp3" />
+    <Content Include="Content\sounds\sms-alert-5-daniel_simon.mp3" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -275,6 +282,7 @@
     <Content Include="Scripts\logIn\password.js" />
     <Content Include="Scripts\logIn\placeholder.js" />
     <Content Include="Scripts\logIn\scripts.js" />
+    <Content Include="Scripts\Model.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\mySlider.js" />
     <Content Include="Scripts\PlayingCards.js" />

@@ -52,9 +52,8 @@ gameHub.client.showBigBlind = function (bigBlind, pos) {
 
 gameHub.client.youAreNext = function (pos, amount, bigBlind) {
     if (pos == clientPos) {
-        var result = playMan(pos, amount, bigBlind);
+        playMan(pos, amount, bigBlind);
 
-        gameHub.server.play(result, gameModel.gameName);
     }
 };
 
@@ -62,11 +61,11 @@ gameHub.client.displayPlayed = function (pos, result) {
     displayMove(pos, result);
 };
 
-gameHub.client.displayCardsOnTable = function (cards) {
-    setTableCards(pos, card)
-    for (var i = 0; i < cards.lenght; i++)
+gameHub.client.displayCardsOnTable = function (pos, cards) {
+    //setTableCard(pos, card)
+    for (var i = 0; i < cards.length; i++)
     {
-        setTableCards(i, cards[i]);
+        setTableCard(i, cards[i]);
     }
 };
 
