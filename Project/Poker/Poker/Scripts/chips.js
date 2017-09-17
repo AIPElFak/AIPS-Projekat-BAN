@@ -185,7 +185,7 @@ var drawChipAmount = function(size, amount)
     var str = "$" + amount;
     var options = {
         height: 512,
-        width: 350 * str.length
+        width: 355 * str.length
     }
     var mat = new BABYLON.DynamicTexture("dynamic texture", options, scene, true);
 
