@@ -8,7 +8,7 @@ var setPlayerChips = function (position, amount) {
 var resetPlayerChips = function()
 {
     for (var i = 0; i < 8; ++i)
-        activePlayers[i] = false;
+        model.setPlayerChips(i, 0);
 }
 var setPlayerTableChips = function (position, amount)
 {
@@ -79,35 +79,23 @@ var commitAction = function()
 }
 var displayMove = function (position, amount)
 {
-    model.changePlayerChipAmount(position, amount);
+    model.setPlayerChips(position, amount);
     PlayerChips[position] = amount;
 }
 
 var pileUp = function ()
 {
     for (var i = 0; i < 8; ++i)
-        if (activePlayers[i])
-        {
-            PileChips += PlayerChips[i];
-            PlayerChips[i] = 0;
-        }
+    {
+        model.changeTableChips(model.playerChipAmount[i]);
+        model.setPlayerChips(i, 0);
+    }
+}
+var resetSceen = function ()
+{
+    model.resetSceen();
 }
 
-var resetAllCards = function () {
-    noShownCards = 0;
-
-    var blankCard = new BABYLON.StandardMaterial("mat5", scene);
-    blankCard.alpha = 1;
-    blankCard.diffuseColor = new BABYLON.Color3(1, 1, 1);
-    blankCard.backFaceCulling = false;
-    blankCard.diffuseTexture = new BABYLON.Texture("../Scripts/textures/back.png", scene);
-
-    for (var i = 0; i < 16; ++i)
-        PlayerCards[i] = blankCard;
-
-    for (var i = 0; i < 5; ++i)
-        TableCards[i] = blankCard;
-}
 
 
 var canvas = document.querySelector("#renderCanvas");

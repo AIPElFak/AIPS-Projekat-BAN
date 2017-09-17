@@ -8,6 +8,7 @@
     playerMoney: new Array(),
     playerMoneyAmount: new Array(),
     playerChipAmount: new Array(),
+    tableChipAmount: 0,
     sounds: new Array(),
 
     init: function ()
@@ -52,11 +53,14 @@
     },
     setPlayerCards: function(playerNumber, card1, card2)
     {
+        this.playerCards[playerNumber][0].setEnabled(1);
         this.playerCards[playerNumber][0].material = this.getCardTexture(card1);
+        this.playerCards[playerNumber][1].setEnabled(1);
         this.playerCards[playerNumber][1].material = this.getCardTexture(card2);
     },
     setTableCard: function (position, card)
     {
+        this.tableCards[position].setEnabled(1);
         this.tableCards[position].material = this.getCardTexture(card);
     },
     //to do
@@ -91,12 +95,24 @@
     //to do
     setTableChips: function (amount)
     {
-
+        this.tableChipAmount = amount;
+    },
+    changeTableChips: function (amount)
+    {
+        this.setTableChips(this.tableChipAmount + amount);
     },
     //to do
     resetSceen: function ()
     {
-        // no cards no money on table
+        this.setTableChips(0);
+        for (var i = 0; i < 8; ++i)
+        {
+            this.setPlayerChips(i,0);
+            this.playerCards[i][0].setEnabled(0);
+            this.playerCards[i][1].setEnabled(0);
+        }
+        for (var i = 0; i < 5; ++i)
+            this.tableCards[i].setEnabled(0);
     },
     findChipsForSum : function (sum, limit) {
         var niz = [100, 500, 1000, 5000, 25000, 100000, 250000, 500000, 1000000];
