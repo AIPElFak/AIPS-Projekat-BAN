@@ -101,6 +101,7 @@ namespace Poker.Hubs
                 (thisGame.currentRase - thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].stakesMoney);
             thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].stakesMoney = thisGame.currentRase;
             thisGame.piles[0] += (thisGame.currentRase - thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].stakesMoney);
+            thisGame.currentRase = thisGame.currentPlayer;
         }
     }
 
