@@ -74,6 +74,7 @@ namespace Poker.Hubs
 
             Clients.All.showBigBlind(game.table.bigBlind, game.CurrentHand[game.currentPlayer]);
 
+            game.lastRasePlayer = game.currentPlayer;
             game.currentPlayer = (game.currentPlayer + 1) % game.CurrentHand.Count;
             Clients.Caller.youAreNext(game.CurrentHand[game.currentPlayer], game.table.bigBlind, game.table.bigBlind);
         }
@@ -97,12 +98,12 @@ namespace Poker.Hubs
             game.currentPlayer = (game.currentPlayer + 1) % game.CurrentHand.Count;
 
             if (game.currentPlayer != game.lastRasePlayer)
-                Clients.All.youAreNext(game.CurrentHand[game.currentPlayer], 
+            {
+                Clients.All.youAreNext(game.CurrentHand[game.currentPlayer],
                     game.currentRase - game.Players[game.CurrentHand[game.currentPlayer]].stakesMoney, game.table.bigBlind);
+            }
             else
             {
-                game.endCircle();
-                game.lastRasePlayer = game.currentPlayer - 1;
                 if (game.cardsOnTable.Count == 5)
                 {
                     int winner = game.WhoIsWinner();
@@ -112,16 +113,18 @@ namespace Poker.Hubs
                     game.newHand();
                     playDeal(game.Name);
                 }
-                else
-                {
-                    List<string> cards = new List<string>();
-                    for (int i = 0; i < game.cardsOnTable.Count; i++)
-                        cards.Add(game.cardsOnTable[i].getString());
 
-                    Clients.All.displayCardsOnTable(game.CurrentHand[game.currentPlayer], cards);
-                    Clients.All.youAreNext(game.CurrentHand[game.currentPlayer],
-                        game.currentRase - game.Players[game.CurrentHand[game.currentPlayer]].stakesMoney, game.table.bigBlind);
-                }
+                game.endCircle();
+                game.lastRasePlayer = game.currentPlayer;
+
+                List<string> cards = new List<string>();
+                for (int i = 0; i < game.cardsOnTable.Count; i++)
+                    cards.Add(game.cardsOnTable[i].getString());
+
+                Clients.All.displayCardsOnTable(game.CurrentHand[game.currentPlayer], cards);
+                Clients.All.youAreNext(game.CurrentHand[game.currentPlayer],
+                    game.currentRase - game.Players[game.CurrentHand[game.currentPlayer]].stakesMoney, game.table.bigBlind);
+          
             }
         }
     }

@@ -169,7 +169,7 @@ namespace Poker.Hubs
                     cards.Add(new Card() { number = i, sign = j });
 
             Random rnd = new Random(DateTime.Now.Millisecond);
-            for (int i = cards.Count - 1; i > 0; i--)
+            for (int i = cards.Count; i > 0; i--)
             {
                 int pos = rnd.Next(i);
                 Card x = cards[i - 1];
@@ -223,15 +223,15 @@ namespace Poker.Hubs
                 CurrentHand.Add(player.Key);
             }
 
-            for (int j = 0; j < numOfHands; j++)
-            {
-                int tmp = CurrentHand[0];
-                for (int i = 0; i < CurrentHand.Count - 1; i++)
-                    CurrentHand[i] = CurrentHand[i + 1];
-                CurrentHand[CurrentHand.Count - 1] = tmp;
-            }
+            //for (int j = 0; j < numOfHands; j++)
+            //{
+            //    int tmp = CurrentHand[0];
+            //    for (int i = 0; i < CurrentHand.Count - 1; i++)
+            //        CurrentHand[i] = CurrentHand[i + 1];
+            //    CurrentHand[CurrentHand.Count - 1] = tmp;
+            //}
 
-            currentPlayer = (0 - 3) % CurrentHand.Count;
+            currentPlayer = 1;
         }
 
         public void endCircle() 

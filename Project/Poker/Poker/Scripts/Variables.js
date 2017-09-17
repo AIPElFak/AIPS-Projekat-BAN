@@ -46,7 +46,7 @@ var playMan = function (position, amount, bigBlind)
     max[0].innerHTML = PlayerTableChips[position] - amount;
 
     
-    timer = setTimeout(commitAction, 20000);
+   // timer = setTimeout(commitAction, 20000);
     model.sounds["wait"].play();
 }
 var commitAction = function()
@@ -72,11 +72,12 @@ var commitAction = function()
         if (raiseAmount < 0)
             model.sounds["fold"].play();
         if (raiseAmount == 0)
-            model.sounds["ckeck"].play();
+            model.sounds["check"].play();
         if (raiseAmount > 0)
             model.sounds["raise"].play();
     }
 }
+// to do 
 var displayMove = function (position, amount)
 {
     model.setPlayerChips(position, amount);

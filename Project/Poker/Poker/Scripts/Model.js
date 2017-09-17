@@ -71,7 +71,7 @@
     //to do
     setPlayerChips: function (playerNumber, amount)
     {
-        var chips = this.findChipsForSum(amount, 25);
+        var chips = this.findChipsForSum(amount, 20);
         this.playerChipAmount[playerNumber] = amount;
         for (var i = 0; i < 20; ++i)
         {
