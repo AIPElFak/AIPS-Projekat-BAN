@@ -119,7 +119,8 @@ var drawChipPile = function (size, height, distanceX, distanceY, angle, position
 
     var chipAmount = drawChipAmount(size);
 
-    //chipAmount.position = firstChip.position;
+    chipAmount.position = firstChip[0].position;
+    chipAmount.translate(new BABYLON.Vector3(0, size *6, 0), 1, BABYLON.Space.LOCAL);
     model.playerStakes[position] = chipAmount;
     //chipAmount.rotate(BABYLON.Axis.Y, angle - Math.PI * 3 / 30 , BABYLON.Space.LOCAL);
     //chipAmount.translate(new BABYLON.Vector3(0, size*6, 0), 1, BABYLON.Space.LOCAL);
@@ -138,7 +139,7 @@ var drawStackOfChips = function (stackNumber, Size, chips, height, distanceX, di
 
         var chip = drawChip(Size);
         if (first) {
-            firstChip = first;
+            firstChip = chip;
             first = false;
         }
         model.playerChips[position][stackNumber * chips + i] = new Array();
@@ -176,7 +177,7 @@ var findChipsForSum = function (sum, limit) {
     return values;
 }
 var drawChipAmount = function (Size) {
-    var size = Size / 15;
+    var size = Size*1.5;
     var str = "";
     var options = {
         height: 512,
@@ -245,6 +246,7 @@ var drawChipAmount = function (Size) {
 
     ribbon.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_ALL;
     ribbon.material = new BABYLON.StandardMaterial("outputplane", scene);
+    ribbon.material.emissiveColor = new BABYLON.Color3(1, 1, 1);
     ribbon.material.diffuseTexture = new BABYLON.DynamicTexture("dynamic texture", options, scene, true);;
     ribbon.material.diffuseTexture.drawText(str + str, null, 450, "bold " + 500 + "px" + " verdana", "white");
     ribbon.material.diffuseTexture.hasAlpha = true;
@@ -260,7 +262,9 @@ var setStakes = function (position, amount)
     }
 
     model.playerStakes[position].material.diffuseTexture.dispose();
-    model.playerStakes[position].material.diffuseTexture = new BABYLON.DynamicTexture("dynamic texture", options, scene, true);;
-    model.playerStakes[position].material.diffuseTexture.drawText("$"+amount, null, 450, "bold " + 500 + "px" + " verdana", "white");
+    model.playerStakes[position].material.diffuseTexture = new BABYLON.DynamicTexture("dynamic texture", options, scene, true);
+    model.playerStakes[position].material.emissiveColor = new BABYLON.Color3(1, 1, 1);
+    if (amount != 0)
+        model.playerStakes[position].material.diffuseTexture.drawText("$"+amount, null, 450, "bold " + 500 + "px" + " verdana", "white");
     model.playerStakes[position].material.diffuseTexture.hasAlpha = true;
 }
