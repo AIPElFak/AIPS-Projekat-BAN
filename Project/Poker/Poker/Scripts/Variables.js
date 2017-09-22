@@ -1,6 +1,7 @@
 ﻿var setTableCard = function (position, card) {
     model.setTableCard(position, card);
     model.sounds["flop"].play();
+    pileUp();
 }
 var setPlayerChips = function (position, amount) {
     model.setPlayerChips(position, amount);
@@ -79,8 +80,12 @@ var commitAction = function()
 // to do 
 var displayMove = function (position, amount)
 {
-    model.setPlayerChips(position, amount);
-    PlayerChips[position] = amount;
+    if (amount < 0)
+        model.eliminatePlayer(position);
+    else {
+        model.changePlayerChipAmount(position, amount);
+        PlayerChips[position] += amount;
+    }
 }
 
 var pileUp = function ()
