@@ -76,3 +76,11 @@ gameHub.client.displayCardsOnTable = function (pos, cards) {
 gameHub.client.showWinner = function (pos) {
     //showWinner
 };
+
+gameHub.client.displayMessage = function (username, message) {
+    //show message
+}
+
+function sendMessage(message) {
+    gameHub.server.send(gameModel.username, message);
+}

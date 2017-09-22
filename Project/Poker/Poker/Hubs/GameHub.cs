@@ -146,5 +146,10 @@ namespace Poker.Hubs
 
             }
         }
+
+        public void send(string tableName, string username, string message)
+        {
+            Clients.Group(tableName).displayMessage(username, message);
+        }
     }
 }
