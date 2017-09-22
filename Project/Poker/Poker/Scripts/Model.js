@@ -9,6 +9,7 @@
     playerMoneyAmount: new Array(),
     playerChipAmount: new Array(),
     playerStakes: new Array(),
+    avatars: new Array(),
     tableChipAmount: 0,
     sounds: new Array(),
 
@@ -21,6 +22,22 @@
         this.sounds["wait"] = new Audio("../Content/sounds/wait.mp3");
     },
 
+    setAvatar: function (position)
+    {
+        var plane = avatars[position];
+        plane.material.dispose();
+        plane.material = new BABYLON.StandardMaterial("outputplane", scene);
+        plane.material.diffuseTexture = new BABYLON.Texture("https://maxcdn.icons8.com/Share/icon/Cinema//avatar1600.png", scene);
+        plane.material.diffuseTexture.hasAlpha = true;
+        plane.material.emissiveColor = new BABYLON.Color3(1, 1, 1);
+        plane.setEnabled(1);
+    },
+    removeAvatar: function (position)
+    {
+        var plane = avatars[position];
+        plane.material.dispose();
+        plane.setEnabled(0);
+    },
     getCardTexture: function (cardName) {
         if (typeof this.cardTextures[cardName] === 'undefined') {
             var newCard = new BABYLON.StandardMaterial(cardName, scene);
