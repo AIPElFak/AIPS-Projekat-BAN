@@ -40,6 +40,10 @@ gameHub.client.getCards = function (card1, card2, pos) {
     }
 };
 
+gameHub.client.resetTable = function (card1, card2, pos) {
+    resetSceen();
+};
+
 gameHub.client.showSmallBlind = function (smallBlind, pos) {
     resetPlayerChips();
     setPlayerChips(pos, smallBlind);
