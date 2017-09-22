@@ -108,5 +108,6 @@
 
     drawAllPlayingCardPositions(Size, height, yOffset, heightDiff);
     drawAllPlayingChipPositions(Size, height, yOffset, heightDiff);
+    drawAllAvatars(Size, height, yOffset, heightDiff);
 
 }
