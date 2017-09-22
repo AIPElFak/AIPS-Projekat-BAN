@@ -98,7 +98,7 @@ namespace Poker.Hubs
 
             game.CurrentCommand.Execute();
 
-            Clients.OthersInGroup(game.Name).displayPlayed(game.CurrentHand[game.currentPlayer], 
+            Clients.Group(game.Name).displayPlayed(game.CurrentHand[game.currentPlayer], 
                                             result);
 
             game.currentPlayer = (game.currentPlayer + 1) % game.CurrentHand.Count;
