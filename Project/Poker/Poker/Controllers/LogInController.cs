@@ -40,22 +40,22 @@ namespace Poker.Controllers
         }
         public ActionResult SignUp()
         {
-            string returnString = "";
-            return View(returnString);
+            LogInModel m = new LogInModel();
+            return View(m);
         }
         [HttpPost]
-        public ActionResult SignUp(string username, string password)
+        public ActionResult SignUp(LogInModel model)
         {
             UserRepository u = new UserRepository();
-            if (u.IsTaken(username))
+            if (u.IsTaken(model.username))
             {
                 ViewBag.returnString = "Username taken";
                 return View("SignUp");
             }
             else
             {
-                u.Register(username, password);
-                var temp = u.ReadByUsername(username);
+                u.Register(model.username, model.password,model.avatarURL);
+                var temp = u.ReadByUsername(model.username);
                 Session["username"] = temp.username;
                 return RedirectToAction("Index", "Home");
             }

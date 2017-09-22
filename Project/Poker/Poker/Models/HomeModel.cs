@@ -10,12 +10,14 @@ namespace Poker.Models
     {
         public string money { get; set; }
         public string username { get; set; }
-        //ubaciti sliku (avatar)
+        public string avatarURL { get; set; }
+
         public void Load(string username)
         {
             UserRepository user = new UserRepository();
             this.money = user.ReadByUsername(username).money.ToString();
             this.username = username;
+            this.avatarURL = user.ReadByUsername(username).avatarURL;
         }
     }
 }

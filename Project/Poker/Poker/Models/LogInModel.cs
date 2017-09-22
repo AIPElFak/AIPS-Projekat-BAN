@@ -12,5 +12,6 @@ namespace Poker.Models
         public string username { get; set; }
         [Required(ErrorMessage = "Please enter password")]
         public string password { get; set; }
+        public string avatarURL { get; set; }
     }
 }

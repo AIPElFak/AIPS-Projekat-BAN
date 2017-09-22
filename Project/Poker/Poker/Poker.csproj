@@ -197,6 +197,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\fotorama.css" />
     <Content Include="Content\css\ion.rangeSlider.css" />
     <Content Include="Content\css\ion.rangeSlider.skinFlat.css" />
     <Content Include="Content\css\my.rangeSlider.skinFlat.css" />
@@ -208,6 +209,8 @@
     <Content Include="Content\images\cntr_bult.jpg" />
     <Content Include="Content\images\coin.png" />
     <Content Include="Content\images\design.gif" />
+    <Content Include="Content\images\fotorama%402x.png" />
+    <Content Include="Content\images\fotorama.png" />
     <Content Include="Content\images\header.jpg" />
     <Content Include="Content\images\hg.jpg" />
     <Content Include="Content\images\lnk1.jpg" />
@@ -219,6 +222,16 @@
     <Content Include="Content\images\lnk7.jpg" />
     <Content Include="Content\images\lnk8.jpg" />
     <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\myAvatar1.png" />
+    <Content Include="Content\images\myAvatar10.png" />
+    <Content Include="Content\images\myAvatar2.png" />
+    <Content Include="Content\images\myAvatar3.png" />
+    <Content Include="Content\images\myAvatar4.png" />
+    <Content Include="Content\images\myAvatar5.png" />
+    <Content Include="Content\images\myAvatar6.png" />
+    <Content Include="Content\images\myAvatar7.png" />
+    <Content Include="Content\images\myAvatar8.png" />
+    <Content Include="Content\images\myAvatar9.png" />
     <Content Include="Content\images\nav_lft.jpg" />
     <Content Include="Content\images\nav_rite.jpg" />
     <Content Include="Content\images\onl_pokr_lnks.jpg" />
@@ -274,6 +287,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\logIn\bootstrap.js" />
     <Content Include="Scripts\logIn\bootstrap.min.js" />
+    <Content Include="Scripts\logIn\fotorama.js" />
     <Content Include="Scripts\logIn\jquery-1.11.1.js" />
     <Content Include="Scripts\logIn\jquery-1.11.1.min.js" />
     <Content Include="Scripts\logIn\jquery.backstretch.js" />

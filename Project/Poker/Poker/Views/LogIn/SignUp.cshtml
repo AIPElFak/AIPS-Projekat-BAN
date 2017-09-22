@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Poker.Models.LogInModel
+
+@{
     Layout = null;
 }
 
@@ -16,6 +18,7 @@
     <link rel="stylesheet" href="~/Content/logIn/form-elements.css">
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
     <link rel="stylesheet" href="~/Content/logIn/style.css">
+    <link href="~/Content/css/fotorama.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -55,23 +58,34 @@
                         <div class="form-bottom">
                             <form role="form" action="/LogIn/SignUp" method="post" class="login-form">
                                 <div class="form-group">
-                                    <input type="text" name="username" placeholder="Username" class="form-username form-control" id="form-username">
+                                    <input type="text" name="username" placeholder="Username" class="form-username form-control" id="form-username" value="@Model.username">
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" id="txtNewPassword" name="password" placeholder="Password" class="form-password form-control">
+                                    <input type="password" id="txtNewPassword" name="password" placeholder="Password" class="form-password form-control" value="@Model.password">
                                 </div>
                                 <div class="myForm">
                                         <input id="txtConfirmPassword" type="password" class="form-password form-control" placeholder="Reenter new password" name="newPassword2" required="true" />
                                 </div>
                                 <div style="margin-top: 20px;" id="divCheckPasswordMatch" class="alert alert-danger myAlert">
                                  </div>
-                                       @if (ViewBag.returnString != null)
-                                    {
-                                        <div class="alert alert-danger" role="alert">
-                                            <strong>Oops!</strong> @ViewBag.returnString
-                                        </div>
-                                    }
-                                    <button type="submit" class="btn">Sign Up!</button>
+                                <div class="avatars">
+                                    <input type="hidden" name="avatarURL" value="" id="avatar" />
+                                    <div class="fotorama" data-width="700" data-ratio="700/467" data-max-width="100%" data-arrows="true" data-click="false" data-swipe="false">
+                                        <img src="~/Content/images/myAvatar1.png">
+                                        <img src="~/Content/images/myAvatar2.png">
+                                        <img src="~/Content/images/myAvatar3.png">
+                                        <img src="~/Content/images/myAvatar4.png">
+                                        <img src="~/Content/images/myAvatar5.png">
+                                        <img src="~/Content/images/myAvatar6.png">
+                                        <img src="~/Content/images/myAvatar7.png">
+                                        <img src="~/Content/images/myAvatar8.png">
+                                        <img src="~/Content/images/myAvatar9.png">
+                                        <img src="~/Content/images/myAvatar10.png">
+                                    </div>
+                                </div>
+
+                                     
+                                    <button type="submit" class="btn" id="signUpButton">Sign Up!</button>
 </form>
                         </div>
                     </div>
@@ -80,11 +94,22 @@
         </div>
     </div>
     <!-- Javascript -->
+    
     <script src="~/Scripts/logIn/jquery-1.11.1.min.js"></script>
     <script src="~/Scripts/logIn/bootstrap.min.js"></script>
     <script src="~/Scripts/logIn/jquery.backstretch.min.js"></script>
+    <script src="~/Scripts/logIn/fotorama.js"></script>
     <script src="~/Scripts/logIn/scripts.js"></script>
     <script src="~/Scripts/logIn/password.js"></script>
+    <script>
+        document.getElementById("signUpButton").onclick = function ()
+        {
+            var foto = document.getElementsByClassName("fotorama__active");
+            var s = foto[0].firstElementChild.src;
+            var ret = document.getElementById("avatar");
+            ret.value = s;
+        };
+    </script>
     <!--[if lt IE 10]>
         <script src="assets/js/placeholder.js"></script>
     <![endif]-->
