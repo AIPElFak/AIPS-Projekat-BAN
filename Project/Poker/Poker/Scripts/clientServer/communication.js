@@ -16,19 +16,19 @@ function start(model) {
 }
 
 //functions for hub to call
-gameHub.client.myPosition = function (username, position, amount) {
+gameHub.client.myPosition = function (username, position, amount, avatarURL) {
     clientPos = position;
     positionPlayer(position);
-    setPlayerStats(username, position, amount);
+    setPlayerStats(username, position, amount, avatarURL);
 };
 
-gameHub.client.otherPlayers = function (username, position, amount) {
+gameHub.client.otherPlayers = function (username, position, amount, avatarURL) {
     setPlayerCard(position, "back", "back");
-    setPlayerStats(username, position, amount);
+    setPlayerStats(username, position, amount, avatarURL);
 };
 
-gameHub.client.displayPlayer = function (username, position, amount) {
-    setPlayerStats(username, position, amount);
+gameHub.client.displayPlayer = function (username, position, amount, avatarURL) {
+    setPlayerStats(username, position, amount, avatarURL);
 };
 
 gameHub.client.getCards = function (card1, card2, pos) {

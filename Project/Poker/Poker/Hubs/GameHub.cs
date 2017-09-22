@@ -23,17 +23,19 @@ namespace Poker.Hubs
 
             Groups.Add(Context.ConnectionId, tableName);
 
-            Clients.Caller.myPosition(username, pos, game.Players[pos].currentMoney);
+            Clients.Caller.myPosition(username, pos, game.Players[pos].currentMoney, game.Players[pos].avatar);
 
             foreach (KeyValuePair<int, Player> player in game.Players)
             {
                 if (player.Key != pos)
                 {
-                    Clients.Caller.otherPlayers(player.Value.username, player.Key, player.Value.currentMoney);
+                    Clients.Caller.otherPlayers(player.Value.username, player.Key, 
+                                                player.Value.currentMoney, player.Value.avatar);
                 }
             }
 
-            Clients.OthersInGroup(tableName).displayPlayer(username, pos, game.Players[pos].currentMoney);
+            Clients.OthersInGroup(tableName).displayPlayer(username, pos, 
+                                                            game.Players[pos].currentMoney, game.Players[pos].avatar);
 
             if (game.Players.Count == 2)
             {
@@ -103,7 +105,17 @@ namespace Poker.Hubs
 
             game.currentPlayer = (game.currentPlayer + 1) % game.CurrentHand.Count;
 
-            if (game.currentPlayer != game.lastRasePlayer)
+            if (game.CurrentHand.Count == 1)
+            {
+                int winner = game.CurrentHand[0];
+                Clients.Group(game.Name).showWinner(winner);
+                game.SetWinning(winner);
+
+                game.newHand();
+                playDeal(game.Name);
+                return;
+            }
+            else if (game.currentPlayer != game.lastRasePlayer)
             {
                 Clients.Group(game.Name).youAreNext(game.CurrentHand[game.currentPlayer],
                     game.currentRaise - game.Players[game.CurrentHand[game.currentPlayer]].stakesMoney, game.table.bigBlind);
@@ -131,7 +143,7 @@ namespace Poker.Hubs
                 Clients.Group(game.Name).displayCardsOnTable(game.CurrentHand[game.currentPlayer], cards);
                 Clients.Group(game.Name).youAreNext(game.CurrentHand[game.currentPlayer],
                     game.currentRaise - game.Players[game.CurrentHand[game.currentPlayer]].stakesMoney, game.table.bigBlind);
-          
+
             }
         }
     }

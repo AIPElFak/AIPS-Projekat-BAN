@@ -121,6 +121,7 @@ namespace Poker.Hubs
     public class Player
     {
         public string username { get; set; }
+        public string avatar { get; set; }
         public string connectionId { get; set; }
         public int currentMoney { get; set; }
         public int stakesMoney { get; set; }
@@ -199,6 +200,7 @@ namespace Poker.Hubs
             Player playerAdd = new Player()
             {
                 username = username,
+                avatar = user.avatarURL,
                 currentMoney = ((user.money > table.BuyInMax)? table.BuyInMax : table.BuyInMin),
                 pileNumber = 0,
                 stakesMoney = 0
