@@ -41,14 +41,13 @@ namespace Business
 
             return query;
         }
-        public void Register(string username,string password, string avatarURL)
+        public void Register(string username,string password)
         {
             User user = new User()
             {
                 username = username,
                 password = password,
-                money = 10000000,
-                avatarURL = avatarURL
+                money = 100000000
             };
 
             UserCollection.InsertOne(user);
