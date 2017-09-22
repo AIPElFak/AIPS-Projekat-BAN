@@ -94,16 +94,31 @@
         }
         setStakes(playerNumber, amount);
     },
-    //to do
     setTableChips: function (amount)
     {
+        var chips = this.findChipsForSum(amount, 20);
         this.tableChipAmount = amount;
+        for (var i = 0; i < 20; ++i) {
+            if (typeof chips[i] === 'undefined') {
+                this.playerChips[8][i][0].setEnabled(0);
+                this.playerChips[8][i][1].setEnabled(0);
+                this.playerChips[8][i][2].setEnabled(0);
+            }
+            else {
+                this.playerChips[8][i][0].setEnabled(1);
+                this.playerChips[8][i][1].setEnabled(1);
+                this.playerChips[8][i][2].setEnabled(1);
+                this.playerChips[8][i][0].material = this.getChipTexture("" + chips[i]);
+                this.playerChips[8][i][1].material = this.getChipTexture("" + chips[i]);
+                this.playerChips[8][i][2].material = this.getChipTexture("" + chips[i]);
+            }
+        }
+        setStakes(8, amount);
     },
     changeTableChips: function (amount)
     {
         this.setTableChips(this.tableChipAmount + amount);
     },
-    //to do
     resetSceen: function ()
     {
         this.setTableChips(0);
@@ -134,5 +149,11 @@
         }
 
         return values;
+    },
+    eliminatePlayer : function (position)
+    {
+        this.setPlayerChips(position, 0);
+        this.playerCards[position][0].setEnabled(0);
+        this.playerCards[position][1].setEnabled(0);
     }
 }

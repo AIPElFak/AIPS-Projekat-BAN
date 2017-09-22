@@ -16,6 +16,9 @@
     //4 i 5
     drawChipPile(Size, height, heightDiff * 0.8, -yOffset / 2, Math.PI / 15, 3);
     drawChipPile(Size, height, heightDiff * 0.8, yOffset / 2, - Math.PI / 15, 4);
+
+    //table
+    drawChipPile(Size, height, -size * 0.6, 0, 0, 8);
 }
 var drawChip = function (size) {
     var iterations = 30;
@@ -116,7 +119,7 @@ var drawChipPile = function (size, height, distanceX, distanceY, angle, position
             drawStackOfChips(i, size, 5, height, distanceX, distanceY, angle - Math.PI * 3 / 30, xStackOffsets[i], zStackOffsets[i], position);
         
     }
-
+   
     var chipAmount = drawChipAmount(size);
 
     chipAmount.position = firstChip[0].position;
