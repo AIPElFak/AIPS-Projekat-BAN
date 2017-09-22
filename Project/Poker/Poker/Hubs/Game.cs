@@ -121,6 +121,7 @@ namespace Poker.Hubs
     public class Player
     {
         public string username { get; set; }
+        public string connectionId { get; set; }
         public int currentMoney { get; set; }
         public int stakesMoney { get; set; }
         public int pileNumber { get; set; }
@@ -139,7 +140,7 @@ namespace Poker.Hubs
         public int currentPlayer { get; set; }
         public List<int> piles { get; set; }
         public int lastRasePlayer { get; set; }
-        public int currentRase { get; set; }
+        public int currentRaise { get; set; }
         public List<Card> deck { get; set; }
         public List<Card> cardsOnTable { get; set; }
         public Command CurrentCommand { get; set; }
@@ -214,12 +215,14 @@ namespace Poker.Hubs
             piles.Clear();
             piles.Add(0);
             lastRasePlayer = 0;
+            currentRaise = 0;
             deck = shuffle();
             cardsOnTable.Clear();
 
             CurrentHand.Clear();
             foreach (KeyValuePair<int, Player> player in Players)
             {
+                player.Value.stakesMoney = 0;
                 CurrentHand.Add(player.Key);
             }
 
@@ -230,8 +233,6 @@ namespace Poker.Hubs
             //        CurrentHand[i] = CurrentHand[i + 1];
             //    CurrentHand[CurrentHand.Count - 1] = tmp;
             //}
-
-            currentPlayer = 1;
         }
 
         public void endCircle() 

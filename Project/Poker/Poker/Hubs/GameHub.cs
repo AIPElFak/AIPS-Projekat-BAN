@@ -19,6 +19,9 @@ namespace Poker.Hubs
         {
             int pos = games.findOrAddGame(tableName, username);
             Game game = games.listOfGames[tableName];
+            game.Players[pos].connectionId = Context.ConnectionId;
+
+            Groups.Add(Context.ConnectionId, tableName);
 
             Clients.Caller.myPosition(username, pos, game.Players[pos].currentMoney);
 
@@ -30,11 +33,12 @@ namespace Poker.Hubs
                 }
             }
 
-            Clients.Others.displayPlayer(username, pos, game.Players[pos].currentMoney);
+            Clients.OthersInGroup(tableName).displayPlayer(username, pos, game.Players[pos].currentMoney);
 
             if (game.Players.Count == 2)
             {
                 game.newHand();
+                game.currentPlayer = 1;
                 playDeal(game.Name);
             }
         }
@@ -45,9 +49,11 @@ namespace Poker.Hubs
             game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], "deal", 0);
             game.CurrentCommand.Execute();
 
+            Clients.Group(game.Name).resetTable();
+
             foreach (int pos in game.CurrentHand)
             {
-                Clients.All.getCards(game.Players[pos].card1.getString(), game.Players[pos].card2.getString(), pos);
+                Clients.Group(game.Name).getCards(game.Players[pos].card1.getString(), game.Players[pos].card2.getString(), pos);
             }
 
             game.currentPlayer = (game.currentPlayer + 1) % game.CurrentHand.Count;
@@ -60,7 +66,7 @@ namespace Poker.Hubs
             game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], "smallBlind", 0);
             game.CurrentCommand.Execute();
 
-            Clients.All.showSmallBlind(game.table.smallBlind, game.CurrentHand[game.currentPlayer]);
+            Clients.Group(game.Name).showSmallBlind(game.table.smallBlind, game.CurrentHand[game.currentPlayer]);
 
             game.currentPlayer = (game.currentPlayer + 1) % game.CurrentHand.Count;
             playBigBlind(game.Name);
@@ -72,7 +78,7 @@ namespace Poker.Hubs
             game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], "bigBlind", 0);
             game.CurrentCommand.Execute();
 
-            Clients.All.showBigBlind(game.table.bigBlind, game.CurrentHand[game.currentPlayer]);
+            Clients.Group(game.Name).showBigBlind(game.table.bigBlind, game.CurrentHand[game.currentPlayer]);
 
             game.lastRasePlayer = game.currentPlayer;
             game.currentPlayer = (game.currentPlayer + 1) % game.CurrentHand.Count;
@@ -92,26 +98,27 @@ namespace Poker.Hubs
 
             game.CurrentCommand.Execute();
 
-            Clients.Others.displayPlayed(game.CurrentHand[game.currentPlayer], 
-                                            game.currentRase - game.Players[game.CurrentHand[game.currentPlayer]].stakesMoney);
+            Clients.OthersInGroup(game.Name).displayPlayed(game.CurrentHand[game.currentPlayer], 
+                                            game.currentRaise - game.Players[game.CurrentHand[game.currentPlayer]].stakesMoney);
 
             game.currentPlayer = (game.currentPlayer + 1) % game.CurrentHand.Count;
 
             if (game.currentPlayer != game.lastRasePlayer)
             {
-                Clients.All.youAreNext(game.CurrentHand[game.currentPlayer],
-                    game.currentRase - game.Players[game.CurrentHand[game.currentPlayer]].stakesMoney, game.table.bigBlind);
+                Clients.Group(game.Name).youAreNext(game.CurrentHand[game.currentPlayer],
+                    game.currentRaise - game.Players[game.CurrentHand[game.currentPlayer]].stakesMoney, game.table.bigBlind);
             }
             else
             {
                 if (game.cardsOnTable.Count == 5)
                 {
                     int winner = game.WhoIsWinner();
-                    Clients.All.showWinner(winner);
+                    Clients.Group(game.Name).showWinner(winner);
                     game.SetWinning(winner);
 
                     game.newHand();
                     playDeal(game.Name);
+                    return;
                 }
 
                 game.endCircle();
@@ -121,9 +128,9 @@ namespace Poker.Hubs
                 for (int i = 0; i < game.cardsOnTable.Count; i++)
                     cards.Add(game.cardsOnTable[i].getString());
 
-                Clients.All.displayCardsOnTable(game.CurrentHand[game.currentPlayer], cards);
-                Clients.All.youAreNext(game.CurrentHand[game.currentPlayer],
-                    game.currentRase - game.Players[game.CurrentHand[game.currentPlayer]].stakesMoney, game.table.bigBlind);
+                Clients.Group(game.Name).displayCardsOnTable(game.CurrentHand[game.currentPlayer], cards);
+                Clients.Group(game.Name).youAreNext(game.CurrentHand[game.currentPlayer],
+                    game.currentRaise - game.Players[game.CurrentHand[game.currentPlayer]].stakesMoney, game.table.bigBlind);
           
             }
         }
