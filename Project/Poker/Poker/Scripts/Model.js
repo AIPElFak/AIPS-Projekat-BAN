@@ -8,6 +8,7 @@
     playerMoney: new Array(),
     playerMoneyAmount: new Array(),
     playerChipAmount: new Array(),
+    playerStakes: new Array(),
     tableChipAmount: 0,
     sounds: new Array(),
 
@@ -91,6 +92,7 @@
                 this.playerChips[playerNumber][i][2].material = this.getChipTexture("" + chips[i]);
             }
         }
+        setStakes(playerNumber, amount);
     },
     //to do
     setTableChips: function (amount)
