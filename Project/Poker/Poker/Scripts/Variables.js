@@ -14,7 +14,6 @@ var setPlayerTableChips = function (position, amount)
 {
     PlayerTableChips[position] = amount;
 }
-
 var setPlayerCard = function (position, card1, card2) {
     model.setPlayerCards(position, card1, card2);
 }
@@ -120,7 +119,7 @@ var raiseAmount = 0;
 var scene = new BABYLON.Scene(engine);
 model.scene = scene;
 model.init();
-resetAllCards();
+
 
 
 

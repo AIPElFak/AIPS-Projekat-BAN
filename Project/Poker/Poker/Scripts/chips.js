@@ -17,7 +17,6 @@
     drawChipPile(Size, height, heightDiff * 0.8, -yOffset / 2, Math.PI / 15, 3);
     drawChipPile(Size, height, heightDiff * 0.8, yOffset / 2, - Math.PI / 15, 4);
 }
-
 var drawChip = function (size) {
     var iterations = 30;
     var Size = size;
@@ -60,7 +59,6 @@ var drawChip = function (size) {
 
     return ribbons;
 }
-
 function drawElipticBase(iterations, heightDiff, height, yOffset) {
     var paths = [];
 
@@ -103,8 +101,6 @@ function drawElipticBase(iterations, heightDiff, height, yOffset) {
 
     return ribbon;
 }
-
-
 var drawChipPile = function (size, height, distanceX, distanceY, angle, position) {
     
     
@@ -121,8 +117,10 @@ var drawChipPile = function (size, height, distanceX, distanceY, angle, position
         
     }
 
-    //var chipAmount = drawChipAmount(size, sum);
+    var chipAmount = drawChipAmount(size);
 
+    //chipAmount.position = firstChip.position;
+    model.playerStakes[position] = chipAmount;
     //chipAmount.rotate(BABYLON.Axis.Y, angle - Math.PI * 3 / 30 , BABYLON.Space.LOCAL);
     //chipAmount.translate(new BABYLON.Vector3(0, size*6, 0), 1, BABYLON.Space.LOCAL);
     //chipAmount.translate(new BABYLON.Vector3(distanceX, 0, 0), 1, BABYLON.Space.LOCAL);
@@ -131,7 +129,6 @@ var drawChipPile = function (size, height, distanceX, distanceY, angle, position
     //chipAmount.rotate(BABYLON.Axis.Y, -Math.PI/2, BABYLON.Space.LOCAL);
     
 }
-
 var drawStackOfChips = function (stackNumber, Size, chips, height, distanceX, distanceY,angle, xStackOffset,zStackOffset, position) {
     var yOffset = 0;
     var firstChip;
@@ -159,7 +156,6 @@ var drawStackOfChips = function (stackNumber, Size, chips, height, distanceX, di
     }
     return firstChip;
 }
-
 var findChipsForSum = function (sum, limit) {
     var niz = [100, 500, 1000, 5000, 25000, 100000, 250000, 500000, 1000000];
     var values = [];
@@ -179,20 +175,19 @@ var findChipsForSum = function (sum, limit) {
 
     return values;
 }
-
-var drawChipAmount = function(size, amount)
-{
-    var str = "$" + amount;
+var drawChipAmount = function (Size) {
+    var size = Size / 15;
+    var str = "";
     var options = {
         height: 512,
-        width: 355 * str.length
+        width: 355 * 15
     }
     var mat = new BABYLON.DynamicTexture("dynamic texture", options, scene, true);
 
     var paths = [];
     var iterations = 10;
-    var Size = size /5;
-    var xOffset = Size * 5 * (str.length);
+    var Size = size / 5;
+    var xOffset = Size * 5 * 15;
     var yOffset = Size * 10;
     var heightDiff = Size * 1.4;
     for (var t = iterations; t >= 0; t--) {
@@ -200,10 +195,10 @@ var drawChipAmount = function(size, amount)
         for (var k = 0; k <= 1; k++) {
 
             var x = (xOffset - 2 * heightDiff) / 2 + heightDiff * Math.cos(Math.PI / 2 - t * Math.PI / (2 * iterations));
-            var y = 0;
-            var z = yOffset / 2 + heightDiff * Math.sin(Math.PI / 2 - t * Math.PI / (2 * iterations));
+            var z = 0;
+            var y = yOffset / 2 + heightDiff * Math.sin(Math.PI / 2 - t * Math.PI / (2 * iterations));
             if (k == 0)
-                z = -1 * z;
+                y = -1 * y;
             path.push(new BABYLON.Vector3(x, y, z));
         }
         paths.push(path);
@@ -214,10 +209,10 @@ var drawChipAmount = function(size, amount)
         for (var k = 0; k <= 1; k++) {
 
             var x = -xOffset / 2 + heightDiff * Math.cos(Math.PI - t * Math.PI / (2 * iterations));
-            var y = 0;
-            var z = yOffset / 2 + heightDiff * Math.sin(Math.PI - t * Math.PI / (2 * iterations));
+            var z = 0;
+            var y = yOffset / 2 + heightDiff * Math.sin(Math.PI - t * Math.PI / (2 * iterations));
             if (k == 0)
-                z = -1 * z;
+                y = -1 * y;
             path.push(new BABYLON.Vector3(x, y, z));
         }
         paths.push(path);
@@ -234,9 +229,9 @@ var drawChipAmount = function(size, amount)
 
     for (var i = 0; i < iterations * 2 + 2; ++i) {
         var ulX = (paths[i][0].x - minX) / diffX;
-        var ulZ = (paths[i][0].z - minZ) / diffZ;
+        var ulZ = (paths[i][0].y - minZ) / diffZ;
         var dlX = (paths[i][1].x - minX) / diffX;
-        var dlZ = (paths[i][1].z - minZ) / diffZ;
+        var dlZ = (paths[i][1].y - minZ) / diffZ;
         faceUV[i * 2] = new BABYLON.Vector2(ulX, ulZ);
         faceUV[i * 2 + 1] = new BABYLON.Vector2(dlX, dlZ);
     }
@@ -248,15 +243,24 @@ var drawChipAmount = function(size, amount)
         sideOrientation: BABYLON.Mesh.DOUBLESIDE, offset: 0, uvs: faceUV, invertUV: true
     }, scene);
 
-    //ribbon.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_ALL;
+    ribbon.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_ALL;
     ribbon.material = new BABYLON.StandardMaterial("outputplane", scene);
-    ribbon.material.diffuseTexture = mat;
-    ribbon.material.specularColor = new BABYLON.Color3(0, 0, 0);
-    ribbon.material.emissiveColor = new BABYLON.Color3(1, 1, 1);
-
-    mat.drawText(str, null, 450, "bold " + 500 + "px" + " verdana", "white");
-
+    ribbon.material.diffuseTexture = new BABYLON.DynamicTexture("dynamic texture", options, scene, true);;
+    ribbon.material.diffuseTexture.drawText(str + str, null, 450, "bold " + 500 + "px" + " verdana", "white");
+    ribbon.material.diffuseTexture.hasAlpha = true;
 
     return ribbon;
 
+}
+var setStakes = function (position, amount)
+{
+    var options = {
+        height: 512,
+        width: 355 * 15
+    }
+
+    model.playerStakes[position].material.diffuseTexture.dispose();
+    model.playerStakes[position].material.diffuseTexture = new BABYLON.DynamicTexture("dynamic texture", options, scene, true);;
+    model.playerStakes[position].material.diffuseTexture.drawText("$"+amount, null, 450, "bold " + 500 + "px" + " verdana", "white");
+    model.playerStakes[position].material.diffuseTexture.hasAlpha = true;
 }
