@@ -99,7 +99,7 @@ namespace Poker.Hubs
             game.CurrentCommand.Execute();
 
             Clients.OthersInGroup(game.Name).displayPlayed(game.CurrentHand[game.currentPlayer], 
-                                            game.currentRaise - game.Players[game.CurrentHand[game.currentPlayer]].stakesMoney);
+                                            result);
 
             game.currentPlayer = (game.currentPlayer + 1) % game.CurrentHand.Count;
 
