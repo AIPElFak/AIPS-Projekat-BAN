@@ -9,7 +9,7 @@ namespace Poker.Hubs
     {
         public Game thisGame { get; set; }
         protected Command() { }
-        public abstract void Execute();
+        public abstract int Execute();
         public static Command makeCommand(Game game, string commandName, int money = 0)
         {
             switch (commandName)
@@ -38,7 +38,7 @@ namespace Poker.Hubs
         {
             this.thisGame = game;
         }
-        public override void Execute()
+        public override int Execute()
         {
             int currentPos = thisGame.currentPlayer;
             for (int i = 0; i < thisGame.CurrentHand.Count; i++)
@@ -53,6 +53,8 @@ namespace Poker.Hubs
                 thisGame.Players[thisGame.CurrentHand[currentPos]].card1 = card1;
                 thisGame.Players[thisGame.CurrentHand[currentPos]].card2 = card2;
             }
+
+            return 0;
         }
     }
 
@@ -62,11 +64,12 @@ namespace Poker.Hubs
         {
             this.thisGame = game;
         }
-        public override void Execute()
+        public override int Execute()
         {
             thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].currentMoney -= thisGame.table.smallBlind;
             thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].stakesMoney += thisGame.table.smallBlind;
             thisGame.piles[0] += thisGame.table.smallBlind;
+            return 0;
         }
     }
 
@@ -76,13 +79,14 @@ namespace Poker.Hubs
         {
             this.thisGame = game;
         }
-        public override void Execute()
+        public override int Execute()
         {
             thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].currentMoney -= thisGame.table.bigBlind;
             thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].stakesMoney += thisGame.table.bigBlind;
             thisGame.piles[0] += thisGame.table.bigBlind;
             thisGame.lastRasePlayer = thisGame.currentPlayer;
             thisGame.currentRaise = thisGame.table.bigBlind;
+            return 0;
         }
     }
 
@@ -94,14 +98,19 @@ namespace Poker.Hubs
             this.thisGame = game;
             this.money = money;
         }
-        public override void Execute()
+        public override int Execute()
         {
+            int diff;
+
             thisGame.currentRaise += money;
             thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].currentMoney -=
                 (thisGame.currentRaise - thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].stakesMoney);
-            thisGame.piles[0] += (thisGame.currentRaise - thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].stakesMoney);
+            diff = (thisGame.currentRaise - thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].stakesMoney);
+            thisGame.piles[0] += diff;
             thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].stakesMoney = thisGame.currentRaise;
             thisGame.lastRasePlayer = thisGame.currentPlayer;
+
+            return diff;
         }
     }
 
@@ -111,10 +120,12 @@ namespace Poker.Hubs
         {
             this.thisGame = game;
         }
-        public override void Execute()
+        public override int Execute()
         {
             thisGame.CurrentHand.RemoveAt(thisGame.currentPlayer);
             thisGame.currentPlayer = (thisGame.currentPlayer - 1) % thisGame.CurrentHand.Count;
+
+            return -1;
         }
     }
 
@@ -126,13 +137,18 @@ namespace Poker.Hubs
             this.thisGame = game;
             this.money = money;
         }
-        public override void Execute()
+        public override int Execute()
         {
+            int diff;
+
             thisGame.currentRaise += money;
             thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].currentMoney -=
                 (thisGame.currentRaise - thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].stakesMoney);
-            thisGame.piles[0] += (thisGame.currentRaise - thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].stakesMoney);
+            diff = (thisGame.currentRaise - thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].stakesMoney);
+            thisGame.piles[0] += diff;
             thisGame.Players[thisGame.CurrentHand[thisGame.currentPlayer]].stakesMoney = thisGame.currentRaise;
+
+            return diff;
         }
     }
 
@@ -142,9 +158,9 @@ namespace Poker.Hubs
         {
             this.thisGame = game;
         }
-        public override void Execute()
+        public override int Execute()
         {
-
+            return 0;
         }
     }
 }
