@@ -11,6 +11,7 @@
     playerStakes: new Array(),
     avatars: new Array(),
     tableChipAmount: 0,
+    noShownCards: 0,
     sounds: new Array(),
 
     init: function ()
@@ -22,15 +23,15 @@
         this.sounds["wait"] = new Audio("../Content/sounds/wait.mp3");
     },
 
-    setAvatar: function (position)
+    setAvatar: function (position, name)
     {
-        var plane = avatars[position];
-        plane.material.dispose();
-        plane.material = new BABYLON.StandardMaterial("outputplane", scene);
-        plane.material.diffuseTexture = new BABYLON.Texture("https://maxcdn.icons8.com/Share/icon/Cinema//avatar1600.png", scene);
-        plane.material.diffuseTexture.hasAlpha = true;
-        plane.material.emissiveColor = new BABYLON.Color3(1, 1, 1);
-        plane.setEnabled(1);
+        if (this.avatars[position].material != 'undefined')
+            this.avatars[position].material.dispose();
+        this.avatars[position].material = new BABYLON.StandardMaterial(""+position+"avatar", scene);
+        this.avatars[position].material.diffuseTexture = new BABYLON.Texture(name, scene);
+        this.avatars[position].material.diffuseTexture.hasAlpha = true;
+        this.avatars[position].material.emissiveColor = new BABYLON.Color3(1, 1, 1);
+        this.avatars[position].setEnabled(1);
     },
     removeAvatar: function (position)
     {
@@ -86,7 +87,6 @@
     {
         this.playerMoney[playerNumber] = amount;
     },
-    //to do
     setPlayerChips: function (playerNumber, amount)
     {
         var chips = this.findChipsForSum(amount, 20);
@@ -138,6 +138,7 @@
     },
     resetSceen: function ()
     {
+        this.noShownCards = 0;
         this.setTableChips(0);
         for (var i = 0; i < 8; ++i)
         {

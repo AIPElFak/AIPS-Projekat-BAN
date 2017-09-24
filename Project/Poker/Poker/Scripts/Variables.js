@@ -1,7 +1,10 @@
 ﻿var setTableCard = function (position, card) {
-    model.setTableCard(position, card);
-    model.sounds["flop"].play();
-    pileUp();
+    if (model.noShownCards <= position) {
+        model.setTableCard(position, card);
+        model.sounds["flop"].play();
+        pileUp();
+        model.noShownCards++;
+    }
 }
 var setPlayerChips = function (position, amount) {
     model.setPlayerChips(position, amount);
@@ -18,9 +21,10 @@ var setPlayerTableChips = function (position, amount)
 var setPlayerCard = function (position, card1, card2) {
     model.setPlayerCards(position, card1, card2);
 }
-var setPlayerStats = function (username, position, amount)
+var setPlayerStats = function (username, position, amount, avatar)
 {
     Usernames[position] = username;
+    model.setAvatar(position, avatar);
     PlayerTableChips[position] = amount;
 }
 // to do
@@ -90,11 +94,13 @@ var displayMove = function (position, amount)
 
 var pileUp = function ()
 {
+    var amount = 0;
     for (var i = 0; i < 8; ++i)
     {
-        model.changeTableChips(model.playerChipAmount[i]);
+        amount += model.playerChipAmount[i];
         model.setPlayerChips(i, 0);
     }
+    model.changeTableChips(amount);
 }
 var resetSceen = function ()
 {

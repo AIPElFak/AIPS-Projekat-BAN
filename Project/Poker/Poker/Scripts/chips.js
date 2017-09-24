@@ -125,6 +125,7 @@ var drawChipPile = function (size, height, distanceX, distanceY, angle, position
     chipAmount.position = firstChip[0].position;
     chipAmount.translate(new BABYLON.Vector3(0, size *6, 0), 1, BABYLON.Space.LOCAL);
     model.playerStakes[position] = chipAmount;
+
     //chipAmount.rotate(BABYLON.Axis.Y, angle - Math.PI * 3 / 30 , BABYLON.Space.LOCAL);
     //chipAmount.translate(new BABYLON.Vector3(0, size*6, 0), 1, BABYLON.Space.LOCAL);
     //chipAmount.translate(new BABYLON.Vector3(distanceX, 0, 0), 1, BABYLON.Space.LOCAL);
@@ -259,6 +260,7 @@ var drawChipAmount = function (Size) {
 }
 var setStakes = function (position, amount)
 {
+    /*
     var options = {
         height: 512,
         width: 355 * 15
@@ -269,5 +271,13 @@ var setStakes = function (position, amount)
     model.playerStakes[position].material.emissiveColor = new BABYLON.Color3(1, 1, 1);
     if (amount != 0)
         model.playerStakes[position].material.diffuseTexture.drawText("$"+amount, null, 450, "bold " + 500 + "px" + " verdana", "white");
-    model.playerStakes[position].material.diffuseTexture.hasAlpha = true;
+    */
+    
+    
+    var ctx = model.playerStakes[position].material.diffuseTexture.getContext();
+    ctx.clearRect(0, 0, 355*15, 355*15);
+    if (amount != 0)
+        model.playerStakes[position].material.diffuseTexture.drawText("$" + amount, null, 450, "bold " + 500 + "px" + " verdana", "white");
+    else
+        model.playerStakes[position].material.diffuseTexture.update();
 }

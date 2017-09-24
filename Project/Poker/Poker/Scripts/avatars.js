@@ -1,30 +1,31 @@
-﻿var drawAvatar = function (Size, height, distanceX, distanceY, angle, position)
+﻿var drawAvatar = function (Size, X, Y, Z, position)
 {
-    var avatar = BABYLON.Mesh.CreatePlane("plane", Size, scene, false, BABYLON.Mesh.DEFAULTSIDE);
+    var avatar = BABYLON.Mesh.CreatePlane("plane"+position, Size, scene, false, BABYLON.Mesh.DOUBLESIDE);
 
-    avatar.rotate(BABYLON.Axis.Y, angle, BABYLON.Space.LOCAL);
-    avatar.translate(new BABYLON.Vector3(distanceX, 0, 0), 1, BABYLON.Space.LOCAL);
-    avatar.translate(new BABYLON.Vector3(0, 0, distanceY), 1, BABYLON.Space.WORLD);
-    avatar.translate(new BABYLON.Vector3(0, height * 1.1, 0), 1, BABYLON.Space.LOCAL);
+    avatar.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_ALL;
+    avatar.material = new BABYLON.StandardMaterial("outputplane" + position, scene);
+    avatar.position = new BABYLON.Vector3(X, Y, Z);   
+    avatar.setEnabled(0);
 
     model.avatars[position] = avatar;
+    var b = avatar.position;
 }
 
 var drawAllAvatars = function (Size, height, yOffset, heightDiff) {
 
-    //1 i 8  
-    drawAvatar(Size, height, heightDiff * 1.3, -yOffset * 0.3, Math.PI, 0);
-    drawAvatar(Size, height, heightDiff * 1.3, yOffset * 0.3, Math.PI, 7);
+    //1 i 8
+    drawAvatar(Size, -Size * 2.6, 0.089973 * Size, -0.916 * Size, 0);
+    drawAvatar(Size, -Size * 2.6, 0.089973 * Size, 0.916 * Size, 7);
 
     //2 i 7
-    drawAvatar(Size, height, heightDiff * 1.3, -yOffset / 2, Math.PI * 11 / 15, 1);
-    drawAvatar(Size, height, heightDiff * 1.3, yOffset / 2, -Math.PI * 11 / 15, 6);
+    drawAvatar(Size, -Size * 1.73974, 0.089973 * Size, -3.43066 * Size, 1);
+    drawAvatar(Size, -Size * 1.73974, 0.089973 * Size, 3.43066 * Size, 6);
 
     //3 i 6
-    drawAvatar(Size, height, heightDiff * 1.3, -yOffset / 2, Math.PI * 6 / 15, 2);
-    drawAvatar(Size, height, heightDiff * 1.3, yOffset / 2, -Math.PI * 6 / 15, 5);
+    drawAvatar(Size, Size * 0.80344, 0.089973 * Size, -3.96073 * Size, 2);
+    drawAvatar(Size, Size * 0.80344, 0.089973 * Size, 3.96073 * Size, 5);
 
     //4 i 5
-    drawAvatar(Size, height, heightDiff * 1.3, -yOffset / 2, Math.PI / 15, 3);
-    drawAvatar(Size, height, heightDiff * 1.3, yOffset / 2, -Math.PI / 15, 4);
+    drawAvatar(Size, Size * 2.54318, 0.089973 * Size, -2.06608 * Size, 3);
+    drawAvatar(Size, Size * 2.54318, 0.089973 * Size, 2.06608 * Size, 4);
 }
