@@ -42,6 +42,10 @@ gameHub.client.getCards = function (card1, card2, pos) {
     }
 };
 
+gameHub.client.flipCards = function (card1, card2, pos) {
+        setPlayerCard(pos, card1, card2);
+};
+
 gameHub.client.resetTable = function (card1, card2, pos) {
     resetSceen();
 };

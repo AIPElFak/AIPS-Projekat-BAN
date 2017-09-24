@@ -85,6 +85,7 @@ namespace Poker.Hubs
                     if (game.CurrentHand.Count == 1)
                     {
                         int winner = game.CurrentHand[0];
+                        showPlayersCards(game);
                         Clients.Group(game.Name).showWinner(winner);
                         game.SetWinning(winner);
 
@@ -108,6 +109,7 @@ namespace Poker.Hubs
                     if (game.CurrentHand.Count == 1)
                     {
                         int winner = game.CurrentHand[0];
+                        showPlayersCards(game);
                         Clients.Group(game.Name).showWinner(winner);
                         game.SetWinning(winner);
 
@@ -210,6 +212,7 @@ namespace Poker.Hubs
                 if (game.cardsOnTable.Count == 5)
                 {
                     int winner = game.WhoIsWinner();
+                    showPlayersCards(game);
                     Clients.Group(game.Name).showWinner(winner);
                     game.SetWinning(winner);
 
@@ -235,6 +238,15 @@ namespace Poker.Hubs
         public void send(string tableName, string username, string message)
         {
             Clients.OthersInGroup(tableName).displayMessage(username, message);
+        }
+
+        public void showPlayersCards(Game game)
+        {
+            for (int i = 0; i < game.CurrentHand.Count; i++)
+            {
+                int pos = game.CurrentHand[i];
+                Clients.Group(game.Name).flipCards(game.Players[pos].card1.getString(), game.Players[pos].card2.getString(), pos);
+            }
         }
     }
 }
