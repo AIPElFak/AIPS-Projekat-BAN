@@ -311,7 +311,7 @@ namespace Poker.Hubs
                 rep.UpdateTable(table.Id, FreeSeats);
 
             User updateUser = rep.ReadByUsername(Players[position].username);
-            rep.UpdateMoney(Players[position].username, Players[position].currentMoney);
+            rep.UpdateMoney(Players[position].username, updateUser.money + Players[position].currentMoney);
 
             Players.Remove(position);
         }

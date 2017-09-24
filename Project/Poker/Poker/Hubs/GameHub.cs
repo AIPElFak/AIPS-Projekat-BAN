@@ -46,17 +46,88 @@ namespace Poker.Hubs
             }
         }
 
-        public void exitGame(int pos, string tableName)
+        public override Task OnDisconnected(bool stopCalled)
         {
-            Game game = games.listOfGames[tableName];
+            if (stopCalled)
+            {
+                string tableName = "";
+                int pos = 0;
+                foreach (KeyValuePair<string, Game> room in games.listOfGames)
+                {
+                    foreach (KeyValuePair<int, Player> player in room.Value.Players)
+                    {
+                        if (player.Value.connectionId == Context.ConnectionId)
+                        {
+                            tableName = room.Value.Name;
+                            pos = player.Key;
+                            break;
+                        }
+                    }
 
-            if (pos == game.CurrentHand[game.currentPlayer])
-                play(-1, game.Name);
+                    if (tableName != "")
+                        break;
+                }
 
-            game.RemovePlayer(pos);
+                if (tableName == "")
+                    return base.OnDisconnected(stopCalled);
 
-            if (game.FreeSeats == 8)
-                games.listOfGames.Remove(tableName);
+                Game game = games.listOfGames[tableName];
+                Groups.Remove(Context.ConnectionId, tableName);
+
+                if (pos == game.CurrentHand[game.currentPlayer])
+                {
+                    game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], "fold", 0);
+                    int amount = game.CurrentCommand.Execute();
+                    Clients.Group(game.Name).displayPlayed(game.CurrentHand[game.currentPlayer],
+                                                    amount);
+
+                    game.currentPlayer = (game.currentPlayer + 1) % game.CurrentHand.Count;
+                    if (game.CurrentHand.Count == 1)
+                    {
+                        int winner = game.CurrentHand[0];
+                        Clients.Group(game.Name).showWinner(winner);
+                        game.SetWinning(winner);
+
+                        game.RemovePlayer(pos);
+
+                        if (game.Players.Count >= 2)
+                        {
+                            game.newHand();
+                            playDeal(game.Name);
+                        }
+                        else
+                            Clients.Group(tableName).resetTable();
+                    }
+                }
+                else
+                {
+                    Clients.Group(game.Name).displayPlayed(pos, -1);
+                    game.RemovePlayer(pos);
+                    game.CurrentHand.RemoveAt(pos);
+
+                    if (game.CurrentHand.Count == 1)
+                    {
+                        int winner = game.CurrentHand[0];
+                        Clients.Group(game.Name).showWinner(winner);
+                        game.SetWinning(winner);
+
+                        if (game.Players.Count >= 2)
+                        {
+                            game.newHand();
+                            playDeal(game.Name);
+                        }
+                        else
+                            Clients.Group(tableName).resetTable();
+                    }
+                }
+
+                Clients.Group(game.Name).displayExit(pos);
+
+                if (game.FreeSeats == 8)
+                    games.listOfGames.Remove(tableName);
+            }
+
+            return base.OnDisconnected(stopCalled);
         }
 
         public void playDeal(string tableName)

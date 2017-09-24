@@ -10,15 +10,12 @@ function start(model) {
     $.connection.hub.start().done(function () {
 
         gameHub.server.enterGame(gameModel.username, gameModel.gameName);
-
-
     });
 }
 
-$.connection.hub.disconnected(function () {
-    gameHub.server.exitGame(clientPos, gameModel.gameName);
-    //remove avatar
-});
+gameHub.client.displayExit = function (position) {
+    //remove player from pos
+};
 
 //functions for hub to call
 gameHub.client.myPosition = function (username, position, amount, avatarURL) {
