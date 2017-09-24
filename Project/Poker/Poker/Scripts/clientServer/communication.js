@@ -15,6 +15,11 @@ function start(model) {
     });
 }
 
+$.connection.hub.disconnected(function () {
+    gameHub.server.exitGame(clientPos, gameModel.gameName);
+    //remove avatar
+});
+
 //functions for hub to call
 gameHub.client.myPosition = function (username, position, amount, avatarURL) {
     clientPos = position;
@@ -82,5 +87,5 @@ gameHub.client.displayMessage = function (username, message) {
 }
 
 function sendMessage(message) {
-    gameHub.server.send(gameModel.username, message);
+    gameHub.server.send(gameModel.gameName, gameModel.username, message);
 }

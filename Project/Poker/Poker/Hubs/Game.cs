@@ -296,5 +296,24 @@ namespace Poker.Hubs
         {
             Players[position].currentMoney += piles[0]; 
         }
+
+        public void RemovePlayer(int position)
+        {
+            FreeSeats++;
+            UsedSeats[position] = false;
+
+            UserRepository rep = new UserRepository();
+            Table updateTable = rep.ReadTable(table.Id);
+
+            if (FreeSeats == 8)
+                rep.DeleteTable(table.Id);
+            else
+                rep.UpdateTable(table.Id, FreeSeats);
+
+            User updateUser = rep.ReadByUsername(Players[position].username);
+            rep.UpdateMoney(Players[position].username, Players[position].currentMoney);
+
+            Players.Remove(position);
+        }
     }
 }

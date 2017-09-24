@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNet.SignalR;
 
@@ -43,6 +44,19 @@ namespace Poker.Hubs
                 game.currentPlayer = 1;
                 playDeal(game.Name);
             }
+        }
+
+        public void exitGame(int pos, string tableName)
+        {
+            Game game = games.listOfGames[tableName];
+
+            if (pos == game.CurrentHand[game.currentPlayer])
+                play(-1, game.Name);
+
+            game.RemovePlayer(pos);
+
+            if (game.FreeSeats == 8)
+                games.listOfGames.Remove(tableName);
         }
 
         public void playDeal(string tableName)
@@ -98,10 +112,10 @@ namespace Poker.Hubs
             else
                 game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], "raise", result);
 
-            game.CurrentCommand.Execute();
+            int amount = game.CurrentCommand.Execute();
 
             Clients.Group(game.Name).displayPlayed(game.CurrentHand[game.currentPlayer], 
-                                            result);
+                                            amount);
 
             game.currentPlayer = (game.currentPlayer + 1) % game.CurrentHand.Count;
 
@@ -149,7 +163,7 @@ namespace Poker.Hubs
 
         public void send(string tableName, string username, string message)
         {
-            Clients.Group(tableName).displayMessage(username, message);
+            Clients.OthersInGroup(tableName).displayMessage(username, message);
         }
     }
 }
