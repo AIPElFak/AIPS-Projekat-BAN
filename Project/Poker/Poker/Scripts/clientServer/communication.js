@@ -84,7 +84,25 @@ gameHub.client.showWinner = function (pos) {
 };
 
 gameHub.client.displayMessage = function (username, message) {
-    //show message
+    var body = document.getElementById("chat-body");
+
+    var tr = document.createElement("TR");
+    tr.style.marginBottom = "5px";
+
+    var td = document.createElement("TD");
+
+    var b = document.createElement("B");
+    b.style.textShadow= "0 0 5px #1095ab";
+
+    var username = document.createTextNode(username + ": ");
+    b.appendChild(username);
+
+    var mess = document.createTextNode(message);
+
+    td.appendChild(b);
+    td.appendChild(mess);
+    tr.appendChild(td);
+    body.appendChild(tr);
 }
 
 function sendMessage(message) {

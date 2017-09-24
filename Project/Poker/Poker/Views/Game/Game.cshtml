@@ -84,38 +84,13 @@
                                             <tr>
                                                 <td class="chat-log-head">
                                                     <i class="material-icons" style="float:left; color:#1095ab; text-shadow:0 0 2px #1095ab;">chat</i>
-                                                    <input type="text" class="chat-input" placeholder="Chat here...">
-                                                    <button class="send-button">SEND</button>
+                                                    <input id="chat-input" type="text" class="chat-input" placeholder="Chat here...">
+                                                    <button id="sendButton" class="send-button">SEND</button>
                                                 </td>
                                             </tr>
                                         </table>
                                         <table style="width:100%;" class="chat-table">
-                                            <tbody>
-                                                <tr style="margin-bottom:5px;">
-                                                    <td>
-                                                        <b style="text-shadow: 0 0 5px #1095ab;">Aca: </b>A red flair silhouetted the jagged edge of a wing.A red flair silhouetted the jagged edge of a wing.
-                                                    </td>
-                                                </tr>
-                                                <tr style="margin-bottom:5px;">
-                                                    <td>
-                                                        <b style="text-shadow: 0 0 5px #1095ab; color:#ff7979;">Me: </b>The recorded voice scratched in the speaker.
-                                                    </td>
-                                                </tr>
-                                                <tr style="margin-bottom:5px;">
-                                                    <td>
-                                                        <b style="text-shadow: 0 0 5px #1095ab;">Bane: </b>A red flair silhouetted the jagged edge of a wing.A red flair silhouetted the jagged edge of a wing.A red flair silhouetted the jagged edge of a wing.A red flair silhouetted the jagged edge of a wing.
-                                                    </td>
-                                                </tr>
-                                                <tr style="margin-bottom:5px;">
-                                                    <td>
-                                                        <b style="text-shadow: 0 0 5px #1095ab; color:#ff7979;">Me: </b>The recorded voice scratched in the speaker.
-                                                    </td>
-                                                </tr>
-                                                <tr style="margin-bottom:5px;">
-                                                    <td>
-                                                        <b style="text-shadow: 0 0 5px #1095ab;">Aca: </b>A red flair silhouetted the jagged edge of a wing.A red flair silhouetted the jagged edge of a wing.
-                                                    </td>
-                                                </tr>
+                                            <tbody id="chat-body">
                                             </tbody>
                                         </table>
                                     </td>
@@ -227,9 +202,38 @@ var updateRange = function (direction) {
         from: from
     });
 };
+
+
+
             </script>
         <script src="~/Scripts/clientServer/communication.js"></script>
         <script>
+            document.getElementById("sendButton").onclick = function () {
+                var input = document.getElementById("chat-input");
+                var message = input.value;
+                input.value = "";
+
+                var body = document.getElementById("chat-body");
+
+                var tr = document.createElement("TR");
+                tr.style.marginBottom = "5px";
+
+                var td = document.createElement("TD");
+
+                var b = document.createElement("B");
+                b.style.textShadow = "0 0 5px #1095ab";
+
+                var username = document.createTextNode("Me: ");
+                b.appendChild(username);
+
+                var mess = document.createTextNode(message);
+
+                td.appendChild(b);
+                td.appendChild(mess);
+                tr.appendChild(td);
+                body.appendChild(tr);
+                sendMessage(message);
+            };
             start(@Html.Raw(Json.Encode(Model)));
         </script>
     </body>
