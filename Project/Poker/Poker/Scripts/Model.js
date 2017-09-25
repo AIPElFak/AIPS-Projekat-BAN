@@ -12,6 +12,7 @@
     avatars: new Array(),
     tableChipAmount: 0,
     noShownCards: 0,
+    camera: 0,
     sounds: new Array(),
 
     init: function ()
@@ -54,8 +55,7 @@
     },
     changePlayerChipAmount: function (playerNumber, amount)
     {
-        this.playerChipAmount[playerNumber] += amount;
-        this.setPlayerChips(playerNumber, amount);
+        this.setPlayerChips(playerNumber, amount + this.playerChipAmount[playerNumber]);
     },
     getChipTexture: function (amount) {
         if (typeof this.chipTextures[amount] === 'undefined') {

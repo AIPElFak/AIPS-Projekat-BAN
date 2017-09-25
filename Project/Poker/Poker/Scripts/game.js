@@ -2,9 +2,9 @@
     
     scene.clearColor = new BABYLON.Color3(0,0,0.1445);
     // camera
-    var camera = new BABYLON.ArcRotateCamera("camera1", 0, 0, 0, new BABYLON.Vector3(0, 0, 0), scene);
-    camera.setPosition(new BABYLON.Vector3(0, 10, -50));
-    camera.attachControl(canvas, true);
+    model.camera = new BABYLON.ArcRotateCamera("camera1", 0, 0, 0, new BABYLON.Vector3(0, 0, 0), scene);
+    model.camera.setPosition(new BABYLON.Vector3(50, 45, 0));
+    //camera.attachControl(canvas, true);
     // light
     var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 1), scene);
     light.intensity = 0.9;
@@ -27,10 +27,10 @@
     mat3.diffuseColor = new BABYLON.Color3(0.6863, 0.0824, 0.0824);
     mat3.backFaceCulling = false;
 
-    var size = 7.5;
+    var size = 9;
 
     drawTable(size, mat, mat2, mat3);
-    drawTableCards(size);
+    drawTableCards(size*1.3);
 
     return scene;
 };

@@ -215,6 +215,7 @@ namespace Poker.Hubs
                     showPlayersCards(game);
                     Clients.Group(game.Name).showWinner(winner);
                     game.SetWinning(winner);
+                    
 
                     game.newHand();
                     playDeal(game.Name);

@@ -1,13 +1,19 @@
 ﻿var setTableCard = function (position, card) {
     if (model.noShownCards <= position) {
-        model.setTableCard(position, card);
-        model.sounds["flop"].play();
-        pileUp();
+
+        var delay = 500;
+        if (position === 2 || position === 3)
+            delay *= position;
+        setTimeout(function (position, card) {
+            model.setTableCard(position, card);
+            model.sounds["flop"].play();
+            pileUp();
+        }, delay, position, card);
         model.noShownCards++;
     }
 }
 var setPlayerChips = function (position, amount) {
-    model.setPlayerChips(position, amount);
+    model.changePlayerChipAmount(position, amount);
 }
 var resetPlayerChips = function()
 {
@@ -27,10 +33,23 @@ var setPlayerStats = function (username, position, amount, avatar)
     model.setAvatar(position, avatar);
     PlayerTableChips[position] = amount;
 }
-// to do
 var positionPlayer = function (position)
 {
-    //fixCamera(position);
+    myPositon = position;
+    if (position < 2 || position > 5) {
+        model.camera.setPosition(new BABYLON.Vector3(-50, 45, 0));
+        model.avatars[2].position.y *= 3.5;
+        model.avatars[3].position.y *= 3.5;
+        model.avatars[4].position.y *= 3.5;
+        model.avatars[5].position.y *= 3.5;
+    }
+    else
+    {
+        model.avatars[0].position.y *= 3.5;
+        model.avatars[1].position.y *= 3.5;
+        model.avatars[6].position.y *= 3.5;
+        model.avatars[7].position.y *= 3.5;
+    }
 }
 var playMan = function (position, amount, bigBlind)
 {
@@ -50,13 +69,16 @@ var playMan = function (position, amount, bigBlind)
     max[0].innerHTML = PlayerTableChips[position] - amount;
 
     
-   // timer = setTimeout(commitAction, 20000);
+    //timer = setTimeout(commitAction, 15000);
     model.sounds["wait"].play();
 }
 var commitAction = function()
 {
     if (!readyToPlay)
     {
+        model.sounds["wait"].pause();
+        model.sounds["wait"].currentTime = 0;
+
         var call = document.getElementById("call");
         if (call.innerHTML == "Check") {
             gameHub.server.play(0, gameModel.gameName);
@@ -70,7 +92,11 @@ var commitAction = function()
     }
     else
     {
-        clearTimeout(timer);
+        model.sounds["wait"].pause();
+        model.sounds["wait"].currentTime = 0;
+
+        //clearTimeout(timer);
+
         readyToPlay = false;
         gameHub.server.play(raiseAmount, gameModel.gameName);
         if (raiseAmount < 0)
@@ -81,17 +107,21 @@ var commitAction = function()
             model.sounds["raise"].play();
     }
 }
-// to do 
-var displayMove = function (position, amount)
-{
+var displayMove = function (position, amount) {
     if (amount < 0)
+    {
         model.eliminatePlayer(position);
+        model.sounds["fold"].play();
+    }
     else {
         model.changePlayerChipAmount(position, amount);
         PlayerChips[position] += amount;
+        if (amount === 0)
+            model.sounds["check"].play();
+        else
+            model.sounds["raise"].play();
     }
 }
-
 var pileUp = function ()
 {
     var amount = 0;
@@ -104,11 +134,17 @@ var pileUp = function ()
 }
 var resetSceen = function ()
 {
-    model.resetSceen();
+    //setTimeout(function () {
+        model.resetSceen();
+    //}, 2000);
+}
+var showWinner = function (position)
+{
+
 }
 
 
-
+myPositon = 0;
 var canvas = document.querySelector("#renderCanvas");
 var engine = new BABYLON.Engine(canvas, true);
 var timer;

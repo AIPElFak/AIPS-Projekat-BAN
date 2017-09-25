@@ -297,6 +297,7 @@
     <Content Include="Scripts\logIn\password.js" />
     <Content Include="Scripts\logIn\placeholder.js" />
     <Content Include="Scripts\logIn\scripts.js" />
+    <Content Include="Scripts\min.js" />
     <Content Include="Scripts\Model.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\mySlider.js" />

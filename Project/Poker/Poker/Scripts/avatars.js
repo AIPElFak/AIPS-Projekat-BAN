@@ -1,5 +1,6 @@
-﻿var drawAvatar = function (Size, X, Y, Z, position)
+﻿var drawAvatar = function (size, X, Y, Z, position)
 {
+    var Size = 0.8 * size;
     var avatar = BABYLON.Mesh.CreatePlane("plane"+position, Size, scene, false, BABYLON.Mesh.DOUBLESIDE);
 
     avatar.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_ALL;

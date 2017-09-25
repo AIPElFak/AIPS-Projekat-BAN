@@ -80,7 +80,7 @@ gameHub.client.displayCardsOnTable = function (pos, cards) {
 };
 
 gameHub.client.showWinner = function (pos) {
-    //showWinner
+    showWinner(pos);
 };
 
 gameHub.client.displayMessage = function (username, message) {
