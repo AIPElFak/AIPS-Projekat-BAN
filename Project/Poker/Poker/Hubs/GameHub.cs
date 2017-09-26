@@ -263,9 +263,10 @@ namespace Poker.Hubs
                 {
                     List<int> winners = game.WhoIsWinner();
                     showPlayersCards(game);
-
+                    
                     Clients.Group(game.Name).showWinner(winners);
                     game.SetWinning(winners);
+
 
                     game.addMove(0, (int)Business.Enum.Moves.Type.Win, 0);
 
@@ -273,7 +274,7 @@ namespace Poker.Hubs
                     {
                         game.addBestHand(winn);
                     }
-                    
+
                     game.newHand();
                     playDeal(game.Name);
                     return;
