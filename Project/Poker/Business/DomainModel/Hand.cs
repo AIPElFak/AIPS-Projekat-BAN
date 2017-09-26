@@ -11,16 +11,16 @@ namespace Business.DomainModel
     public class Hand
     {
         public ObjectId id { get; set; }
-        public DateTime start { get; set; }
         public List<Card> dealtCards { get; set; }
-        public MongoDBRef table { get; set; }
         public List<Move> moves { get; set; }
-        public List<UserSeat> userSeats { get; set; }
+        public Dictionary<string, string> username { get; set; }
+        public Dictionary<string, List<Card>> cards { get; set; }
         public Hand()
         {
             dealtCards = new List<Card>();
             moves = new List<Move>();
-            userSeats = new List<UserSeat>();
+            username = new Dictionary<string, string>();
+            cards = new Dictionary<string, List<Card>>();
         }
     }
 }

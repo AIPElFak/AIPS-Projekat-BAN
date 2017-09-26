@@ -10,114 +10,6 @@ using HoldemHand;
 
 namespace Poker.Hubs
 {
-    public class Card
-    {
-        public int number { get; set; }
-        public int sign { get; set; }
-
-        public string getString()
-        {
-            string retVal = "";
-
-            switch (number)
-            {
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-                case 6:
-                case 7:
-                case 8:
-                case 9:
-                case 10:
-                    retVal = number.ToString();
-                    break;
-                case 11:
-                    retVal = "jack";
-                    break;
-                case 12:
-                    retVal = "queen";
-                    break;
-                case 13:
-                    retVal = "king";
-                    break;
-                case 1:
-                    retVal = "ace";
-                    break;
-            }
-
-            retVal += "_of_";
-
-            switch (sign)
-            {
-                case 1:
-                    retVal += "clubs";
-                    break;
-                case 2:
-                    retVal += "diamonds";
-                    break;
-                case 3:
-                    retVal += "hearts";
-                    break;
-                case 4:
-                    retVal += "spades";
-                    break;
-            }
-
-            return retVal;
-        }
-
-        public string getStringForLib()
-        {
-            string retVal = "";
-
-            switch (number)
-            {
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-                case 6:
-                case 7:
-                case 8:
-                case 9:
-                case 10:
-                    retVal = number.ToString();
-                    break;
-                case 11:
-                    retVal = "j";
-                    break;
-                case 12:
-                    retVal = "q";
-                    break;
-                case 13:
-                    retVal = "k";
-                    break;
-                case 1:
-                    retVal = "a";
-                    break;
-            }
-
-            switch (sign)
-            {
-                case 1:
-                    retVal += "c";
-                    break;
-                case 2:
-                    retVal += "d";
-                    break;
-                case 3:
-                    retVal += "h";
-                    break;
-                case 4:
-                    retVal += "s";
-                    break;
-            }
-
-            return retVal;
-        }
-    }
-
     public class Player
     {
         public string username { get; set; }
@@ -146,7 +38,7 @@ namespace Poker.Hubs
         public List<Card> cardsOnTable { get; set; }
         public Command CurrentCommand { get; set; }
         public int numOfHands { get; set; }
-
+        public Business.DomainModel.Hand Hand { get; set; }
         public Game(string name)
         {
             Name = name;
@@ -222,12 +114,17 @@ namespace Poker.Hubs
             cardsOnTable.Clear();
 
             CurrentHand.Clear();
+
+            Hand = new Business.DomainModel.Hand();
+            
             foreach (KeyValuePair<int, Player> player in Players)
             {
                 player.Value.stakesMoney = 0;
                 CurrentHand.Add(player.Key);
+                
+                Hand.username.Add(player.Key.ToString(), player.Value.username);
             }
-
+            
             //for (int j = 0; j < numOfHands; j++)
             //{
             //    int tmp = CurrentHand[0];
@@ -242,21 +139,41 @@ namespace Poker.Hubs
             if (cardsOnTable.Count == 0)
             {
                 cardsOnTable.Add(deck[deck.Count - 1]);
+                this.Hand.dealtCards.Add(deck[deck.Count - 1]);
                 deck.RemoveAt(deck.Count - 1);
                 cardsOnTable.Add(deck[deck.Count - 1]);
+                this.Hand.dealtCards.Add(deck[deck.Count - 1]);
                 deck.RemoveAt(deck.Count - 1);
                 cardsOnTable.Add(deck[deck.Count - 1]);
+                this.Hand.dealtCards.Add(deck[deck.Count - 1]);
                 deck.RemoveAt(deck.Count - 1);
+
+                int position = -1;
+                int type = (int)Business.Enum.Moves.Type.SetTableCard;
+                int option = 0;
+                this.addMove(position, type, option);
             }
             else if (cardsOnTable.Count == 3)
             {
                 cardsOnTable.Add(deck[deck.Count - 1]);
+                this.Hand.dealtCards.Add(deck[deck.Count - 1]);
                 deck.RemoveAt(deck.Count - 1);
+
+                int position = -1;
+                int type = (int)Business.Enum.Moves.Type.SetTableCard;
+                int option = 0;
+                this.addMove(position, type, option);
             }
             else if (cardsOnTable.Count == 4)
             {
                 cardsOnTable.Add(deck[deck.Count - 1]);
+                this.Hand.dealtCards.Add(deck[deck.Count - 1]);
                 deck.RemoveAt(deck.Count - 1);
+
+                int position = -1;
+                int type = (int)Business.Enum.Moves.Type.SetTableCard;
+                int option = 0;
+                this.addMove(position, type, option);
             }
         }
 
@@ -314,6 +231,25 @@ namespace Poker.Hubs
             rep.UpdateMoney(Players[position].username, updateUser.money + Players[position].currentMoney);
 
             Players.Remove(position);
+        }
+        public void addBestHand(int position)
+        {
+            UserRepository u = new UserRepository();
+            User user = new User();
+            user = u.ReadByUsername(this.Players[position].username);
+
+            if (piles[0] > user.bestWinnings)
+            {
+                u.UpdateWinnings(user.username, piles[0], this.Hand);
+            }
+        }
+        public void addMove(int position, int type, int option)
+        {
+            Move move = new Move();
+            move.moveType = type;
+            move.option = option;
+            move.position = position;
+            this.Hand.moves.Add(move);
         }
     }
 }

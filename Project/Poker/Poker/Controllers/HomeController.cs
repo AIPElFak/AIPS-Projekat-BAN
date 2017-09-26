@@ -34,5 +34,12 @@ namespace Poker.Controllers
             m.gameName = table.Id;
             return View("../Game/Game", m);
         }
+        public ActionResult Replay()
+        {
+            ReplayModel model = new ReplayModel();
+            string username = (string)Session["username"]; ;
+            model.Load(username);
+            return View("../Game/Replay", model);
+        }
     }
 }

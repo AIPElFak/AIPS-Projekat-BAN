@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNet.SignalR;
+using Business.DomainModel;
 
 namespace Poker.Hubs
 {
@@ -146,6 +147,16 @@ namespace Poker.Hubs
             }
 
             game.currentPlayer = (game.currentPlayer + 1) % game.CurrentHand.Count;
+
+            foreach (int pos in game.CurrentHand)
+            {
+                List<Card> cards = new List<Card>();
+                cards.Add(game.Players[pos].card1);
+                cards.Add(game.Players[pos].card2);
+
+                game.Hand.cards.Add(pos.ToString(), cards);
+            }
+
             playSmallBlind(game.Name);
         }
 
@@ -154,6 +165,11 @@ namespace Poker.Hubs
             Game game = games.listOfGames[tableName];
             game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], "smallBlind", 0);
             game.CurrentCommand.Execute();
+
+            int type = (int)Business.Enum.Moves.Type.SmallBlind;
+            int position = game.CurrentHand[game.currentPlayer];
+            int option = game.table.smallBlind;
+            game.addMove(position, type, option);
 
             Clients.Group(game.Name).showSmallBlind(game.table.smallBlind, game.CurrentHand[game.currentPlayer]);
 
@@ -167,6 +183,12 @@ namespace Poker.Hubs
             game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], "bigBlind", 0);
             game.CurrentCommand.Execute();
 
+            
+            int type = (int)Business.Enum.Moves.Type.BigBlind;
+            int position = game.CurrentHand[game.currentPlayer];
+            int option = game.table.bigBlind;
+            game.addMove(position, type, option);
+
             Clients.Group(game.Name).showBigBlind(game.table.bigBlind, game.CurrentHand[game.currentPlayer]);
 
             game.lastRasePlayer = game.currentPlayer;
@@ -178,12 +200,30 @@ namespace Poker.Hubs
         {
             Game game = games.listOfGames[tableName];
 
+            int type;
+            int option;
+            int position = game.CurrentHand[game.currentPlayer];
+
             if (result == -1)
+            {
                 game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], "fold", 0);
+                type = (int)Business.Enum.Moves.Type.Fold;
+                option = 0;
+            }
             else if (result == 0)
+            {
                 game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], "check", 0);
+                type = (int)Business.Enum.Moves.Type.Check;
+                option = 0;
+            }
             else
+            {
                 game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], "raise", result);
+                type = (int)Business.Enum.Moves.Type.Raise;
+                option = result;
+            }
+
+            game.addMove(position, type, option);
 
             int amount = game.CurrentCommand.Execute();
 
@@ -197,6 +237,10 @@ namespace Poker.Hubs
                 int winner = game.CurrentHand[0];
                 Clients.Group(game.Name).showWinner(winner);
                 game.SetWinning(winner);
+                
+                game.addMove(winner, (int)Business.Enum.Moves.Type.Win, 0);
+
+                game.addBestHand(winner);
 
                 game.newHand();
                 playDeal(game.Name);
@@ -215,7 +259,10 @@ namespace Poker.Hubs
                     showPlayersCards(game);
                     Clients.Group(game.Name).showWinner(winner);
                     game.SetWinning(winner);
-                    
+
+                    game.addMove(winner, (int)Business.Enum.Moves.Type.Win, 0);
+
+                    game.addBestHand(winner);
 
                     game.newHand();
                     playDeal(game.Name);

@@ -1,0 +1,77 @@
+﻿@model Poker.Models.ReplayModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Texas Hold'em</title>
+    <meta name="Description" content="Your website description goes here.">
+    <meta name="KeyWords" content="keyword1, keyword2, keyword3">
+    <link href="~/Content/css/style.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Acme|Baloo+Bhaijaan" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <table align="center" border="0" cellpadding="0" cellspacing="0" width="1000">
+        <tbody>
+            <tr>
+                <td valign="top" width="1000">
+                    <table border="0" cellpadding="0" cellspacing="0" width="1000">
+                        <tbody>
+                            <tr>
+                                <td valign="top" width="1000">
+                                    <table style="margin-bottom:10px;" align="center" border="0" cellpadding="0" cellspacing="0" width="860">
+                                        <tbody>
+                                            <tr valign="top">
+                                                <td width="35%;">
+                                                    <img style="margin-top:10px; height:50px;" src="~/Content/images/logo.png">
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="background-repeat:repeat-x;" background="~/Content/images/pokr_rom_btm_bg.jpg" height="20px" valign="top" width="1000">&nbsp;</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table class="poker-container">
+                        <tbody class="bottom-body">
+                            <tr>
+                                <td>
+                                    <canvas style="width:100%; outline:none;" touch-action="none" id="renderCanvas" width="801" height="568" tabindex="1"></canvas>
+                             
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    @* <script src="~/Scripts/Model.js"></script> *@
+    <script src="~/Scripts/babylon.custom.js"></script>
+    <script src="~/Scripts/buttons.js"></script>
+    <script src="~/Content/js/jquery-1.12.3.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+    <script src="~/signalr/hubs" type="text/javascript"></script>
+    @* <script src="~/Scripts/Variables.js"></script>
+        <script src="~/Scripts/PlayingCards.js"></script>
+        <script src="~/Scripts/avatars.js"></script>
+        <script src="~/Scripts/Table.js"></script>
+        <script src="~/Scripts/TablePrimitive.js"></script>
+        <script src="~/Scripts/chips.js"></script>
+        <script src="~/Scripts/game.js"></script> *@
+    <script src="~/Scripts/min.js"></script>
+    
+</body>
+</html>
+

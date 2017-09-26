@@ -15,5 +15,7 @@ namespace Business.DomainModel
         public string password { get; set; }
         public int money { get; set; }
         public string avatarURL { get; set; }
+        public int bestWinnings { get; set; }
+        public MongoDBRef bestHand { get; set; }
     }
 }

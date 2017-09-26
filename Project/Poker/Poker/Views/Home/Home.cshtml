@@ -74,7 +74,8 @@
                 <tr>
                     <td>
                         <img class="main-image" src="~/Content/images/header.jpg">
-                        <button type="button" onclick="location.href='@Url.Action("Index", "Game")'" class="pure-button fuller-button blue trans">PLAY NOW</button>
+                        <input type="hidden" id="winnings" value="@Model.winnings" />
+                        <button type="button" id="replay" onclick="location.href='@Url.Action("Replay", "Home")'" class="pure-button fuller-button blue trans">REPLAY</button>
                     </td>
                 </tr>
                 <tr>
@@ -159,7 +160,14 @@
 
         <script src="~/Content/js/jquery-1.12.3.min.js"></script>
         <script src="~/Content/js/ion.rangeSlider.js"></script>
-
+        
+        <script>
+            var replay = document.getElementById("replay");
+            var winnings = document.getElementById("winnings").value;
+            if (winnings == 0)
+                replay.disabled = true;
+        </script>
+        
         <script>
 
     var $range = $(".js-range-slider"),
@@ -270,7 +278,7 @@ var updateRange = function (direction) {
     });
 };
         </script>
-
+        
     </body>
 </html>
 

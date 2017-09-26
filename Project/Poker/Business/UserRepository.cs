@@ -13,16 +13,19 @@ namespace Business
 {
     public class UserRepository
     {
-        public MongoDatabase Database;
+        public MongoDatabase dataBase;
         public IMongoCollection<User> UserCollection;
         public IMongoCollection<Table> TableCollection;
+        public IMongoCollection<Hand> HandCollection;
 
         public UserRepository()
         {
             var mongoClient = new MongoClient(Settings.Default.ConnectionString);
             var db = mongoClient.GetDatabase(Settings.Default.DB);
+            dataBase = mongoClient.GetServer().GetDatabase(Settings.Default.DB);
             UserCollection = db.GetCollection<User>("User");
             TableCollection = db.GetCollection<Table>("Table");
+            HandCollection = db.GetCollection<Hand>("Hand");
         }
 
         public bool IsTaken(string username)
@@ -48,7 +51,8 @@ namespace Business
                 username = username,
                 password = password,
                 money = 100000000,
-                avatarURL = avatarURL
+                avatarURL = avatarURL,
+                bestWinnings = 0
             };
 
             UserCollection.InsertOne(user);
@@ -133,6 +137,62 @@ namespace Business
             var filter = Builders<User>.Filter.Eq("username", username);
             var update = Builders<User>.Update.Set("money", money);
             UserCollection.UpdateOneAsync(filter, update);
+        }
+        public void UpdateWinnings(string username,int winnings,Hand hand)
+        {
+            var u = (from user in UserCollection.AsQueryable<User>()
+                         where user.username == username
+                         select user).Single();
+
+            Hand newBestHand = new Hand();
+            foreach(var card in hand.cards)
+            {
+                List<Card> cards = new List<Card>();
+                cards.Add(card.Value[0]);
+                cards.Add(card.Value[1]);
+                newBestHand.cards.Add(card.Key, cards);
+            }
+            foreach (var user in hand.username)
+            {
+                newBestHand.username.Add(user.Key, user.Value);
+            }
+            foreach (var move in hand.moves)
+            {
+                Move m = new Move();
+                m.moveType = move.moveType;
+                m.option = move.option;
+                m.position = move.position;
+
+                newBestHand.moves.Add(m);
+            }
+            foreach(var card in hand.dealtCards)
+            {
+                Card c = new Card();
+                c.number = card.number;
+                c.sign = card.sign;
+
+                newBestHand.dealtCards.Add(c);
+            }
+            if(u.bestHand != null)
+            {
+                Hand oldHand = dataBase.FetchDBRefAs<Hand>(u.bestHand);
+                var fil = Builders<Hand>.Filter.Eq("id", oldHand.id);
+                HandCollection.DeleteOne(fil);
+            }
+            HandCollection.InsertOne(newBestHand);
+            var filter = Builders<User>.Filter.Eq("username", username);
+            var update = Builders<User>.Update.Set("bestHand", new MongoDBRef("Hand",newBestHand.id)).Set("bestWinnings",winnings);
+            UserCollection.UpdateOneAsync(filter, update);
+        }
+        public Hand ReadHand(string username)
+        {
+            var u = (from user in UserCollection.AsQueryable<User>()
+                     where user.username == username
+                     select user).Single();
+
+            Hand returnHand = new Hand();
+            returnHand = dataBase.FetchDBRefAs<Hand>(u.bestHand);
+            return returnHand;
         }
     }
 }

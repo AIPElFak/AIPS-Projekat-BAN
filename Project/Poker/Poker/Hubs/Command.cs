@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Business.DomainModel;
 
 namespace Poker.Hubs
 {

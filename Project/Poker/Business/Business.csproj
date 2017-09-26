@@ -60,10 +60,9 @@
     <Compile Include="DomainModel\Card.cs" />
     <Compile Include="DomainModel\Hand.cs" />
     <Compile Include="DomainModel\Move.cs" />
-    <Compile Include="DomainModel\MoveType.cs" />
     <Compile Include="DomainModel\Table.cs" />
     <Compile Include="DomainModel\User.cs" />
-    <Compile Include="DomainModel\UserSeat.cs" />
+    <Compile Include="Enum\Moves.cs" />
     <Compile Include="HandAnalysis.cs" />
     <Compile Include="HandEvaluator.cs" />
     <Compile Include="HandIterator.cs" />

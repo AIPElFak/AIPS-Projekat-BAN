@@ -11,9 +11,8 @@ namespace Business.DomainModel
     public class Move
     {
         public ObjectId id { get; set; }
-        public MongoDBRef moveType { get; set; }
-        public MongoDBRef user { get; set; }
-        public DateTime time { get; set; }
+        public int moveType { get; set; }
+        public int position { get; set; }
         public int option { get; set; }
     }
 }
