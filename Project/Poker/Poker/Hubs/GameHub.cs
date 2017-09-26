@@ -75,55 +75,62 @@ namespace Poker.Hubs
                 Game game = games.listOfGames[tableName];
                 Groups.Remove(Context.ConnectionId, tableName);
 
-                if (pos == game.CurrentHand[game.currentPlayer] && game.CurrentHand.Count > 0)
+                if (game.CurrentHand.Count > 0)
                 {
-                    game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], "fold", 0);
-                    int amount = game.CurrentCommand.Execute();
-                    Clients.Group(game.Name).displayPlayed(game.CurrentHand[game.currentPlayer],
-                                                    amount);
-
-                    game.currentPlayer = (game.currentPlayer + 1) % game.CurrentHand.Count;
-                    if (game.CurrentHand.Count == 1)
+                    if (pos == game.CurrentHand[game.currentPlayer])
                     {
-                        List<int> winner = new List<int>();
-                        winner.Add(game.CurrentHand[0]);
-                        showPlayersCards(game);
-                        Clients.Group(game.Name).showWinner(winner);
-                        game.SetWinning(winner);
+                        game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], "fold", 0);
+                        int amount = game.CurrentCommand.Execute();
+                        Clients.Group(game.Name).displayPlayed(game.CurrentHand[game.currentPlayer],
+                                                        amount);
 
-                        game.RemovePlayer(pos);
-
-                        if (game.Players.Count >= 2)
+                        game.currentPlayer = (game.currentPlayer + 1) % game.CurrentHand.Count;
+                        if (game.CurrentHand.Count == 1)
                         {
-                            game.newHand();
-                            playDeal(game.Name);
+                            List<int> winner = new List<int>();
+                            winner.Add(game.CurrentHand[0]);
+                            showPlayersCards(game);
+                            Clients.Group(game.Name).showWinner(winner);
+                            game.SetWinning(winner);
+
+                            game.RemovePlayer(pos);
+
+                            if (game.Players.Count >= 2)
+                            {
+                                game.newHand();
+                                playDeal(game.Name);
+                            }
+                            else
+                                Clients.Group(tableName).resetTable();
                         }
-                        else
-                            Clients.Group(tableName).resetTable();
+                    }
+                    else
+                    {
+                        Clients.Group(game.Name).displayPlayed(pos, -1);
+                        game.RemovePlayer(pos);
+                        game.CurrentHand.RemoveAt(pos);
+
+                        if (game.CurrentHand.Count == 1)
+                        {
+                            List<int> winner = new List<int>();
+                            winner.Add(game.CurrentHand[0]);
+                            showPlayersCards(game);
+                            Clients.Group(game.Name).showWinner(winner);
+                            game.SetWinning(winner);
+
+                            if (game.Players.Count >= 2)
+                            {
+                                game.newHand();
+                                playDeal(game.Name);
+                            }
+                            else
+                                Clients.Group(tableName).resetTable();
+                        }
                     }
                 }
                 else
                 {
-                    Clients.Group(game.Name).displayPlayed(pos, -1);
                     game.RemovePlayer(pos);
-                    game.CurrentHand.RemoveAt(pos);
-
-                    if (game.CurrentHand.Count == 1)
-                    {
-                        List<int> winner = new List<int>();
-                        winner.Add(game.CurrentHand[0]);
-                        showPlayersCards(game);
-                        Clients.Group(game.Name).showWinner(winner);
-                        game.SetWinning(winner);
-
-                        if (game.Players.Count >= 2)
-                        {
-                            game.newHand();
-                            playDeal(game.Name);
-                        }
-                        else
-                            Clients.Group(tableName).resetTable();
-                    }
                 }
 
                 if (game.Players.Count > 0)
