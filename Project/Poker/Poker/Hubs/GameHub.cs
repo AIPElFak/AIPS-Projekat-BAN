@@ -75,7 +75,7 @@ namespace Poker.Hubs
                 Game game = games.listOfGames[tableName];
                 Groups.Remove(Context.ConnectionId, tableName);
 
-                if (pos == game.CurrentHand[game.currentPlayer])
+                if (pos == game.CurrentHand[game.currentPlayer] && game.CurrentHand.Count > 0)
                 {
                     game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], "fold", 0);
                     int amount = game.CurrentCommand.Execute();
@@ -85,7 +85,8 @@ namespace Poker.Hubs
                     game.currentPlayer = (game.currentPlayer + 1) % game.CurrentHand.Count;
                     if (game.CurrentHand.Count == 1)
                     {
-                        int winner = game.CurrentHand[0];
+                        List<int> winner = new List<int>();
+                        winner.Add(game.CurrentHand[0]);
                         showPlayersCards(game);
                         Clients.Group(game.Name).showWinner(winner);
                         game.SetWinning(winner);
@@ -109,7 +110,8 @@ namespace Poker.Hubs
 
                     if (game.CurrentHand.Count == 1)
                     {
-                        int winner = game.CurrentHand[0];
+                        List<int> winner = new List<int>();
+                        winner.Add(game.CurrentHand[0]);
                         showPlayersCards(game);
                         Clients.Group(game.Name).showWinner(winner);
                         game.SetWinning(winner);
@@ -124,7 +126,8 @@ namespace Poker.Hubs
                     }
                 }
 
-                Clients.Group(game.Name).displayExit(pos);
+                if (game.Players.Count > 0)
+                    Clients.Group(game.Name).displayExit(pos);
 
                 if (game.FreeSeats == 8)
                     games.listOfGames.Remove(tableName);
@@ -234,14 +237,17 @@ namespace Poker.Hubs
 
             if (game.CurrentHand.Count == 1)
             {
-                int winner = game.CurrentHand[0];
+                List<int> winner = new List<int>();
+                winner.Add(game.CurrentHand[0]);
                 Clients.Group(game.Name).showWinner(winner);
                 game.SetWinning(winner);
                 
-                game.addMove(winner, (int)Business.Enum.Moves.Type.Win, 0);
+                game.addMove(0, (int)Business.Enum.Moves.Type.Win, 0);
 
-                game.addBestHand(winner);
-
+                foreach (var winn in winner)
+                {
+                    game.addBestHand(winn);
+                }
                 game.newHand();
                 playDeal(game.Name);
                 return;
@@ -255,15 +261,19 @@ namespace Poker.Hubs
             {
                 if (game.cardsOnTable.Count == 5)
                 {
-                    int winner = game.WhoIsWinner();
+                    List<int> winners = game.WhoIsWinner();
                     showPlayersCards(game);
-                    Clients.Group(game.Name).showWinner(winner);
-                    game.SetWinning(winner);
 
-                    game.addMove(winner, (int)Business.Enum.Moves.Type.Win, 0);
+                    Clients.Group(game.Name).showWinner(winners);
+                    game.SetWinning(winners);
 
-                    game.addBestHand(winner);
+                    game.addMove(0, (int)Business.Enum.Moves.Type.Win, 0);
 
+                    foreach (var winn in winners)
+                    {
+                        game.addBestHand(winn);
+                    }
+                    
                     game.newHand();
                     playDeal(game.Name);
                     return;
