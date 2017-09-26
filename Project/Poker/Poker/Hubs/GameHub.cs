@@ -263,6 +263,7 @@ namespace Poker.Hubs
                 {
                     List<int> winners = game.WhoIsWinner();
                     showPlayersCards(game);
+<<<<<<< HEAD
                     
                     Clients.Group(game.Name).showWinner(winners);
                     game.SetWinning(winners);
@@ -275,6 +276,11 @@ namespace Poker.Hubs
                         game.addBestHand(winn);
                     }
 
+=======
+                    Clients.Group(game.Name).showWinner(winners);
+                    game.SetWinning(winners);
+                    
+>>>>>>> origin/master
                     game.newHand();
                     playDeal(game.Name);
                     return;
