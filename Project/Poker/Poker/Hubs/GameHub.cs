@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Threading;
 using Microsoft.AspNet.SignalR;
 using Business.DomainModel;
 
@@ -75,7 +76,7 @@ namespace Poker.Hubs
                 Game game = games.listOfGames[tableName];
                 Groups.Remove(Context.ConnectionId, tableName);
 
-                if (game.CurrentHand.Count > 0)
+                if (game.CurrentHand.Count > 1)
                 {
                     if (pos == game.CurrentHand[game.currentPlayer])
                     {
@@ -97,6 +98,7 @@ namespace Poker.Hubs
 
                             if (game.Players.Count >= 2)
                             {
+                                Thread.Sleep(5000);
                                 game.newHand();
                                 playDeal(game.Name);
                             }
@@ -120,6 +122,7 @@ namespace Poker.Hubs
 
                             if (game.Players.Count >= 2)
                             {
+                                Thread.Sleep(5000);
                                 game.newHand();
                                 playDeal(game.Name);
                             }
@@ -203,7 +206,7 @@ namespace Poker.Hubs
 
             game.lastRasePlayer = game.currentPlayer;
             game.currentPlayer = (game.currentPlayer + 1) % game.CurrentHand.Count;
-            Clients.Caller.youAreNext(game.CurrentHand[game.currentPlayer], game.table.bigBlind, game.table.bigBlind);
+            Clients.Group(game.Name).youAreNext(game.CurrentHand[game.currentPlayer], game.table.bigBlind, game.table.bigBlind);
         }
 
         public void play(int result, string tableName)
@@ -237,8 +240,7 @@ namespace Poker.Hubs
 
             int amount = game.CurrentCommand.Execute();
 
-            Clients.Group(game.Name).displayPlayed(game.CurrentHand[game.currentPlayer], 
-                                            amount);
+            Clients.Group(game.Name).displayPlayed(position, amount);
 
             game.currentPlayer = (game.currentPlayer + 1) % game.CurrentHand.Count;
 
@@ -246,6 +248,8 @@ namespace Poker.Hubs
             {
                 List<int> winner = new List<int>();
                 winner.Add(game.CurrentHand[0]);
+
+
                 Clients.Group(game.Name).showWinner(winner);
                 game.SetWinning(winner);
                 
@@ -255,6 +259,8 @@ namespace Poker.Hubs
                 {
                     game.addBestHand(winn);
                 }
+
+                Thread.Sleep(5000);
                 game.newHand();
                 playDeal(game.Name);
                 return;
@@ -269,8 +275,7 @@ namespace Poker.Hubs
                 if (game.cardsOnTable.Count == 5)
                 {
                     List<int> winners = game.WhoIsWinner();
-                    showPlayersCards(game);
-                    
+                    showPlayersCards(game);                 
                     Clients.Group(game.Name).showWinner(winners);
                     game.SetWinning(winners);
                     
@@ -281,6 +286,7 @@ namespace Poker.Hubs
                         game.addBestHand(winn);
                     }
 
+                    Thread.Sleep(5000);
                     game.newHand();
                     playDeal(game.Name);
                     return;
