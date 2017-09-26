@@ -260,7 +260,7 @@ namespace Poker.Hubs
             }
         }
 
-        public int WhoIsWinner()
+        public List<int> WhoIsWinner()
         {
             string board = "";
             for (int i = 0; i < cardsOnTable.Count; i++)
@@ -278,23 +278,38 @@ namespace Poker.Hubs
                 hands.Add(hand);
             }
 
-
             sortedHands = hands.OrderByDescending(x => x.HandValue).ToList();
+
+            int tie = 1;
+            for (int i = 0; i < CurrentHand.Count - 1; i++)
+            {
+                if (sortedHands[i].HandValue != sortedHands[i + 1].HandValue)
+                    break;
+                tie++;
+            }
+
+            List<int> retVal = new List<int>();
 
             for (int i = 0; i < CurrentHand.Count; i++)
             {
-                if (hands[i] == sortedHands[0])
+                for (int j = 0; j < tie; j++)
                 {
-                    return CurrentHand[i];
+                    if (hands[i] == sortedHands[j])
+                    {
+                        retVal.Add(CurrentHand[i]);
+                    }
                 }
             }
 
-            return CurrentHand[0];
+            return retVal;
         }
 
-        public void SetWinning(int position)
+        public void SetWinning(List<int> positions)
         {
-            Players[position].currentMoney += piles[0]; 
+            for (int i = 0; i < positions.Count; i++)
+            {
+                Players[positions[i]].currentMoney += piles[0];
+            }
         }
 
         public void RemovePlayer(int position)

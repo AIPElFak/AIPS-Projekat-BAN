@@ -79,8 +79,9 @@ gameHub.client.displayCardsOnTable = function (pos, cards) {
     }
 };
 
-gameHub.client.showWinner = function (pos) {
-    showWinner(pos);
+gameHub.client.showWinner = function (positions) {
+    //mutiple winners posible
+    showWinner(positions[0]);
 };
 
 gameHub.client.displayMessage = function (username, message) {
