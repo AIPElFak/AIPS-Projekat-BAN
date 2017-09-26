@@ -120,7 +120,7 @@ var drawChipPile = function (size, height, distanceX, distanceY, angle, position
         
     }
    
-    var chipAmount = drawChipAmount(size);
+    var chipAmount = drawBubble(size);
 
     chipAmount.position = firstChip[0].position;
     chipAmount.translate(new BABYLON.Vector3(0, size *6, 0), 1, BABYLON.Space.LOCAL);
@@ -180,7 +180,7 @@ var findChipsForSum = function (sum, limit) {
 
     return values;
 }
-var drawChipAmount = function (Size) {
+var drawBubble = function (Size) {
     var size = Size*1.5;
     var str = "";
     var options = {

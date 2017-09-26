@@ -9,7 +9,10 @@
     playerMoneyAmount: new Array(),
     playerChipAmount: new Array(),
     playerStakes: new Array(),
+    usernames: new Array(),
     avatars: new Array(),
+    playerTableMoney: new Array(),
+    playerTableMoneyAmount: new Array(),
     tableChipAmount: 0,
     noShownCards: 0,
     camera: 0,
@@ -57,6 +60,9 @@
     {
         this.setPlayerChips(playerNumber, amount + this.playerChipAmount[playerNumber]);
     },
+    changePlayerTableMoneyAmount: function (playerNumber, amount) {
+        this.setPlayerTableMoneyAmount(playerNumber, amount + this.playerTableMoneyAmount[playerNumber]);
+    },
     getChipTexture: function (amount) {
         if (typeof this.chipTextures[amount] === 'undefined') {
             var newChip = new BABYLON.StandardMaterial(amount, scene);
@@ -82,7 +88,6 @@
         this.tableCards[position].setEnabled(1);
         this.tableCards[position].material = this.getCardTexture(card);
     },
-    //to do
     setPlayerMoney: function (playerNumber, amount)
     {
         this.playerMoney[playerNumber] = amount;
@@ -110,6 +115,10 @@
             }
         }
         setStakes(playerNumber, amount);
+    },
+    setPlayerTableMoneyAmount: function (playerNumber, amount) {
+        this.playerTableMoneyAmount[playerNumber] = amount;
+        setMoneyAmount(playerNumber, amount);
     },
     setTableChips: function (amount)
     {
@@ -173,5 +182,10 @@
         this.setPlayerChips(position, 0);
         this.playerCards[position][0].setEnabled(0);
         this.playerCards[position][1].setEnabled(0);
+        this.setUsername(position, "");
+    },
+    setUsername: function(position, name)
+    {
+        setUsername(position, name);
     }
 }

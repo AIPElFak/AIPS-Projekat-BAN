@@ -14,6 +14,7 @@
 }
 var setPlayerChips = function (position, amount) {
     model.changePlayerChipAmount(position, amount);
+    model.changePlayerTableMoneyAmount(position, -amount);
 }
 var resetPlayerChips = function()
 {
@@ -29,9 +30,10 @@ var setPlayerCard = function (position, card1, card2) {
 }
 var setPlayerStats = function (username, position, amount, avatar)
 {
-    Usernames[position] = username;
+    model.setUsername(position, username);
     model.setAvatar(position, avatar);
     PlayerTableChips[position] = amount;
+    model.setPlayerTableMoneyAmount(position, amount);
 }
 var positionPlayer = function (position)
 {
@@ -42,6 +44,23 @@ var positionPlayer = function (position)
         model.avatars[3].position.y *= 3.5;
         model.avatars[4].position.y *= 3.5;
         model.avatars[5].position.y *= 3.5;
+        model.usernames[2].translate(new BABYLON.Vector3(0, 10, 2), 1, BABYLON.Space.WORLD);
+        model.usernames[3].translate(new BABYLON.Vector3(0, 10, 0), 1, BABYLON.Space.WORLD);
+        model.usernames[4].translate(new BABYLON.Vector3(0, 10, 0), 1, BABYLON.Space.WORLD);
+        model.usernames[5].translate(new BABYLON.Vector3(0, 10, -2), 1, BABYLON.Space.WORLD);
+        model.usernames[0].translate(new BABYLON.Vector3(0, -8, 0), 1, BABYLON.Space.WORLD);
+        model.usernames[1].translate(new BABYLON.Vector3(0, -8, 2), 1, BABYLON.Space.WORLD);
+        model.usernames[6].translate(new BABYLON.Vector3(0, -8, 2), 1, BABYLON.Space.WORLD);
+        model.usernames[7].translate(new BABYLON.Vector3(0, -8, 0), 1, BABYLON.Space.WORLD);
+
+        model.playerTableMoney[2].translate(new BABYLON.Vector3(0, 10, 4), 1, BABYLON.Space.WORLD);
+        model.playerTableMoney[3].translate(new BABYLON.Vector3(0, 10, 0), 1, BABYLON.Space.WORLD);
+        model.playerTableMoney[4].translate(new BABYLON.Vector3(0, 10, 0), 1, BABYLON.Space.WORLD);
+        model.playerTableMoney[5].translate(new BABYLON.Vector3(0, 10, -4), 1, BABYLON.Space.WORLD);
+        model.playerTableMoney[0].translate(new BABYLON.Vector3(0, -8, 0), 1, BABYLON.Space.WORLD);
+        model.playerTableMoney[1].translate(new BABYLON.Vector3(0, -8, 4), 1, BABYLON.Space.WORLD);
+        model.playerTableMoney[6].translate(new BABYLON.Vector3(0, -8, 4), 1, BABYLON.Space.WORLD);
+        model.playerTableMoney[7].translate(new BABYLON.Vector3(0, -8, 0), 1, BABYLON.Space.WORLD);
     }
     else
     {
@@ -49,6 +68,23 @@ var positionPlayer = function (position)
         model.avatars[1].position.y *= 3.5;
         model.avatars[6].position.y *= 3.5;
         model.avatars[7].position.y *= 3.5;
+        model.usernames[2].translate(new BABYLON.Vector3(0, -8, 0), 1, BABYLON.Space.WORLD);
+        model.usernames[3].translate(new BABYLON.Vector3(0, -8, 0), 1, BABYLON.Space.WORLD);
+        model.usernames[4].translate(new BABYLON.Vector3(0, -8, 0), 1, BABYLON.Space.WORLD);
+        model.usernames[5].translate(new BABYLON.Vector3(0, -8, 0), 1, BABYLON.Space.WORLD);
+        model.usernames[0].translate(new BABYLON.Vector3(0, 10, 0), 1, BABYLON.Space.WORLD);
+        model.usernames[1].translate(new BABYLON.Vector3(0, 10, 0), 1, BABYLON.Space.WORLD);
+        model.usernames[6].translate(new BABYLON.Vector3(0, 10, 0), 1, BABYLON.Space.WORLD);
+        model.usernames[7].translate(new BABYLON.Vector3(0, 10, 0), 1, BABYLON.Space.WORLD);
+
+        model.playerTableMoney[2].translate(new BABYLON.Vector3(0, -8, 0), 1, BABYLON.Space.WORLD);
+        model.playerTableMoney[3].translate(new BABYLON.Vector3(0, -8, 0), 1, BABYLON.Space.WORLD);
+        model.playerTableMoney[4].translate(new BABYLON.Vector3(0, -8, 0), 1, BABYLON.Space.WORLD);
+        model.playerTableMoney[5].translate(new BABYLON.Vector3(0, -8, 0), 1, BABYLON.Space.WORLD);
+        model.playerTableMoney[0].translate(new BABYLON.Vector3(0, 10, 0), 1, BABYLON.Space.WORLD);
+        model.playerTableMoney[1].translate(new BABYLON.Vector3(0, 10, 0), 1, BABYLON.Space.WORLD);
+        model.playerTableMoney[6].translate(new BABYLON.Vector3(0, 10, 0), 1, BABYLON.Space.WORLD);
+        model.playerTableMoney[7].translate(new BABYLON.Vector3(0, 10, 0), 1, BABYLON.Space.WORLD);
     }
 }
 var playMan = function (position, amount, bigBlind)
@@ -69,7 +105,7 @@ var playMan = function (position, amount, bigBlind)
     max[0].innerHTML = PlayerTableChips[position] - amount;
 
     
-    //timer = setTimeout(commitAction, 15000);
+    timer = setTimeout(commitAction, 15000);
     model.sounds["wait"].play();
 }
 var commitAction = function()
@@ -95,7 +131,7 @@ var commitAction = function()
         model.sounds["wait"].pause();
         model.sounds["wait"].currentTime = 0;
 
-        //clearTimeout(timer);
+        clearTimeout(timer);
 
         readyToPlay = false;
         gameHub.server.play(raiseAmount, gameModel.gameName);
@@ -115,6 +151,7 @@ var displayMove = function (position, amount) {
     }
     else {
         model.changePlayerChipAmount(position, amount);
+        model.changePlayerTableMoneyAmount(position, -amount);
         PlayerChips[position] += amount;
         if (amount === 0)
             model.sounds["check"].play();
@@ -140,7 +177,7 @@ var resetSceen = function ()
 }
 var showWinner = function (position)
 {
-
+    model.changePlayerTableMoneyAmount(position, model.tableChipAmount);
 }
 
 
