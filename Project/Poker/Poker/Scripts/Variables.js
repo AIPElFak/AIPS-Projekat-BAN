@@ -98,13 +98,8 @@ var playMan = function (position, amount, bigBlind)
     else
         call.innerHTML = "Call " + amount;
 
-    var min = document.getElementsByClassName("irs-min");
-    var max = document.getElementsByClassName("irs-max");
+    maxRaise(amount);
 
-    min[0].innerHTML = bigBlind;
-    max[0].innerHTML = PlayerTableChips[position] - amount;
-
-    
     timer = setTimeout(commitAction, 15000);
     model.sounds["wait"].play();
 }
@@ -179,7 +174,18 @@ var showWinner = function (position)
 {
     model.changePlayerTableMoneyAmount(position, model.tableChipAmount);
 }
-
+var maxRaise = function (raise)
+{
+    var maxRaise = 0;
+    for (var i = 0; i < 8; ++i) {
+        if (model.playerChipAmount[i] != 'undefined') {
+            var capacity = model.playerTableMoneyAmount[i] - raise + model.playerChipAmount[i];
+            if (capacity > maxRaise)
+                maxRaise = capacity;
+        }
+    }
+    document.getElementById("money").value = maxRaise;
+}
 
 myPositon = 0;
 var canvas = document.querySelector("#renderCanvas");

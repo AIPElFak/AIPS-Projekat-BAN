@@ -110,7 +110,7 @@ namespace Poker.Hubs
                     {
                         Clients.Group(game.Name).displayPlayed(pos, -1);
                         game.RemovePlayer(pos);
-                        game.CurrentHand.RemoveAt(pos);
+                        game.CurrentHand.RemoveAt(game.currentPlayer);
 
                         if (game.CurrentHand.Count == 1)
                         {
