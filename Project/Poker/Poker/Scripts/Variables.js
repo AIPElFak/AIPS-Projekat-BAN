@@ -100,7 +100,7 @@ var playMan = function (position, amount, bigBlind)
 
     maxRaise(amount);
 
-    timer = setTimeout(commitAction, 15000);
+    //timer = setTimeout(commitAction, 15000);
     model.sounds["wait"].play();
 }
 var commitAction = function()
@@ -126,7 +126,7 @@ var commitAction = function()
         model.sounds["wait"].pause();
         model.sounds["wait"].currentTime = 0;
 
-        clearTimeout(timer);
+        //clearTimeout(timer);
 
         readyToPlay = false;
         gameHub.server.play(raiseAmount, gameModel.gameName);
