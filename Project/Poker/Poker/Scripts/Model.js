@@ -39,7 +39,7 @@
     },
     removeAvatar: function (position)
     {
-        var plane = avatars[position];
+        var plane = this.avatars[position];
         plane.material.dispose();
         plane.setEnabled(0);
     },
@@ -82,6 +82,11 @@
         this.playerCards[playerNumber][0].material = this.getCardTexture(card1);
         this.playerCards[playerNumber][1].setEnabled(1);
         this.playerCards[playerNumber][1].material = this.getCardTexture(card2);
+    },
+    setPlayerCardMaterials: function (playerNumber, card1, card2)
+    {
+        this.playerCards[playerNumber][0].material = card1;
+        this.playerCards[playerNumber][1].material = card2;
     },
     setTableCard: function (position, card)
     {
@@ -180,9 +185,11 @@
     eliminatePlayer : function (position)
     {
         this.setPlayerChips(position, 0);
+        this.setPlayerTableMoneyAmount(position, 0);
         this.playerCards[position][0].setEnabled(0);
         this.playerCards[position][1].setEnabled(0);
         this.setUsername(position, "");
+        this.removeAvatar(position);
     },
     setUsername: function(position, name)
     {
