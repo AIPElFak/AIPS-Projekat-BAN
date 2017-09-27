@@ -191,6 +191,12 @@
         this.setUsername(position, "");
         this.removeAvatar(position);
     },
+	foldPlayer : function (position)
+	{
+		this.setPlayerChips(position, 0);
+        this.playerCards[position][0].setEnabled(0);
+        this.playerCards[position][1].setEnabled(0);
+	},
     setUsername: function(position, name)
     {
         setUsername(position, name);

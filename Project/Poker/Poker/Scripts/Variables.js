@@ -138,15 +138,16 @@ var commitAction = function()
             model.sounds["raise"].play();
     }
 }
-var displayMove = function (position, amount) {
+var displayMove = function (position, amount, simulation) {
     if (amount < 0)
     {
-        model.eliminatePlayer(position);
+        model.foldPlayer(position);
         model.sounds["fold"].play();
     }
     else {
         model.changePlayerChipAmount(position, amount);
-        model.changePlayerTableMoneyAmount(position, -amount);
+		if (simulation != 1)
+			model.changePlayerTableMoneyAmount(position, -amount);
         PlayerChips[position] += amount;
         if (amount === 0)
             model.sounds["check"].play();
