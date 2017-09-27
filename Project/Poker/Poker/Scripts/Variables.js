@@ -44,22 +44,22 @@ var positionPlayer = function (position)
         model.avatars[3].position.y *= 3.5;
         model.avatars[4].position.y *= 3.5;
         model.avatars[5].position.y *= 3.5;
-        model.usernames[2].translate(new BABYLON.Vector3(0, 10, 2), 1, BABYLON.Space.WORLD);
+        model.usernames[2].translate(new BABYLON.Vector3(0, 10, -2), 1, BABYLON.Space.WORLD);
         model.usernames[3].translate(new BABYLON.Vector3(0, 10, 0), 1, BABYLON.Space.WORLD);
         model.usernames[4].translate(new BABYLON.Vector3(0, 10, 0), 1, BABYLON.Space.WORLD);
-        model.usernames[5].translate(new BABYLON.Vector3(0, 10, -2), 1, BABYLON.Space.WORLD);
+        model.usernames[5].translate(new BABYLON.Vector3(0, 10, 2), 1, BABYLON.Space.WORLD);
         model.usernames[0].translate(new BABYLON.Vector3(0, -8, 0), 1, BABYLON.Space.WORLD);
-        model.usernames[1].translate(new BABYLON.Vector3(0, -8, 2), 1, BABYLON.Space.WORLD);
+        model.usernames[1].translate(new BABYLON.Vector3(0, -8, -2), 1, BABYLON.Space.WORLD);
         model.usernames[6].translate(new BABYLON.Vector3(0, -8, 2), 1, BABYLON.Space.WORLD);
         model.usernames[7].translate(new BABYLON.Vector3(0, -8, 0), 1, BABYLON.Space.WORLD);
 
-        model.playerTableMoney[2].translate(new BABYLON.Vector3(0, 10, 4), 1, BABYLON.Space.WORLD);
+        model.playerTableMoney[2].translate(new BABYLON.Vector3(0, 10, -3.15), 1, BABYLON.Space.WORLD);
         model.playerTableMoney[3].translate(new BABYLON.Vector3(0, 10, 0), 1, BABYLON.Space.WORLD);
         model.playerTableMoney[4].translate(new BABYLON.Vector3(0, 10, 0), 1, BABYLON.Space.WORLD);
-        model.playerTableMoney[5].translate(new BABYLON.Vector3(0, 10, -4), 1, BABYLON.Space.WORLD);
+        model.playerTableMoney[5].translate(new BABYLON.Vector3(0, 10, 3.15), 1, BABYLON.Space.WORLD);
         model.playerTableMoney[0].translate(new BABYLON.Vector3(0, -8, 0), 1, BABYLON.Space.WORLD);
-        model.playerTableMoney[1].translate(new BABYLON.Vector3(0, -8, 4), 1, BABYLON.Space.WORLD);
-        model.playerTableMoney[6].translate(new BABYLON.Vector3(0, -8, 4), 1, BABYLON.Space.WORLD);
+        model.playerTableMoney[1].translate(new BABYLON.Vector3(0, -8, -3.15), 1, BABYLON.Space.WORLD);
+        model.playerTableMoney[6].translate(new BABYLON.Vector3(0, -8, 3.15), 1, BABYLON.Space.WORLD);
         model.playerTableMoney[7].translate(new BABYLON.Vector3(0, -8, 0), 1, BABYLON.Space.WORLD);
     }
     else
@@ -68,22 +68,22 @@ var positionPlayer = function (position)
         model.avatars[1].position.y *= 3.5;
         model.avatars[6].position.y *= 3.5;
         model.avatars[7].position.y *= 3.5;
-        model.usernames[2].translate(new BABYLON.Vector3(0, -8, 0), 1, BABYLON.Space.WORLD);
+        model.usernames[2].translate(new BABYLON.Vector3(0, -8, 2), 1, BABYLON.Space.WORLD);
         model.usernames[3].translate(new BABYLON.Vector3(0, -8, 0), 1, BABYLON.Space.WORLD);
         model.usernames[4].translate(new BABYLON.Vector3(0, -8, 0), 1, BABYLON.Space.WORLD);
-        model.usernames[5].translate(new BABYLON.Vector3(0, -8, 0), 1, BABYLON.Space.WORLD);
+        model.usernames[5].translate(new BABYLON.Vector3(0, -8, -2), 1, BABYLON.Space.WORLD);
         model.usernames[0].translate(new BABYLON.Vector3(0, 10, 0), 1, BABYLON.Space.WORLD);
-        model.usernames[1].translate(new BABYLON.Vector3(0, 10, 0), 1, BABYLON.Space.WORLD);
-        model.usernames[6].translate(new BABYLON.Vector3(0, 10, 0), 1, BABYLON.Space.WORLD);
+        model.usernames[1].translate(new BABYLON.Vector3(0, 10, 2), 1, BABYLON.Space.WORLD);
+        model.usernames[6].translate(new BABYLON.Vector3(0, 10, -2), 1, BABYLON.Space.WORLD);
         model.usernames[7].translate(new BABYLON.Vector3(0, 10, 0), 1, BABYLON.Space.WORLD);
 
-        model.playerTableMoney[2].translate(new BABYLON.Vector3(0, -8, 0), 1, BABYLON.Space.WORLD);
+        model.playerTableMoney[2].translate(new BABYLON.Vector3(0, -8, 3.15), 1, BABYLON.Space.WORLD);
         model.playerTableMoney[3].translate(new BABYLON.Vector3(0, -8, 0), 1, BABYLON.Space.WORLD);
         model.playerTableMoney[4].translate(new BABYLON.Vector3(0, -8, 0), 1, BABYLON.Space.WORLD);
-        model.playerTableMoney[5].translate(new BABYLON.Vector3(0, -8, 0), 1, BABYLON.Space.WORLD);
+        model.playerTableMoney[5].translate(new BABYLON.Vector3(0, -8, -3.15), 1, BABYLON.Space.WORLD);
         model.playerTableMoney[0].translate(new BABYLON.Vector3(0, 10, 0), 1, BABYLON.Space.WORLD);
-        model.playerTableMoney[1].translate(new BABYLON.Vector3(0, 10, 0), 1, BABYLON.Space.WORLD);
-        model.playerTableMoney[6].translate(new BABYLON.Vector3(0, 10, 0), 1, BABYLON.Space.WORLD);
+        model.playerTableMoney[1].translate(new BABYLON.Vector3(0, 10, 3.15), 1, BABYLON.Space.WORLD);
+        model.playerTableMoney[6].translate(new BABYLON.Vector3(0, 10, -3.15), 1, BABYLON.Space.WORLD);
         model.playerTableMoney[7].translate(new BABYLON.Vector3(0, 10, 0), 1, BABYLON.Space.WORLD);
     }
 }
@@ -98,7 +98,7 @@ var playMan = function (position, amount, bigBlind)
     else
         call.innerHTML = "Call " + amount;
 
-    maxRaise(amount);
+    maxRaise(position, amount);
 
     //timer = setTimeout(commitAction, 15000);
     model.sounds["wait"].play();
@@ -173,21 +173,43 @@ var resetSceen = function ()
 var showWinner = function (position)
 {
     model.changePlayerTableMoneyAmount(position, model.tableChipAmount);
+    card1 = model.playerCards[position][0].material;
+    card2 = model.playerCards[position][1].material;
+    for (var i = 0; i < 9; ++i) {
+        if (i % 2 === 0)
+            setTimeout(setPlayerCards, i * 500, position, 'gold', 'gold');
+        else
+            setTimeout(setPlayerCardMaterials, i * 500, position, card1, card2);
+    }
 }
-var maxRaise = function (raise)
+var setPlayerCards = function(position, card1, card2)
 {
-    var maxRaise = 0;
+    model.setPlayerCards(position, card1, card2);
+}
+var setPlayerCardMaterials = function (position, card1, card2)
+{
+    model.setPlayerCardMaterials(position, card1, card2);
+}
+var maxRaise = function (position,raise)
+{
+    var minRaise = model.playerTableMoneyAmount[position]-raise;
+    var totalRaise = raise + model.playerChipAmount[position];
     for (var i = 0; i < 8; ++i) {
         if (model.playerChipAmount[i] != 'undefined') {
-            var capacity = model.playerTableMoneyAmount[i] - raise + model.playerChipAmount[i];
-            if (capacity > maxRaise)
-                maxRaise = capacity;
+            var capacity = model.playerTableMoneyAmount[i] - totalRaise + model.playerChipAmount[i];
+            if (capacity < minRaise && model.playerTableMoneyAmount[i])
+                minRaise = capacity;
         }
     }
-    document.getElementById("money").value = maxRaise;
+    document.getElementById("money").value = minRaise;
+}
+var removePlayer = function (positon)
+{
+    model.eliminatePlayer(positon);
 }
 
 myPositon = 0;
+var card1, card2;
 var canvas = document.querySelector("#renderCanvas");
 var engine = new BABYLON.Engine(canvas, true);
 var timer;
