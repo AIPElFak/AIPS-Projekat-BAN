@@ -245,15 +245,14 @@ a:hover {
 	height:70px;
 }
 
-.poker-container
-{
-	width:90%;
-	background-color: #000027;
-	height: 450px;
-	margin:auto;
-	border-left: 8px solid #444848;
-	border-right: 8px solid #444848; 
-	padding-bottom:0px;
+.poker-container {
+    width: 90%;
+    background-color: rgb(5, 47, 15);
+    height: 450px;
+    margin: auto;
+    border-left: 8px solid #444848;
+    border-right: 8px solid #444848;
+    padding-bottom: 0px;
 }
 .chat-table
 {
