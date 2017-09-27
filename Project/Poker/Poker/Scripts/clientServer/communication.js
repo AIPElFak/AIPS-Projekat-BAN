@@ -14,7 +14,7 @@ function start(model) {
 }
 
 gameHub.client.displayExit = function (position) {
-    //remove player from pos
+    removePlayer(position);
 };
 
 //functions for hub to call
