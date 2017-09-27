@@ -25,6 +25,7 @@
         this.sounds["check"] = new Audio("../Content/sounds/check.mp3");
         this.sounds["flop"] = new Audio("../Content/sounds/flop.mp3");
         this.sounds["wait"] = new Audio("../Content/sounds/wait.mp3");
+        this.sounds["win"] = new Audio("../Content/sounds/win.wav");
     },
 
     setAvatar: function (position, name)

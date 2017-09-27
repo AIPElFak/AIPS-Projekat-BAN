@@ -182,6 +182,9 @@ var showWinner = function (position, noWinners, simulation)
     if (noWinners === 'undefined')
         devide = 1;
 
+    if (position === myPositon)
+        model.sounds["win"].play();
+
     if (simulation != 1)
         model.changePlayerTableMoneyAmount(position, model.tableChipAmount / devide);
     card1 = model.playerCards[position][0].material;
