@@ -125,6 +125,10 @@
         this.playerTableMoneyAmount[playerNumber] = amount;
         setMoneyAmount(playerNumber, amount);
     },
+    setMoveName: function (playerNumber, amount)
+    {
+        setMoneyAmountToText(playerNumber, amount);
+    },
     setTableChips: function (amount)
     {
         var chips = this.findChipsForSum(amount, 20);

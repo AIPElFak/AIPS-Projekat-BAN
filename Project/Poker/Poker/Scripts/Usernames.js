@@ -47,3 +47,12 @@ var setMoneyAmount = function (position, amount) {
     else
         model.playerTableMoney[position].material.diffuseTexture.update();
 }
+var setMoneyAmountToText = function (position, amount) {
+    
+    var ctx = model.playerTableMoney[position].material.diffuseTexture.getContext();
+    ctx.clearRect(0, 0, 355 * 15, 355 * 15);
+    if (amount != 0)
+        model.playerTableMoney[position].material.diffuseTexture.drawText("" + amount, null, 450, "bold " + 500 + "px" + " verdana", "white");
+    else
+        model.playerTableMoney[position].material.diffuseTexture.update();
+}
