@@ -119,6 +119,29 @@ namespace Poker.Hubs
             
             foreach (KeyValuePair<int, Player> player in Players)
             {
+                if (player.Value.currentMoney < this.table.BuyInMin)
+                {
+                    UserRepository rep = new UserRepository();
+                    User user = rep.ReadByUsername(player.Value.username);
+
+                    if (user.money >= table.BuyInMax)
+                    {
+                        player.Value.currentMoney += table.BuyInMax;
+                        user.money -= table.BuyInMax;
+                        rep.UpdateMoney(user.username, user.money);
+                    }
+                    else if (user.money > table.BuyInMin)
+                    {
+                        player.Value.currentMoney += table.BuyInMin;
+                        user.money -= table.BuyInMin;
+                        rep.UpdateMoney(user.username, user.money);
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+
                 player.Value.stakesMoney = 0;
                 CurrentHand.Add(player.Key);
                 
