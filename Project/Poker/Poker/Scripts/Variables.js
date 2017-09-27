@@ -178,12 +178,12 @@ var resetSceen = function ()
 }
 var showWinner = function (position, noWinners, simulation)
 {
-    var devide = noWinners;
+    var devide = parseInt(noWinners);
     if (noWinners === 'undefined')
         devide = 1;
 
     if (simulation != 1)
-        model.changePlayerTableMoneyAmount(position, model.tableChipAmount[position] / devide);
+        model.changePlayerTableMoneyAmount(position, model.tableChipAmount / devide);
     card1 = model.playerCards[position][0].material;
     card2 = model.playerCards[position][1].material;
     for (var i = 0; i < 9; ++i) {
