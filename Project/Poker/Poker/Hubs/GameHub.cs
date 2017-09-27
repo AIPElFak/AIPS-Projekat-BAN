@@ -18,7 +18,7 @@ namespace Poker.Hubs
 
         private const int ShowWinnerDelay = 5000;
 
-        private const int PlayerMoveDelay = 5000;
+        private const int PlayerMoveDelay = 3000;
 
         public GameHub()
         {

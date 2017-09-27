@@ -178,6 +178,8 @@ var resetSceen = function ()
 }
 var showWinner = function (position, noWinners, simulation)
 {
+    pileUp();
+
     var devide = parseInt(noWinners);
     if (noWinners === 'undefined')
         devide = 1;
