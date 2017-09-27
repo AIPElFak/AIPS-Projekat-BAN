@@ -101,6 +101,13 @@ namespace Poker.Hubs
                             Clients.Group(game.Name).showWinner(winner);
                             game.SetWinning(winner);
 
+                            game.addMove(game.CurrentHand[0], (int)Business.Enum.Moves.Type.Win, 0);
+
+                            foreach (var winn in winner)
+                            {
+                                game.addBestHand(winn);
+                            }
+
                             game.RemovePlayer(pos);
 
                             if (game.Players.Count >= 2)
@@ -126,6 +133,13 @@ namespace Poker.Hubs
                             showPlayersCards(game);
                             Clients.Group(game.Name).showWinner(winner);
                             game.SetWinning(winner);
+
+                            game.addMove(game.CurrentHand[0], (int)Business.Enum.Moves.Type.Win, 0);
+
+                            foreach (var winn in winner)
+                            {
+                                game.addBestHand(winn);
+                            }
 
                             if (game.Players.Count >= 2)
                             {
@@ -256,11 +270,10 @@ namespace Poker.Hubs
                 List<int> winner = new List<int>();
                 winner.Add(game.CurrentHand[0]);
 
-
                 Clients.Group(game.Name).showWinner(winner);
                 game.SetWinning(winner);
                 
-                game.addMove(0, (int)Business.Enum.Moves.Type.Win, 0);
+                game.addMove(game.CurrentHand[0], (int)Business.Enum.Moves.Type.Win, 0);
 
                 foreach (var winn in winner)
                 {
@@ -286,7 +299,8 @@ namespace Poker.Hubs
                     Clients.Group(game.Name).showWinner(winners);
                     game.SetWinning(winners);
                     
-                    game.addMove(0, (int)Business.Enum.Moves.Type.Win, 0);
+                    for (int i = 0; i < winners.Count; i++)
+                        game.addMove(winners[i], (int)Business.Enum.Moves.Type.Win, 0);
 
                     foreach (var winn in winners)
                     {
@@ -352,16 +366,18 @@ namespace Poker.Hubs
             List<Move> list = model.hand.moves;
             int numOfCards = 0;
             List<string> cards = new List<string>();
-            List<int> foldedPlayers = new List<int>();
+            bool[] foldedPlayers = new bool[8];
             for (int i = 0; i < list.Count; i++)
             {
                 if (list[i].moveType == (int)Moves.Type.SmallBlind)
                 {
                     Clients.Caller.showSmallBlind(list[i].option, list[i].position);
+                    Clients.Caller.displayPlayedMove(list[i].position, ((Moves.Type)list[i].moveType).ToString());
                 }
                 else if (list[i].moveType == (int)Moves.Type.BigBlind)
                 {
                     Clients.Caller.showBigBlind(list[i].option, list[i].position);
+                    Clients.Caller.displayPlayedMove(list[i].position, ((Moves.Type)list[i].moveType).ToString());
                 }
                 else if (list[i].moveType == (int)Moves.Type.SetTableCard)
                 {
@@ -391,17 +407,20 @@ namespace Poker.Hubs
                     winners.Add(pos);
                     foreach (KeyValuePair<string, string> player in model.hand.username)
                     {
-                        Clients.Caller.flipCards(model.hand.cards[player.Key][0].getString(),
+                        if (!foldedPlayers[Int32.Parse(player.Key)])
+                            Clients.Caller.flipCards(model.hand.cards[player.Key][0].getString(),
                                                  model.hand.cards[player.Key][1].getString(), player.Key);
                     }
                     Clients.Caller.showWinner(winners);
+                    Clients.Caller.displayPlayedMove(list[i].position, ((Moves.Type)list[i].moveType).ToString());
                 }
                 else
                 {
                     Clients.Caller.displayPlayed(list[i].position, list[i].option);
+                    Clients.Caller.displayPlayedMove(list[i].position, ((Moves.Type)list[i].moveType).ToString());
                     if (list[i].moveType == (int)Moves.Type.Fold)
                     {
-                        foldedPlayers.Add(list[i].position);
+                        foldedPlayers[list[i].position] = true;
                     }
                 }
                 Thread.Sleep(PlayerMoveDelay);

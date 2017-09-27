@@ -182,7 +182,7 @@ var showWinner = function (position)
     card1 = model.playerCards[position][0].material;
     card2 = model.playerCards[position][1].material;
     for (var i = 0; i < 9; ++i) {
-        if (i % 2 === 0)
+        if (i % 2 === 1)
             setTimeout(setPlayerCards, i * 500, position, 'gold', 'gold');
         else
             setTimeout(setPlayerCardMaterials, i * 500, position, card1, card2);

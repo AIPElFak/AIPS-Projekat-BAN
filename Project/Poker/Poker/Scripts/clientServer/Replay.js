@@ -56,7 +56,9 @@ gameHub.client.displayCardsOnTable = function (pos, cards) {
 
 gameHub.client.showWinner = function (positions) {
     //mutiple winners posible
-    showWinner(positions[0]);
+    for (var i = 0; i < positions.length; i++) {
+        showWinner(positions[i], positions.length);
+    }
 };
 
 gameHub.client.flipCards = function (card1, card2, pos) {
@@ -65,4 +67,8 @@ gameHub.client.flipCards = function (card1, card2, pos) {
 
 gameHub.client.displayPlayed = function (pos, result) {
     displayMove(pos, result, 1);
+};
+
+gameHub.client.displayPlayedMove = function (pos, move) {
+    setMoveName(pos, move);
 };
