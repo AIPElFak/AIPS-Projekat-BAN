@@ -9,8 +9,8 @@ namespace Poker.Models
 {
     public class ReplayModel
     {
-        string username { get; set; }
-        int position { get; set; }
+        public string username { get; set; }
+        public int position { get; set; }
         public Hand hand { get; set; }
         public void Load(string username)
         {

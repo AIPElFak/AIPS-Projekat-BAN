@@ -336,7 +336,8 @@ namespace Poker.Hubs
 
             Clients.Caller.resetTable();
             Clients.Caller.myPosition(username, pos, 0, user.avatarURL);
-            Clients.Caller.getCards(model.hand.cards[pos.ToString()][0], model.hand.cards[pos.ToString()][1], pos);
+            Clients.Caller.getCards(model.hand.cards[pos.ToString()][0].getString(), 
+                model.hand.cards[pos.ToString()][1].getString(), pos);
             foreach (KeyValuePair<string, string> player in model.hand.username)
             {
                 int playerPos = Int32.Parse(player.Key);
@@ -366,21 +367,21 @@ namespace Poker.Hubs
                 {
                     if (numOfCards == 0)
                     {
-                        cards.Add(model.hand.dealtCards[0].ToString());
-                        cards.Add(model.hand.dealtCards[1].ToString());
-                        cards.Add(model.hand.dealtCards[2].ToString());
+                        cards.Add(model.hand.dealtCards[0].getString());
+                        cards.Add(model.hand.dealtCards[1].getString());
+                        cards.Add(model.hand.dealtCards[2].getString());
                         numOfCards = 3;
                         Clients.Caller.displayCardsOnTable(0, cards);
                     }
                     else if (numOfCards == 3)
                     {
-                        cards.Add(model.hand.dealtCards[3].ToString());
+                        cards.Add(model.hand.dealtCards[3].getString());
                         numOfCards = 4;
                         Clients.Caller.displayCardsOnTable(0, cards);
                     }
                     else
                     {
-                        cards.Add(model.hand.dealtCards[4].ToString());
+                        cards.Add(model.hand.dealtCards[4].getString());
                         Clients.Caller.displayCardsOnTable(0, cards);
                     }
                 }

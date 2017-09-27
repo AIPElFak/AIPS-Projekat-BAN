@@ -7,7 +7,7 @@ function start(model) {
 
     //functions for client to call hub
     $.connection.hub.start().done(function () {
-        clientPos = model.position;
+        clientPos = gameModel.position;
 
         gameHub.server.replay(gameModel.username, gameModel.position);
     });
