@@ -6,6 +6,13 @@
     model.camera.setPosition(new BABYLON.Vector3(50, 45, 0));
     //camera.attachControl(canvas, true);
     // light
+
+    var background = new BABYLON.Layer("back", "../Scripts/textures/pozadina.jpg", scene);
+    background.isBackground = true;
+    background.texture.level = 0.2;
+    background.texture.wAng = 0;
+
+
     var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 1), scene);
     light.intensity = 0.9;
     // material

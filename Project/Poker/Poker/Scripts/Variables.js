@@ -176,9 +176,12 @@ var resetSceen = function ()
         model.resetSceen();
     //}, 2000);
 }
-var showWinner = function (position)
+var showWinner = function (position, noWinners)
 {
-    model.changePlayerTableMoneyAmount(position, model.tableChipAmount);
+    var devide = noWinners;
+    if (noWinners === 'undefined')
+        devide = 1;
+    model.changePlayerTableMoneyAmount(position, model.tableChipAmount / devide);
     card1 = model.playerCards[position][0].material;
     card2 = model.playerCards[position][1].material;
     for (var i = 0; i < 9; ++i) {
