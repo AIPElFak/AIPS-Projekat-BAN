@@ -12,14 +12,19 @@
         model.noShownCards++;
     }
 }
-var setPlayerChips = function (position, amount) {
+var setPlayerChips = function (position, amount, simulation) {
     model.changePlayerChipAmount(position, amount);
-    model.changePlayerTableMoneyAmount(position, -amount);
+    if (simulation != 1)
+        model.changePlayerTableMoneyAmount(position, -amount);
 }
 var resetPlayerChips = function()
 {
     for (var i = 0; i < 8; ++i)
         model.setPlayerChips(i, 0);
+}
+var setMoveName = function (position, move)
+{
+    model.setMoveName(position, move);
 }
 var setPlayerTableChips = function (position, amount)
 {
