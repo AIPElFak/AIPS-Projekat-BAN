@@ -272,8 +272,8 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\buttons.js" />
     <Content Include="Scripts\clientServer\communication.js" />
-    <Content Include="Scripts\clientServer\gameLogic.js" />
     <Content Include="Scripts\chips.js" />
+    <Content Include="Scripts\clientServer\Replay.js" />
     <Content Include="Scripts\game.js" />
     <Content Include="Scripts\hand.js" />
     <Content Include="Scripts\hand.min.js" />

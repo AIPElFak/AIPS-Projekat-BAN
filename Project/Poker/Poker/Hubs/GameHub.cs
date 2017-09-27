@@ -6,12 +6,19 @@ using System.Web;
 using System.Threading;
 using Microsoft.AspNet.SignalR;
 using Business.DomainModel;
+using Business.Enum;
+using Business;
+using Poker.Models;
 
 namespace Poker.Hubs
 {
     public class GameHub : Hub
     {
         private Games games;
+
+        private const int ShowWinnerDelay = 5000;
+
+        private const int PlayerMoveDelay = 5000;
 
         public GameHub()
         {
@@ -80,7 +87,7 @@ namespace Poker.Hubs
                 {
                     if (pos == game.CurrentHand[game.currentPlayer])
                     {
-                        game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], "fold", 0);
+                        game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], Moves.Type.Fold, 0);
                         int amount = game.CurrentCommand.Execute();
                         Clients.Group(game.Name).displayPlayed(game.CurrentHand[game.currentPlayer],
                                                         amount);
@@ -98,7 +105,7 @@ namespace Poker.Hubs
 
                             if (game.Players.Count >= 2)
                             {
-                                Thread.Sleep(5000);
+                                Thread.Sleep(ShowWinnerDelay);
                                 game.newHand();
                                 playDeal(game.Name);
                             }
@@ -122,7 +129,7 @@ namespace Poker.Hubs
 
                             if (game.Players.Count >= 2)
                             {
-                                Thread.Sleep(5000);
+                                Thread.Sleep(ShowWinnerDelay);
                                 game.newHand();
                                 playDeal(game.Name);
                             }
@@ -149,7 +156,7 @@ namespace Poker.Hubs
         public void playDeal(string tableName)
         {
             Game game = games.listOfGames[tableName];
-            game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], "deal", 0);
+            game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], Moves.Type.SetTableCard, 0);
             game.CurrentCommand.Execute();
 
             Clients.Group(game.Name).resetTable();
@@ -176,7 +183,7 @@ namespace Poker.Hubs
         public void playSmallBlind(string tableName)
         {
             Game game = games.listOfGames[tableName];
-            game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], "smallBlind", 0);
+            game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], Moves.Type.SmallBlind, 0);
             game.CurrentCommand.Execute();
 
             int type = (int)Business.Enum.Moves.Type.SmallBlind;
@@ -193,7 +200,7 @@ namespace Poker.Hubs
         public void playBigBlind(string tableName)
         {
             Game game = games.listOfGames[tableName];
-            game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], "bigBlind", 0);
+            game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], Moves.Type.BigBlind, 0);
             game.CurrentCommand.Execute();
 
             
@@ -219,19 +226,19 @@ namespace Poker.Hubs
 
             if (result == -1)
             {
-                game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], "fold", 0);
+                game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], Moves.Type.Fold, 0);
                 type = (int)Business.Enum.Moves.Type.Fold;
-                option = 0;
+                option = -1;
             }
             else if (result == 0)
             {
-                game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], "check", 0);
+                game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], Moves.Type.Check, 0);
                 type = (int)Business.Enum.Moves.Type.Check;
                 option = 0;
             }
             else
             {
-                game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], "raise", result);
+                game.CurrentCommand = Command.makeCommand(games.listOfGames[tableName], Moves.Type.Raise, result);
                 type = (int)Business.Enum.Moves.Type.Raise;
                 option = result;
             }
@@ -260,7 +267,7 @@ namespace Poker.Hubs
                     game.addBestHand(winn);
                 }
 
-                Thread.Sleep(5000);
+                Thread.Sleep(ShowWinnerDelay);
                 game.newHand();
                 playDeal(game.Name);
                 return;
@@ -317,6 +324,86 @@ namespace Poker.Hubs
             {
                 int pos = game.CurrentHand[i];
                 Clients.Group(game.Name).flipCards(game.Players[pos].card1.getString(), game.Players[pos].card2.getString(), pos);
+            }
+        }
+
+        public void replay(string username, int pos)
+        {
+            ReplayModel model = new ReplayModel();
+            model.Load(username);
+            UserRepository rep = new UserRepository();
+            User user = rep.ReadByUsername(username);
+
+            Clients.Caller.resetTable();
+            Clients.Caller.myPosition(username, pos, 0, user.avatarURL);
+            Clients.Caller.getCards(model.hand.cards[pos.ToString()][0], model.hand.cards[pos.ToString()][1], pos);
+            foreach (KeyValuePair<string, string> player in model.hand.username)
+            {
+                int playerPos = Int32.Parse(player.Key);
+                if (playerPos != pos)
+                {
+                    user = rep.ReadByUsername(player.Value);
+                    Clients.Caller.otherPlayers(player.Value, playerPos, 0, user.avatarURL);
+                }
+            }
+
+            Thread.Sleep(PlayerMoveDelay);
+            List<Move> list = model.hand.moves;
+            int numOfCards = 0;
+            List<string> cards = new List<string>();
+            List<int> foldedPlayers = new List<int>();
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].moveType == (int)Moves.Type.SmallBlind)
+                {
+                    Clients.Caller.showSmallBlind(list[i].option, list[i].position);
+                }
+                else if (list[i].moveType == (int)Moves.Type.BigBlind)
+                {
+                    Clients.Caller.showBigBlind(list[i].option, list[i].position);
+                }
+                else if (list[i].moveType == (int)Moves.Type.SetTableCard)
+                {
+                    if (numOfCards == 0)
+                    {
+                        cards.Add(model.hand.dealtCards[0].ToString());
+                        cards.Add(model.hand.dealtCards[1].ToString());
+                        cards.Add(model.hand.dealtCards[2].ToString());
+                        numOfCards = 3;
+                        Clients.Caller.displayCardsOnTable(0, cards);
+                    }
+                    else if (numOfCards == 3)
+                    {
+                        cards.Add(model.hand.dealtCards[3].ToString());
+                        numOfCards = 4;
+                        Clients.Caller.displayCardsOnTable(0, cards);
+                    }
+                    else
+                    {
+                        cards.Add(model.hand.dealtCards[4].ToString());
+                        Clients.Caller.displayCardsOnTable(0, cards);
+                    }
+                }
+                else if (list[i].moveType == (int)Moves.Type.Win)
+                {
+                    List<int> winners = new List<int>();
+                    winners.Add(pos);
+                    foreach (KeyValuePair<string, string> player in model.hand.username)
+                    {
+                        Clients.Caller.flipCards(model.hand.cards[player.Key][0].ToString(),
+                                                 model.hand.cards[player.Key][1].ToString(), player.Key);
+                    }
+                    Clients.Caller.showWinner(winners);
+                }
+                else
+                {
+                    Clients.Caller.displayPlayed(list[i].position, list[i].option);
+                    if (list[i].moveType == (int)Moves.Type.Fold)
+                    {
+                        foldedPlayers.Add(list[i].position);
+                    }
+                }
+                Thread.Sleep(PlayerMoveDelay);
             }
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Business.DomainModel;
+using Business.Enum;
 
 namespace Poker.Hubs
 {
@@ -11,21 +12,21 @@ namespace Poker.Hubs
         public Game thisGame { get; set; }
         protected Command() { }
         public abstract int Execute();
-        public static Command makeCommand(Game game, string commandName, int money = 0)
+        public static Command makeCommand(Game game, Moves.Type commandName, int money = 0)
         {
             switch (commandName)
             {
-                case "deal":
+                case Moves.Type.SetTableCard:
                     return new Deal(game);
-                case "smallBlind":
+                case Moves.Type.SmallBlind:
                     return new SmallBlind(game);
-                case "bigBlind":
+                case Moves.Type.BigBlind:
                     return new BigBlind(game);
-                case "raise":
+                case Moves.Type.Raise:
                     return new Raise(game, money);
-                case "fold":
+                case Moves.Type.Fold:
                     return new Fold(game);
-                case "check":
+                case Moves.Type.Check:
                     return new Check(game, money);
                 default:
                     return new DoNothing(game);
