@@ -30,6 +30,7 @@
                                                 <tr valign="top">
                                                     <td width="35%;">
                                                         <img style="margin-top:10px; height:50px;" src="~/Content/images/logo.png">
+                                                        <a id="home-link" href="@Url.Action("Index","Home")">Home</a>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -239,5 +240,7 @@ var updateRange = function (direction) {
             };
             start(@Html.Raw(Json.Encode(Model)));
         </script>
+        <script src="~/Scripts/logIn/jquery.backstretch.min.js"></script>
+        <script src="~/Scripts/logIn/scripts.js"></script>
     </body>
 </html>
