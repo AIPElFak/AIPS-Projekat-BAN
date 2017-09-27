@@ -19,13 +19,29 @@ var raise = function () {
 }
 
 var disableButtons = function () {
-    document.getElementById("raise").disabled = true;
-    document.getElementById("call").disabled = true;
-    document.getElementById("fold").disabled = true;
+    var b1 = document.getElementById("raise");
+    var b2 = document.getElementById("call");
+    var b3 = document.getElementById("fold");
+
+    b1.disabled = true;
+    b2.disabled = true;
+    b3.disabled = true;
+
+    b1.style.backgroundColor = "#777";
+    b2.style.backgroundColor = "#777";
+    b3.style.backgroundColor = "#777";
 }
 var enableButtons = function () {
 
-    document.getElementById("raise").disabled = false;
-    document.getElementById("call").disabled = false;
-    document.getElementById("fold").disabled = false;
+    var b1 = document.getElementById("raise");
+    var b2 = document.getElementById("call");
+    var b3 = document.getElementById("fold");
+
+    b1.disabled = false;
+    b2.disabled = false;
+    b3.disabled = false;
+
+    b1.style.backgroundColor = "#353534";
+    b2.style.backgroundColor = "#353534";
+    b3.style.backgroundColor = "#353534";
 }

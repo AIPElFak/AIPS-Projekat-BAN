@@ -12,7 +12,10 @@ body {
 }
 a {
 	color: #FFFFFC;
-	text-decoration: underline;
+	text-decoration: none;
+    font-size: 20px;
+    margin-top:25px;
+    float:right;
 }
 a:hover {
 	text-decoration: none;

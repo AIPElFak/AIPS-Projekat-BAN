@@ -22,263 +22,262 @@
 </head>
 
     <body>
-        <table align="center" border="0" cellpadding="0" cellspacing="0" width="1000">
-            <tbody>
-                <tr>
-                    <td valign="top" width="1000">
-                        <table border="0" cellpadding="0" cellspacing="0" width="1000">
-                            <tbody>
-                                <tr>
-                                    <td valign="top" width="1000">
-                                        <table class="top-table" align="center" border="0" cellpadding="0" cellspacing="0" width="860">
-                                            <tbody>
-                                                <tr valign="top">
-                                                    <td width="35%;">
-                                                        <img src="~/Content/images/logo.png">
-                                                    </td>
-                                                    <td style= height="151" valign="middle" width="30%">
-                                                        <table align="center" border="0" cellpadding="0" cellspacing="0" width="175">
-                                                            <tbody> 
+        <div class="top-content" style="margin-top:25px;">
+            <table align="center" border="0" cellpadding="0" cellspacing="0" width="1000">
+                <tbody>
+                    <tr>
+                        <td valign="top" width="1000">
+                            <table border="0" cellpadding="0" cellspacing="0" width="1000">
+                                <tbody>
+                                    <tr>
+                                        <td valign="top" width="1000">
+                                            <table class="top-table" align="center" border="0" cellpadding="0" cellspacing="0" width="860">
+                                                <tbody>
+                                                    <tr valign="top">
+                                                        <td width="35%;">
+                                                            <img src="~/Content/images/logo.png">
+                                                        </td>
+                                                        <td style= height="151" valign="middle" width="30%">
+                                                            <table align="center" border="0" cellpadding="0" cellspacing="0" width="175">
+                                                                <tbody>
                                                                     <img class="img-circle spin circle" src="@Model.avatarURL">
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                    <td width="35%;">
-                                                        <table>
-                                                            <tr>
-                                                                <div class="fake-input">
-                                                                    <input class="textbox MyTextboxT MyTextbox" type="text" readonly="readonly" value="@Model.username">
-                                                                </div>
-                                                            </tr>
-                                                            <tr>
-                                                                <div class="fake-input">
-                                                                    <input id="MyTextboxBmoney" class="textbox MyTextboxB MyTextbox" type="text" readonly="readonly" value="$@Model.money">
-                                                                    <input id="money" type="hidden" value="@Model.money" />
-                                                                    <img src="~/Content/images/coin.png" width="25px">
-                                                                </div>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                        <td width="35%;">
+                                                            <table>
+                                                                <tr>
+                                                                    <div class="fake-input">
+                                                                        <input class="textbox MyTextboxT MyTextbox" type="text" readonly="readonly" value="@Model.username">
+                                                                    </div>
+                                                                </tr>
+                                                                <tr>
+                                                                    <div class="fake-input">
+                                                                        <input id="MyTextboxBmoney" class="textbox MyTextboxB MyTextbox" type="text" readonly="readonly" value="$@Model.money">
+                                                                        <input id="money" type="hidden" value="@Model.money" />
+                                                                        <img src="~/Content/images/coin.png" width="25px">
+                                                                    </div>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-repeat:repeat-x;" background="~/Content/images/pokr_rom_btm_bg.jpg" height="25" valign="top" width="1000">&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img class="main-image" src="~/Content/images/header.jpg">
+                            <input type="hidden" id="winnings" value="@Model.winnings" />
+                            <button type="button" id="replay" onclick="location.href='@Url.Action("Replay", "Home")'" class="pure-button fuller-button blue trans">REPLAY</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-repeat:repeat-x;" background="~/Content/images/pokr_rom_btm_bg.jpg" height="25" valign="top" width="1000">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table width="100%">
+                                <tr>
+                                    <td class="heading heading-end">
+                                        <div class="borders">
+                                        </div>
+                                    </td>
+                                    <td class="heading heading-middle">
+                                        CHOOSE YOUR TABLE
+                                    </td>
+                                    <td class="heading heading-end">
+                                        <div class="borders">
+                                        </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td style="background-repeat:repeat-x;" background="~/Content/images/pokr_rom_btm_bg.jpg" height="25" valign="top" width="1000">&nbsp;</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <img class="main-image" src="~/Content/images/header.jpg">
-                        <input type="hidden" id="winnings" value="@Model.winnings" />
-                        <button type="button" id="replay" onclick="location.href='@Url.Action("Replay", "Home")'" class="pure-button fuller-button blue trans">REPLAY</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="background-repeat:repeat-x;" background="~/Content/images/pokr_rom_btm_bg.jpg" height="25" valign="top" width="1000">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>
-                        <table width="100%">
-                            <tr>
-                                <td class="heading heading-end">
-                                    <div class="borders">
-                                    </div>
-                                </td>
-                                <td class="heading heading-middle">
-                                    CHOOSE YOUR TABLE
-                                </td>
-                                <td class="heading heading-end">
-                                    <div class="borders">
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <form action="/Home/Play" method="post">
-                            <table class="bottom-table">
-
-                                <tbody class="bottom-body">
-
-                                    <tr>
-                                        <td class="stakes">
-
-                                            <div class="myDiv">
-                                                <p class="blind" id="smallBlind"></p>
-                                                <p class="blind" id="bigBlind"></p>
-                                                <p class="myText">Stakes</p>
-                                                <input type="hidden" name="smallblind" id="small-blind" value="" />
-                                                <input type="hidden" name="bigblind" id="big-blind" value="" />
-                                            </div>
-                                            <div>
-                                                <p class="blind" id="buyInMin"></p>
-                                                <p class="blind" id="buyInMax"></p>
-                                                <p class="myText">Buy-In Range</p>
-                                                <input type="hidden" name="buyinmin" id="buy-in-min" value="" />
-                                                <input type="hidden" name="buyinmax" id="buy-in-max" value="" />
-                                            </div>
-
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="sld">
-                                                <button type="button" class="minus js-btn-minus"><div class="mySpan">-</div></button>
-                                                <div style="width:88%; float:left; margin-top:5px;">
-                                                    <div class="range-slider">
-                                                        <input type="text" class="js-range-slider" value="" />
-                                                    </div>
-                                                </div>
-                                                <button type="button" class="plus js-btn-plus"><div class="mySpan2">+</div></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="display:block;">
-                                            <div>
-                                                <button id="play" type="submit" class="pure-button fuller-button blue table-button">PLAY</button>
-                                            </div>
-
-                                        </td>
-                                    </tr>
-
-                                </tbody>
-
                             </table>
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <form action="/Home/Play" method="post">
+                                <table class="bottom-table">
 
-        <script src="~/Content/js/jquery-1.12.3.min.js"></script>
-        <script src="~/Content/js/ion.rangeSlider.js"></script>
-        
-        <script>
-            var replay = document.getElementById("replay");
-            var winnings = document.getElementById("winnings").value;
-            if (winnings == 0)
-                replay.disabled = true;
-        </script>
-        
-        <script>
+                                    <tbody class="bottom-body">
 
-    var $range = $(".js-range-slider"),
-    $btn_minus = $(".js-btn-minus"),
-    $btn_plus = $(".js-btn-plus"),
-    min = 1,
-    max = 5,
-    step = 1,
-	smallBlind = ["100","500","1000","5000","10000"],
-    bigBlind = ["200","1000","2000","10000","20000"],
-    buyInMin = ["5000","25000","50000","250000","500000"],
-	buyInMax= ["25000","125000","250000","1250000","2500000"],
-    smallBlindSign = ["100","500","1K","5K","10K"],
-    bigBlindSign = ["200","1K","2K","10K","20K"],
-    buyInMinSign = ["5K","25K","50K","250K","500K"],
-	buyInMaxSign= ["25K","125K","250K","1.25M","2.5M"],
-    from = 1;
+                                        <tr>
+                                            <td class="stakes">
 
-	var p1 = document.getElementById("smallBlind");
-	var p2 = document.getElementById("bigBlind");
-	var p3 = document.getElementById("buyInMin");
-	var p4 = document.getElementById("buyInMax");
+                                                <div class="myDiv">
+                                                    <p class="blind" id="smallBlind"></p>
+                                                    <p class="blind" id="bigBlind"></p>
+                                                    <p class="myText">Stakes</p>
+                                                    <input type="hidden" name="smallblind" id="small-blind" value="" />
+                                                    <input type="hidden" name="bigblind" id="big-blind" value="" />
+                                                </div>
+                                                <div>
+                                                    <p class="blind" id="buyInMin"></p>
+                                                    <p class="blind" id="buyInMax"></p>
+                                                    <p class="myText">Buy-In Range</p>
+                                                    <input type="hidden" name="buyinmin" id="buy-in-min" value="" />
+                                                    <input type="hidden" name="buyinmax" id="buy-in-max" value="" />
+                                                </div>
 
-	var ip1 = document.getElementById("small-blind");
-	var ip2 = document.getElementById("big-blind");
-	var ip3 = document.getElementById("buy-in-min");
-	var ip4 = document.getElementById("buy-in-max");
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="sld">
+                                                    <button type="button" class="minus js-btn-minus"><div class="mySpan">-</div></button>
+                                                    <div style="width:88%; float:left; margin-top:5px;">
+                                                        <div class="range-slider">
+                                                            <input type="text" class="js-range-slider" value="" />
+                                                        </div>
+                                                    </div>
+                                                    <button type="button" class="plus js-btn-plus"><div class="mySpan2">+</div></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="display:block;">
+                                                <div>
+                                                    <button id="play" type="submit" class="pure-button fuller-button blue table-button">PLAY</button>
+                                                </div>
 
-	ip1.value = smallBlind[0];
-	ip2.value = bigBlind[0];
-	ip3.value = buyInMin[0];
-	ip4.value = buyInMax[0];
+                                            </td>
+                                        </tr>
 
-	p1.innerHTML = "$" + smallBlindSign[0] + "/";
-	p2.innerHTML = "$" + bigBlindSign[0];
-	p3.innerHTML = "$" + buyInMinSign[0] + "/";
-	p4.innerHTML = "$" + buyInMaxSign[0];
+                                    </tbody>
 
-	var play = document.getElementById("play");
-	if(parseInt(document.getElementById("money").value) < parseInt(buyInMin[0]))
-	{
-	    play.disabled = true;
-	    play.style.boxShadow = "0 0 0 rgba(0,170,170,0.7)";
-	}
+                                </table>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+            <script src="~/Content/js/jquery-1.12.3.min.js"></script>
+            <script src="~/Content/js/ion.rangeSlider.js"></script>
 
-$range.ionRangeSlider({
-    type: "single",
-    min: min,
-    max: max,
-    step: step,
-    from: from,
-    onFinish: function (data) {
-        from = data.from;
-    }
-});
+            <script>
+                var replay = document.getElementById("replay");
+                var winnings = document.getElementById("winnings").value;
+                if (winnings == 0)
+                    replay.disabled = true;
+            </script>
 
-$btn_minus.on("click", function () {
-    updateRange(-1);
-});
+            <script>
 
-$btn_plus.on("click", function () {
-    updateRange(1);
-});
+                var $range = $(".js-range-slider"),
+                $btn_minus = $(".js-btn-minus"),
+                $btn_plus = $(".js-btn-plus"),
+                min = 1,
+                max = 5,
+                step = 1,
+                smallBlind = ["100", "500", "1000", "5000", "10000"],
+                bigBlind = ["200", "1000", "2000", "10000", "20000"],
+                buyInMin = ["5000", "25000", "50000", "250000", "500000"],
+                buyInMax = ["25000", "125000", "250000", "1250000", "2500000"],
+                smallBlindSign = ["100", "500", "1K", "5K", "10K"],
+                bigBlindSign = ["200", "1K", "2K", "10K", "20K"],
+                buyInMinSign = ["5K", "25K", "50K", "250K", "500K"],
+                buyInMaxSign = ["25K", "125K", "250K", "1.25M", "2.5M"],
+                from = 1;
 
-var range_instance = $range.data("ionRangeSlider");
+                var p1 = document.getElementById("smallBlind");
+                var p2 = document.getElementById("bigBlind");
+                var p3 = document.getElementById("buyInMin");
+                var p4 = document.getElementById("buyInMax");
 
-var updateRange = function (direction) {
-    from += step * direction;
-    if (from < min) {
-        from = min;
-    } else if (from > max) {
-        from = max;
-    }
+                var ip1 = document.getElementById("small-blind");
+                var ip2 = document.getElementById("big-blind");
+                var ip3 = document.getElementById("buy-in-min");
+                var ip4 = document.getElementById("buy-in-max");
 
-	var p1 = document.getElementById("smallBlind");
-	var p2 = document.getElementById("bigBlind");
-	var p3 = document.getElementById("buyInMin");
-	var p4 = document.getElementById("buyInMax");
+                ip1.value = smallBlind[0];
+                ip2.value = bigBlind[0];
+                ip3.value = buyInMin[0];
+                ip4.value = buyInMax[0];
 
-	var ip1 = document.getElementById("small-blind");
-	var ip2 = document.getElementById("big-blind");
-	var ip3 = document.getElementById("buy-in-min");
-	var ip4 = document.getElementById("buy-in-max");
+                p1.innerHTML = "$" + smallBlindSign[0] + "/";
+                p2.innerHTML = "$" + bigBlindSign[0];
+                p3.innerHTML = "$" + buyInMinSign[0] + "/";
+                p4.innerHTML = "$" + buyInMaxSign[0];
 
-	ip1.value = smallBlind[from-1];
-	ip2.value = bigBlind[from-1];
-	ip3.value = buyInMin[from-1];
-	ip4.value = buyInMax[from-1];
+                var play = document.getElementById("play");
+                if (parseInt(document.getElementById("money").value) < parseInt(buyInMin[0])) {
+                    play.disabled = true;
+                    play.style.boxShadow = "0 0 0 rgba(0,170,170,0.7)";
+                }
 
-	p1.innerHTML = "$" + smallBlindSign[from-1] + "/";
-	p2.innerHTML = "$" + bigBlindSign[from-1];
-	p3.innerHTML = "$" + buyInMinSign[from-1] + "/";
-	p4.innerHTML = "$" + buyInMaxSign[from-1];
+                $range.ionRangeSlider({
+                    type: "single",
+                    min: min,
+                    max: max,
+                    step: step,
+                    from: from,
+                    onFinish: function (data) {
+                        from = data.from;
+                    }
+                });
 
-	if(parseInt(document.getElementById("money").value) < parseInt(buyInMin[from-1]))
-	{
-	    play.disabled = true;
-	    play.style.boxShadow = "0 0 0 rgba(0,170,170,0.7)";
-	}
-	else
-	{
-	    play.disabled = false;
-	    play.style.boxShadow = "0 0 1.5em rgba(0,170,170,0.7)";
-	}
+                $btn_minus.on("click", function () {
+                    updateRange(-1);
+                });
 
-    range_instance.update({
-        from: from
-    });
-};
-        </script>
-        
-    </body>
+                $btn_plus.on("click", function () {
+                    updateRange(1);
+                });
+
+                var range_instance = $range.data("ionRangeSlider");
+
+                var updateRange = function (direction) {
+                    from += step * direction;
+                    if (from < min) {
+                        from = min;
+                    } else if (from > max) {
+                        from = max;
+                    }
+
+                    var p1 = document.getElementById("smallBlind");
+                    var p2 = document.getElementById("bigBlind");
+                    var p3 = document.getElementById("buyInMin");
+                    var p4 = document.getElementById("buyInMax");
+
+                    var ip1 = document.getElementById("small-blind");
+                    var ip2 = document.getElementById("big-blind");
+                    var ip3 = document.getElementById("buy-in-min");
+                    var ip4 = document.getElementById("buy-in-max");
+
+                    ip1.value = smallBlind[from - 1];
+                    ip2.value = bigBlind[from - 1];
+                    ip3.value = buyInMin[from - 1];
+                    ip4.value = buyInMax[from - 1];
+
+                    p1.innerHTML = "$" + smallBlindSign[from - 1] + "/";
+                    p2.innerHTML = "$" + bigBlindSign[from - 1];
+                    p3.innerHTML = "$" + buyInMinSign[from - 1] + "/";
+                    p4.innerHTML = "$" + buyInMaxSign[from - 1];
+
+                    if (parseInt(document.getElementById("money").value) < parseInt(buyInMin[from - 1])) {
+                        play.disabled = true;
+                        play.style.boxShadow = "0 0 0 rgba(0,170,170,0.7)";
+                    }
+                    else {
+                        play.disabled = false;
+                        play.style.boxShadow = "0 0 1.5em rgba(0,170,170,0.7)";
+                    }
+
+                    range_instance.update({
+                        from: from
+                    });
+                };
+            </script>
+            <script src="~/Scripts/logIn/jquery.backstretch.min.js"></script>
+        <script src="~/Scripts/logIn/scripts.js"></script>
+</body>
 </html>
 
