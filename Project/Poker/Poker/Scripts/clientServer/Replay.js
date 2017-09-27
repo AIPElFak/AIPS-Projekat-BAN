@@ -39,12 +39,12 @@ gameHub.client.getCards = function (card1, card2, pos) {
 
 gameHub.client.showSmallBlind = function (smallBlind, pos) {
     resetPlayerChips();
-    setPlayerChips(pos, smallBlind);
+    setPlayerChips(pos, smallBlind, 1);
 };
 
 gameHub.client.showBigBlind = function (bigBlind, pos) {
     //resetPlayerChips();
-    setPlayerChips(pos, bigBlind);
+    setPlayerChips(pos, bigBlind, 1);
 };
 
 gameHub.client.displayCardsOnTable = function (pos, cards) {
@@ -61,4 +61,8 @@ gameHub.client.showWinner = function (positions) {
 
 gameHub.client.flipCards = function (card1, card2, pos) {
     setPlayerCard(pos, card1, card2);
+};
+
+gameHub.client.displayPlayed = function (pos, result) {
+    displayMove(pos, result, 1);
 };

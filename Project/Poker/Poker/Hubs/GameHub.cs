@@ -391,8 +391,8 @@ namespace Poker.Hubs
                     winners.Add(pos);
                     foreach (KeyValuePair<string, string> player in model.hand.username)
                     {
-                        Clients.Caller.flipCards(model.hand.cards[player.Key][0].ToString(),
-                                                 model.hand.cards[player.Key][1].ToString(), player.Key);
+                        Clients.Caller.flipCards(model.hand.cards[player.Key][0].getString(),
+                                                 model.hand.cards[player.Key][1].getString(), player.Key);
                     }
                     Clients.Caller.showWinner(winners);
                 }

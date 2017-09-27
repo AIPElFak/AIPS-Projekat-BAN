@@ -205,6 +205,7 @@
     <Content Include="Content\Game.css" />
     <Content Include="Content\images\avatar.png" />
     <Content Include="Content\images\bult.jpg" />
+    <Content Include="Content\images\casino.jpg" />
     <Content Include="Content\images\cntr_bg.jpg" />
     <Content Include="Content\images\cntr_bult.jpg" />
     <Content Include="Content\images\coin.png" />
