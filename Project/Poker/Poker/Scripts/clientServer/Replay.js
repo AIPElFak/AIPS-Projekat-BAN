@@ -57,7 +57,7 @@ gameHub.client.displayCardsOnTable = function (pos, cards) {
 gameHub.client.showWinner = function (positions) {
     //mutiple winners posible
     for (var i = 0; i < positions.length; i++) {
-        showWinner(positions[i], positions.length);
+        showWinner(positions[i], positions.length, 1);
     }
 };
 
