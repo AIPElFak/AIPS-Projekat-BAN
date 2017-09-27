@@ -361,6 +361,7 @@
     <Content Include="Scripts\textures\queen_of_hearts.png" />
     <Content Include="Scripts\textures\queen_of_spades.png" />
     <Content Include="Scripts\textures\red_joker.png" />
+    <Content Include="Scripts\Usernames.js" />
     <Content Include="Scripts\Variables.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
