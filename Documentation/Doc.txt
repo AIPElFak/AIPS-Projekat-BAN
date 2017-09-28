@@ -1,4 +1,4 @@
-Texas Hold'Em
+﻿Texas Hold'Em
 
 Domen:
 
@@ -23,7 +23,7 @@ Tehnologije:
 -HTML
 -CSS
 -Javascript
--MSSQL
+-MongoDB
 
 Okviri:
 
@@ -34,12 +34,12 @@ Okviri:
 Okruženja:
 
 Visual studio (ASP.NET MVC project)
-Microsoft SQL server
+MongoShell
 
 Zaduženja:
 
-Predrag Nikolić - Backend, projektovanje i implementacija baze.
-Nevena Radosavljević - Frontend, implementacija modela i kontrolera.
+Predrag Nikolić - Backend, komunikacija između klijenata.
+Nevena Radosavljević - Frontend, implementacija modela perzistencije i pristupa bazi podataka.
 Aleksandar Stojčić - Grafički prikaz i implementacija mehanike igre.
 
 Ovo su neka okvirna zaduženja. U zavisnosti od razvoja aplikacije i obima posla članovi tima će 
